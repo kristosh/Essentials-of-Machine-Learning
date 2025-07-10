@@ -34,9 +34,9 @@ The course aims to provide the necessary introductory knowledge for Machine Lear
 
 [Here you can find the assignments of the course](./assignments.html).
 
-[Here you can find an introduction to mathematics and data analysis for Machine learning](./mathintro.html).
+[Introduction to Machine Learning and Mathematics for ML](./mathintro.html).
 
-[Here you will find an introduction to coding for this course. The essentials in Python, NumPy, SciPy, packages, PyTorch etc.](./codeintro.html).
+[Introduction to Machine Learning and coding.](./codeintro.html).
 
 <!-- There should be whitespace between paragraphs.
 
