@@ -10,11 +10,13 @@ description: In this page we will introduce the concept of Machine Learning and 
 
 A definition of datum/data
 
-Machine learning is data-driven and the data is at core of machine learning. The goals is to design general purposes methodologies with which we can extract interesting patterns and that are not dependent in expertise domain. For instance having a huge corpus of textual data from Wikipedia we can extract information about 
+Machine learning is data-driven and the data is at core of machine learning. The goals is to design general purposes methodologies with which we can extract interesting patterns and that are not dependent in expertise domain. For instance having a huge corpus of textual data from Wikipedia we can extract information about these wikipedia sites such as the topic of each page but also event analysis or sentiment analysis in reviews from webpages such as IMDB.
+
+Give some examples here of that can work.
 
 ## Data and datasets
 
-> Definition of what we consider as datum and data and how exactly we perceive them in Machine Learning
+> Definition of what we consider as datum and data and how exactly we perceive them in Machine Learning  
 
 ## Types of Data 
 
