@@ -16,7 +16,17 @@ Give some examples here of that can work.
 
 ## Data and datasets
 
-> Definition of what we consider as datum and data and how exactly we perceive them in Machine Learning  
+There are multiple definitions for the word `data`. We will try to make sense for this word by providing several definitions for this word:
+
+> Data refers to recorded observations or measurable pieces of information, often collected from experiments, transactions, sensors, texts, or user behavior, that are used to represent phenomena, derive insights, or inform decision-making through analysis.
+
+> Data are values or observations, usually structured, often numeric, that represent attributes of entities and are used to answer questions.
+
+> Data are representations of variables measured from the real world, which can be used to model and infer patterns or causality.
+
+
+So central to the concept of data is the numerical or not representation of information about the real world and under a study domain that can be found or produced in the real world or online. That involves information that we exchange or measurements from scientific studies that are captured structured and presented in a formatted way.
+
 
 ## Types of Data 
 
@@ -24,6 +34,8 @@ Data exists in different flavours. First and foremost could be numerical data: i
 
 
 ## Data as vectors and matrices
+
+While as we just mentioned not all data is numerical, for a computer perspective, it is always necessary to transform these data into a numerical format. Thus, when we talk about images we talk about pixel-values, and when we talk about text we are talking about string and numerical representation of these strings.
 
 ## Linear Algebra
 
