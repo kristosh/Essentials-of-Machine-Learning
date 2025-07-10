@@ -32,7 +32,11 @@ The course aims to provide the necessary introductory knowledge for Machine Lear
 * Only the final grade will be rounded (.49 rounded down and .5 rounded up)
 * Students who are entitled to more exam/retake time must report to info@sbb.leidenuniv.nl 10 days before the exam/retake takes place.
 
-[Link to another page](./another-page.html).
+[Here you can find the assignments of the course](./assignments.html).
+
+[Here you can find an introduction to mathematics and data analysis for Machine learning](./mathintro.html).
+
+[Here you will find an introduction to coding for this course. The essentials in Python, NumPy, SciPy, packages, PyTorch etc.](./codeintro.html).
 
 <!-- There should be whitespace between paragraphs.
 
