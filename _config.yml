@@ -3,3 +3,9 @@ description: A comprehensive guide to the fundamentals of machine learning.
 show_downloads: False 
 google_analytics:
 theme: jekyll-theme-cayman
+buttons:
+  zip_url: https://kristosh.github.io/Essentials-of-Machine-Learning/assignments.html
+  zip_title: Assignments
+  zip_hide: false
+  tar_hide: true
+  github_hide: true
