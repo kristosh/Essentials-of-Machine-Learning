@@ -3,3 +3,7 @@ description: A comprehensive guide to the fundamentals of machine learning.
 show_downloads: False 
 google_analytics:
 theme: jekyll-theme-cayman
+
+kramdown:
+  input: GFM
+  math_engine: mathjax # you can also set this field to 'katex'
