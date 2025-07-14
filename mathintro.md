@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Introduction to Machine Learning.
-description: Introduction to data science, linear algebra and mathematics for Machine Learning
+description: Data science and Mathematics for Machine Learning
 ---
 
 ## Introduction to Machine Learning
@@ -40,17 +40,94 @@ For comprehensive purposes of the humans and computers, when we collect, store a
 
 ## Intro to Linear Algebra
 
-The vectors many of us know from school are called `geometric vectors`, which are usually denoted by a small arrow above the letter, e.g. $\vec{x}$ and $\vec{y}$. In this tutorial, we will simply denote the vectors as $\mathbf{x}$, $\mathbf{y}$ as a collection of numerical values. For example we can have that $\mathbf{x} = [1, 1]$ and $\mathbf{y} = [1, 2]$.
+### Vectors
 
-These vectors can be visualized in the cartesian space as:
+The vectors many of us know from school are called `geometric vectors`, which are usually denoted by a small arrow above the letter, e.g. $\vec{v_1}$ and $\vec{v_2}$. In this tutorial, we will simply denote the vectors as $\mathbf{v}_1$, $\mathbf{v}_2$ as a collection of numerical values. For example we can have that $\mathbf{v}_1 = [1, 1]$ and $\mathbf{v}_2 = [1, 2]$. That are example of two dimensional vectors that lies on the cartesian space $\{x, y\}$. Each dimension of this vector it is called a `feature` and can represent a characteristic value for the observation. For example, these two value of the vector $\mathbf{v}_1$ could be the values of an image that contains just two pixels.
 
-![alt text](images/vector_x_y.png "Vectors x and y")
+You may recall from high-school that these vectors can be visualized in the cartesian 2-dimensional space as:
 
-Once we represent our observations in vectors and visualize them in the cartesian space we can actually perform some basic mathematical computations. One simple and straightforward example is to add these two vectors. That is represented by the following image:
+![alt text](images/vectors.png "Vectors x and y")
 
-![alt text](images/vectors_addition.png "Vectors x and y")
+Once we represent our observations in vectors and visualize them in the cartesian space we can actually perform some basic mathematical computations. One simple and straightforward example is to add these two vectors. That can be represented as $\mathbf{v}_1 + \mathbf{v}_2 = [2, 3]$ That is represented by the following image:
 
 
+![alt text](images/addition.png "Vectors x and y")
+
+Another simply example is the multiplication of a vector with the scalar. For instance $\mathbf{v}_3 = 2 \cdot \mathbf{v}_1 = [2, 2]$
+
+![alt text](images/scaled.png "Vectors x and y")
+
+### Inner product
+
+A really important computation in Linear algebra is called `inner product`. If we stick with the above-mentioned vectors we can calculate the following entity $\mathbf{v}_4 =\mathbf{v}_1 \cdot \mathbf{v}_2  = 1 \cdot 1 + 1 \cdot 2 = 3$. Eventually, we end up calculating a scalar value which represents the similarity of these two vectors. It shows actually if these two vectors point to the same direction they are perpendicular or point to opposite direction. Thus, the inner product:
+
+- Is positive if the angle between vectors is less than 90°,
+- Zero if the vectors are orthogonal (perpendicular),
+- Negative if the angle is greater than 90°.
+
+Another thing to keep in mind is that this product relates also with the angle between the two vectors. It ends up being as follows:
+
+$\mathbf{v}_1 \cdot \mathbf{v}_2 =  \lVert \mathbf{v}_1  \lVert  \lVert  \mathbf{v}_2 \lVert   \cdot cos(\theta)$.
+
+The norm of a vector $\lVert \mathbf{v}_1 \lVert = \sqrt{1^2 + 1^2 } = \sqrt{2} $, $\lVert \mathbf{v}_2 \lVert = \sqrt{1^2 + 2^2 } = \sqrt{5} $  represents the length of the vector.
+
+### Matrices
+
+Now if we would like to create a placeholder in order to store multiple vectors together, we can construct a `matrix`. A matrix could encapsulate the given set of observation into a rectangular entity that looks like an extended version of a vector. For instance given the observation $\mathbf{v}_1, \mathbf{v}_2$ we can group them together into a `dataset` or a `matrix` as follows:
+
+$D = \begin{bmatrix}
+1 & 1 \newline
+1 & 2
+\end{bmatrix}$
+
+And that can of course can be generalized with multiple vectors of n-th dimensions as follows:
+
+$A = \begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \newline
+a_{21} & a_{22} & \cdots & a_{2n} \newline
+\vdots & \vdots & \ddots & \vdots \newline
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{bmatrix}$
+
+with $a_{ij}\in \mathbb{R}$, where $\mathbb{R}$ is the set with all the real-values. We then can denote that a vector $\mathbf{v}_1 \in \mathbb{R}^2$ and the matrix $\mathbf{A} \in \mathbb{R}^{m \times n}$, where $\mathbb{R}^{m \times n}$ is the set of all real-valued $m \times n$ matrices.
+
+#### Matrix addition
+
+In the same spirit with the addition of a vector, we can define also the addition of two (or more) matrices. For example if we have a matrix $\mathbf{B}$ as:
+
+$B = \begin{bmatrix}
+b_{11} & b_{12} & \cdots & b_{1n} \newline
+b_{21} & b_{22} & \cdots & b_{2n} \newline
+\vdots & \vdots & \ddots & \vdots \newline
+b_{m1} & b_{m2} & \cdots & b_{mn}
+\end{bmatrix}$
+
+Then, $\mathbf{C} = \mathbf{B} + \mathbf{A}$ can be defined as follows:
+
+$C = \begin{bmatrix}
+a_{11} + b_{11} & a_{12} + b_{12} & \cdots & a_{1n} + b_{1n} \newline
+a_{21} + b_{21} & a_{22} + b_{22} & \cdots & a_{2n} + b_{2n} \newline
+\vdots & \vdots & \ddots & \vdots \newline
+a_{m1} + b_{m1} & a_{m2} + b_{m2} & \cdots & a_{mn} + b_{mn}
+\end{bmatrix}$
+
+It\s important to note that in order to be able to add two matrices they need to have the same size otherwise it is not possible to perform the matrix addition.
+
+#### Matrix multiplication
+
+Another important operation in matrixes is the matrix multiplication. For matrices $\mathbf{A} \in \mathbb{R}^{m \times n} $, $\mathbf{B} \in \mathbb{R}^{n \times k} $, the multiplication operation can be denoted as $\mathbf{D} = \mathbf{A} \cdot \mathbf{B}$, with to be:
+
+$ \mathbf{D} = \begin{bmatrix}
+d_{11} & d_{12} & \cdots & d_{1k} \newline
+d_{21} & d_{22} & \cdots & d_{2k} \newline
+\vdots & \vdots & \ddots & \vdots \newline
+d_{m1} & d_{m2} & \cdots & d_{mk}
+\end{bmatrix}$
+
+
+the elements $ d_{ij} $ of the product $\mathbf{D} = \mathbf{A}\cdot \mathbf{B} \in \mathbb{R}^{m \times k} $ are computed as: $d_{ij} = \sum_{l=1}^{n} a_{il} b_{lj}, \quad i = 1, \ldots, m, \quad j = 1, \ldots, k$
+
+Hence, in the case of matrix multiplication it is important to note that the number of columns of the first matrix should be the same for the number of rows of the second matrix in order the multiplication to be a valid operation.
 ## Geometry
 
 [back](./)
