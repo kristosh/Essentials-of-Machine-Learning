@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Assignments for the Essentials of machine learning
-description: This page means to introduce the assignments of this course and gives all the details of how the assessments for these assignments will take place.
+title: Assignments for the EoML
+description: This is the official page for the course assignments
 ---
 
 ## Welcome to another page
 
-There will be in total three assignments for the course. The format of these assignments are 3 jupyter notebook with blocks of codes that you can run and with missing code, but also eventually some tasks that needs to be done and you will need to submit an individual report for each one of these assignments.
+There will be in total three assignments for the course. The format of these assignments are 3 jupyter notebook with blocks of codes that you can run and with missing code, but also eventually some tasks that needs to be done and you will need to submit an individual report for each one of these assignments. These assignments needs to be submitted via Brightspace. You can find the link in here. The deadlines will be announced soon.
 
 The topic of the assignments are the following:
 

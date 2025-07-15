@@ -10,13 +10,13 @@
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"> </script>
 
-<script>
+<!-- <script>
 MathJax = {
     loader: {load: ['[tex]/newcommand', '[tex]/color']},
     tex: {
         packages: {'[+]': ['newcommand', 'color']},
         inlineMath: [['$','$']],
-        displayMath: [['$$', '$$']],
+        displayMath: [['$$', '$$', '\[', '\]']],
         macros: {
             bold: ['{\bf #1}',1],
             ddfrac: ['{\frac{\displaystyle #1}{\displaystyle #2}}', 2],
@@ -47,3 +47,19 @@ MathJax = {
 <script id="MathJax-script" async
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 </script>
+
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+  type="text/javascript">
+</script> -->
+
+
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

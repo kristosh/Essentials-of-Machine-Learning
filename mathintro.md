@@ -46,16 +46,22 @@ The vectors many of us know from school are called `geometric vectors`, which ar
 
 You may recall from high-school that these vectors can be visualized in the cartesian 2-dimensional space as:
 
-![alt text](images/vectors.png "Vectors x and y")
+<p align="center">
+  <img src="images/vectors.png" alt="Sublime's custom image"/>
+</p>
 
 Once we represent our observations in vectors and visualize them in the cartesian space we can actually perform some basic mathematical computations. One simple and straightforward example is to add these two vectors. That can be represented as $\mathbf{v}_1 + \mathbf{v}_2 = [2, 3]$ That is represented by the following image:
 
 
-![alt text](images/addition.png "Vectors x and y")
+<p align="center">
+  <img src="images/addition.png" alt="Sublime's custom image"/>
+</p>
 
 Another simply example is the multiplication of a vector with the scalar. For instance $\mathbf{v}_3 = 2 \cdot \mathbf{v}_1 = [2, 2]$
 
-![alt text](images/scaled.png "Vectors x and y")
+<p align="center">
+  <img src="images/scaled.png" alt="Sublime's custom image"/>
+</p>
 
 ### Inner product
 
@@ -67,27 +73,36 @@ A really important computation in Linear algebra is called `inner product`. If w
 
 Another thing to keep in mind is that this product relates also with the angle between the two vectors. It ends up being as follows:
 
-$\mathbf{v}_1 \cdot \mathbf{v}_2 =  \lVert \mathbf{v}_1  \lVert  \lVert  \mathbf{v}_2 \lVert   \cdot cos(\theta)$.
+$$\mathbf{v}_1 \cdot \mathbf{v}_2 =  \lVert \mathbf{v}_1  \lVert  \lVert  \mathbf{v}_2 \lVert   \cdot cos(\theta)$$.
+
 
 The norm of a vector $\lVert \mathbf{v}_1 \lVert = \sqrt{1^2 + 1^2 } = \sqrt{2} $, $\lVert \mathbf{v}_2 \lVert = \sqrt{1^2 + 2^2 } = \sqrt{5} $  represents the length of the vector.
+
+We can also re-write as:
+
+$$\lVert \mathbf{v}_1^{2} \lVert = 1^2 + 1^2 $$
+
+and the angle between the two vectors as:
+
+$$cos(\theta) = \frac{\mathbf{v}_1 \cdot \mathbf{v}_2}{\lVert \mathbf{v}_1 \lVert  \lVert \mathbf{v}_2 \lVert }$$
 
 ### Matrices
 
 Now if we would like to create a placeholder in order to store multiple vectors together, we can construct a `matrix`. A matrix could encapsulate the given set of observation into a rectangular entity that looks like an extended version of a vector. For instance given the observation $\mathbf{v}_1, \mathbf{v}_2$ we can group them together into a `dataset` or a `matrix` as follows:
 
-$D = \begin{bmatrix}
+$$D = \begin{bmatrix}
 1 & 1 \newline
 1 & 2
-\end{bmatrix}$
+\end{bmatrix}$$
 
 And that can of course can be generalized with multiple vectors of n-th dimensions as follows:
 
-$A = \begin{bmatrix}
+$$A = \begin{bmatrix}
 a_{11} & a_{12} & \cdots & a_{1n} \newline
 a_{21} & a_{22} & \cdots & a_{2n} \newline
 \vdots & \vdots & \ddots & \vdots \newline
 a_{m1} & a_{m2} & \cdots & a_{mn}
-\end{bmatrix}$
+\end{bmatrix}$$
 
 with $a_{ij}\in \mathbb{R}$, where $\mathbb{R}$ is the set with all the real-values. We then can denote that a vector $\mathbf{v}_1 \in \mathbb{R}^2$ and the matrix $\mathbf{A} \in \mathbb{R}^{m \times n}$, where $\mathbb{R}^{m \times n}$ is the set of all real-valued $m \times n$ matrices.
 
@@ -95,21 +110,21 @@ with $a_{ij}\in \mathbb{R}$, where $\mathbb{R}$ is the set with all the real-val
 
 In the same spirit with the addition of a vector, we can define also the addition of two (or more) matrices. For example if we have a matrix $\mathbf{B}$ as:
 
-$B = \begin{bmatrix}
+$$B = \begin{bmatrix}
 b_{11} & b_{12} & \cdots & b_{1n} \newline
 b_{21} & b_{22} & \cdots & b_{2n} \newline
 \vdots & \vdots & \ddots & \vdots \newline
 b_{m1} & b_{m2} & \cdots & b_{mn}
-\end{bmatrix}$
+\end{bmatrix}$$
 
 Then, $\mathbf{C} = \mathbf{B} + \mathbf{A}$ can be defined as follows:
 
-$C = \begin{bmatrix}
+$$C = \begin{bmatrix}
 a_{11} + b_{11} & a_{12} + b_{12} & \cdots & a_{1n} + b_{1n} \newline
 a_{21} + b_{21} & a_{22} + b_{22} & \cdots & a_{2n} + b_{2n} \newline
 \vdots & \vdots & \ddots & \vdots \newline
 a_{m1} + b_{m1} & a_{m2} + b_{m2} & \cdots & a_{mn} + b_{mn}
-\end{bmatrix}$
+\end{bmatrix}$$
 
 It\s important to note that in order to be able to add two matrices they need to have the same size otherwise it is not possible to perform the matrix addition.
 
@@ -117,17 +132,123 @@ It\s important to note that in order to be able to add two matrices they need to
 
 Another important operation in matrixes is the matrix multiplication. For matrices $\mathbf{A} \in \mathbb{R}^{m \times n} $, $\mathbf{B} \in \mathbb{R}^{n \times k} $, the multiplication operation can be denoted as $\mathbf{D} = \mathbf{A} \cdot \mathbf{B}$, with to be:
 
-$ \mathbf{D} = \begin{bmatrix}
+$$ \mathbf{D} = \begin{bmatrix}
 d_{11} & d_{12} & \cdots & d_{1k} \newline
 d_{21} & d_{22} & \cdots & d_{2k} \newline
 \vdots & \vdots & \ddots & \vdots \newline
 d_{m1} & d_{m2} & \cdots & d_{mk}
-\end{bmatrix}$
+\end{bmatrix}$$
 
 
-the elements $ d_{ij} $ of the product $\mathbf{D} = \mathbf{A}\cdot \mathbf{B} \in \mathbb{R}^{m \times k} $ are computed as: $d_{ij} = \sum_{l=1}^{n} a_{il} b_{lj}, \quad i = 1, \ldots, m, \quad j = 1, \ldots, k$
+the elements $ d_{ij} $ of the product 
+
+$$\mathbf{D} = \mathbf{A}\cdot \mathbf{B} \in \mathbb{R}^{m \times k} $$
+
+are computed as: 
+
+$$d_{ij} = \sum_{l=1}^{n} a_{il} b_{lj}, \quad i = 1, \ldots, m, \quad j = 1, \ldots, k$$
 
 Hence, in the case of matrix multiplication it is important to note that the number of columns of the first matrix should be the same for the number of rows of the second matrix in order the multiplication to be a valid operation.
-## Geometry
+
+That means that in order to calculate $d_ij$ element we need to multiple the elements of the i-th row of $\mathbf{A}$ with the j-th column of $\mathbf{B}$ and sum them up, so to calculate the inner product of these two. Of course, a row in matrix can be considered as a vector and thus, we can just use the inner product that we can discuss earlier.
+
+The matrices can only be multiplied if their `neighboring` dimensions match. For instance, an $n \times k$-matrix $\mathbf{A}$can be multiplied with a $k \times m$-matrix $\mathbf{B}$, but only from the left side:
+
+
+$$\underbrace{A}_{n \times k} \cdot \underbrace{B}_{k \times m} =  \underbrace{D}_{n \times m}$$
+
+The product $BA$ is not defined if $m \ne n$ since the neighboring dimensions do not match.
+
+#### Example of matrix multiplications
+
+An example to help you grasp the detail inner working of the matrix multiplication is placed below. By having two matrices $\mathbf{A}$ and $\mathbf{B}$:
+
+$$A = \begin{bmatrix} 1 & 2 & 3 \newline 3 & 2 & 1 \end{bmatrix} \in \mathbb{R}^{2 \times 3}$$
+
+$$B = \begin{bmatrix} 0 & 2 \newline 1 & -1 \newline 0 & 1 \end{bmatrix} \in \mathbb{R}^{3 \times 2}$$
+
+we can obtain the results of multiplying $\mathbf{A}$ with $\mathbf{B}$
+
+$$\begin{align}
+AB &= \begin{bmatrix} 1 & 2 & 3 \newline 3 & 2 & 1 \end{bmatrix} \begin{bmatrix} 0 & 2 \newline 1 & -1 \newline 0 & 1 \end{bmatrix} = \begin{bmatrix} 2 & 3 \newline 2 & 5 \end{bmatrix} \in \mathbb{R}^{2 \times 2}
+\end{align}$$
+
+and the results multiplying $\mathbf{B}$ and $\mathbf{A}$:
+
+$$\begin{align}
+BA &= \begin{bmatrix} 0 & 2 \newline 1 & -1 \newline 0 & 1 \end{bmatrix} \begin{bmatrix} 1 & 2 & 3 \newline 3 & 2 & 1 \end{bmatrix} = \begin{bmatrix} 6 & 4 & 2 \newline -2 & 0 & 2 \newline 3 & 2 & 1 \end{bmatrix} \in \mathbb{R}^{3 \times 3}
+\end{align}$$
+
+From this example, we can already see that matrix multiplication is not commutative, i.e., $AB \neq BA$; 
+
+#### Matrix properties
+
+- Associativity
+- Distributivity
+- Multiplication with the identity matrix
+- Inverse and Transpose
+
+
+#### Vector transformation
+
+### Linear models in Machine learning
+
+But ok why do we event mentioned all these computations of vectors and matrices. We are just interested in data and making machines learning patterns out of these data.
+
+Using these type of placeholders for our data ends-up being the easiest way to process data and perform calculation in computers.
+
+Having for instance a set of images for example [MNIST dataset: ](https://en.wikipedia.org/wiki/MNIST_database) that contains 70.000 gray scale images of handwritten digits (with pixel size $28 \times 28$) and name after the digit they represent. So there is a way to know what each image represent. That type of `naming` entity is called `label` or `annotation`. That being said we can represent this label using an integer variable that takes the following values $t = \{0, 1, 2, ..., 9$.
+
+Each input image can be represented as a vector after placing each row next to each other. Eventually, instead of 28 rows with 28 columns we can end up having 1 row with 784 columns. We can actually use as placeholder a vector $\mathbf{x} \in \mathbb{R}^{784}$. We can store all the vector-images in one big matrix:
+
+$$ \mathbf{D} = \begin{bmatrix}
+\text{---} & \mathbf{x}_1  & \text{---} \newline
+\text{---}&  \mathbf{x}_2 & \text{---} \newline
+\vdots & \vdots  & \vdots \newline
+\text{---} &  \mathbf{x}_n  & \text{---}
+\end{bmatrix}$$
+
+Where each row is represented by a vector $\mathbf{x}$. The task is extract useful information and patterns from these data. For example in classification, we would like to build a ML model to predict the digits in images that contains handwritten text. We can also place each label that corresponds to each image in a vector $\mathbf{t} \in {\(0, 1, 2, ..., 9\)}^{60000}$.
+
+A standard method to approach this is by performing simple operations by introducing some parameters $\mathbf{w}$ which are variables that needs to be tuned in such a way that each time that we will have an observation $\mathbf{x}^{\prime}$ if we multiply (`inner product`) these parameters $\mathbf{w}$ the output should be a numerical value that will represent the digit that the input observation contains.
+
+$$y = \mathbf{w} \cdot  \mathbf{x}^{\prime}$$
+
+of a bit more elaborate (using some linear or non-linear function $f$) 
+
+$$y =  f(\mathbf{w} \cdot  \mathbf{x}^{\prime})$$
+
+
+Thus, if the input image looks as follows:
+
+<p align="center">
+  <img src="images/nine.png" alt="Sublime's custom image"/>
+</p>
+
+The output $y \approx 9$ or some value that codifies this specific digit.
+
+It is important of course to figure out a good way to tune the parameters $\mathbf{w}$ in such a way that the above tasks is feasible. The process of tuning these parameters is called in machine learning `training` or `learning` process. 
+
+A gentle introduction on this process is as follows: Firstly, we want to perform a simple operation between the data in the dataset and the introduced parameters $\mathbf{w}$. For example we can consider the following:
+
+$$\mathbf{y} = \mathbf{D} \cdot \mathbf{w}$$ 
+
+or 
+
+$$\mathbf{y} = f(\mathbf{D} \cdot \mathbf{w})$$
+
+now a very good question is the following: `how can we set meaningful values to parameters` $\mathbf{w}$?. 
+
+We can start by setting these values randomly. Then we can calculate the output vector $\mathbf{y}$. This vector represents now the predictions of the model during the `training process`. However, given that we initialize the parameters $\mathbf{w}$ randomly there is not any quarantee that the values $\mathbf{y}$ could represent the MNIST digits. However, we already have some information about what this vector should be and this is the annotations that are stored and place in vector $\mathbf{t}$.
+
+We should thus find a way to measure the distance between the predictions $\mathbf{y}$ and the annotations $\mathbf{t}$ and then update the values of $\mathbf{w}$ in a way that this distance between the two vectors is minimized.
+
+We then need to find a way to measure the distance between predictions and labels and then a way to update the weights $\mathbf{w}$ in order to minimize this distance. 
+
+And hooray, we have just given a simple explanation of how classification ans supervised learning works in Machine Learning. 
+
+Of course, we do have other problems that are more elaborate and different in nature and this will be the task of the course to give you a some sneak peak on how these problems are tackled.
+
+
 
 [back](./)
