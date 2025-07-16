@@ -169,15 +169,25 @@ $$B = \begin{bmatrix} 0 & 2 \newline 1 & -1 \newline 0 & 1 \end{bmatrix} \in \ma
 
 we can obtain the results of multiplying $\mathbf{A}$ with $\mathbf{B}$
 
-$$\begin{align}
+
+<p align="center">
+  <img src="images/AB.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+
+<!-- $$\begin{align}
 AB &= \begin{bmatrix} 1 & 2 & 3 \newline 3 & 2 & 1 \end{bmatrix} \begin{bmatrix} 0 & 2 \newline 1 & -1 \newline 0 & 1 \end{bmatrix} = \begin{bmatrix} 2 & 3 \newline 2 & 5 \end{bmatrix} \in \mathbb{R}^{2 \times 2}
-\end{align}$$
+\end{align}$$ -->
 
 and the results multiplying $\mathbf{B}$ and $\mathbf{A}$:
 
-$$\begin{align}
+<p align="center">
+  <img src="images/BA.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+<!-- $$\begin{align}
 BA &= \begin{bmatrix} 0 & 2 \newline 1 & -1 \newline 0 & 1 \end{bmatrix} \begin{bmatrix} 1 & 2 & 3 \newline 3 & 2 & 1 \end{bmatrix} = \begin{bmatrix} 6 & 4 & 2 \newline -2 & 0 & 2 \newline 3 & 2 & 1 \end{bmatrix} \in \mathbb{R}^{3 \times 3}
-\end{align}$$
+\end{align}$$ -->
 
 From this example, we can already see that matrix multiplication is not commutative, i.e., $AB \neq BA$; 
 
@@ -197,7 +207,7 @@ But ok why do we event mentioned all these computations of vectors and matrices.
 
 Using these type of placeholders for our data ends-up being the easiest way to process data and perform calculation in computers.
 
-Having for instance a set of images for example [MNIST dataset: ](https://en.wikipedia.org/wiki/MNIST_database) that contains 70.000 gray scale images of handwritten digits (with pixel size $28 \times 28$) and name after the digit they represent. So there is a way to know what each image represent. That type of `naming` entity is called `label` or `annotation`. That being said we can represent this label using an integer variable that takes the following values $t = \{0, 1, 2, ..., 9$.
+Having for instance a set of images for example [MNIST dataset: ](https://en.wikipedia.org/wiki/MNIST_database) that contains 70.000 gray scale images of handwritten digits (with pixel size $28 \times 28$) and name after the digit they represent. So there is a way to know what each image represent. That type of `naming` entity is called `label` or `annotation`. That being said we can represent this label using an integer variable that takes the following values $t = \{0, 1, 2, ..., 9\}$.
 
 Each input image can be represented as a vector after placing each row next to each other. Eventually, instead of 28 rows with 28 columns we can end up having 1 row with 784 columns. We can actually use as placeholder a vector $\mathbf{x} \in \mathbb{R}^{784}$. We can store all the vector-images in one big matrix:
 

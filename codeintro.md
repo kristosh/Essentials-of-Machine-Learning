@@ -6,7 +6,7 @@ description: Some pre-requisite knowledge for understanding the materials of thi
 
 ## Introduction to Machine Learning and coding
 
-> Machine learning domain concerns the designing of algorithms that automatically extracts interesting information from knowledge sources that we call data. 
+> In this course we will make use of Python as the programming language for 
 
 
 ## Data and datasets in Python
