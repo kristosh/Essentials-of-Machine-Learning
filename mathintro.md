@@ -163,7 +163,7 @@ $$d_{ij} = \sum_{l=1}^{n} a_{il} b_{lj}, \quad i = 1, \ldots, m, \quad j = 1, \l
 
 Hence, in the case of matrix multiplication it is important to note that the number of columns of the first matrix should be the same for the number of rows of the second matrix in order the multiplication to be a valid operation.
 
-That means that in order to calculate $d_ij$ element we need to multiple the elements of the i-th row of $\mathbf{A}$ with the j-th column of $\mathbf{B}$ and sum them up, so to calculate the inner product of these two. Of course, a row in matrix can be considered as a vector and thus, we can just use the inner product that we can discuss earlier.
+That means that in order to calculate $d_{ij}$ element we need to multiple the elements of the i-th row of $\mathbf{A}$ with the j-th column of $\mathbf{B}$ and sum them up, so to calculate the inner product of these two. Of course, a row in matrix can be considered as a vector and thus, we can just use the inner product that we can discuss earlier.
 
 The matrices can only be multiplied if their `neighboring` dimensions match. For instance, an $n \times k$-matrix $\mathbf{A}$can be multiplied with a $k \times m$-matrix $\mathbf{B}$, but only from the left side:
 
@@ -247,7 +247,7 @@ $$\mathbf{A} = \begin{bmatrix}
 1 & 2 & 1 \newline
 4 & 4 & 5 \newline
 6 & 7 & 7 
-\end{bmatrix}$$
+\end{bmatrix} \in \mathbb{R}^{3 \times 3}$$
 
 and 
 
@@ -255,7 +255,7 @@ $$\mathbf{B} = \begin{bmatrix}
 -7 & -7 & 6 \newline
 2 & 1 & -1 \newline
 4 & 5 & -4 
-\end{bmatrix}$$
+\end{bmatrix} \in \mathbb{R}^{3 \times 3}$$
 
 Then the product $\mathbf{A} \cdot \mathbf{B} = \mathbf{I}_3$  
 #### Transpose of a matrix
@@ -267,12 +267,71 @@ $$\mathbf{A}^T = \begin{bmatrix}
 1 & 4 & 6 \newline
 2 & 4 & 7 \newline
 1 & 5 & 7 
-\end{bmatrix}$$
+\end{bmatrix} \in \mathbb{R}^{3 \times 3}$$
 
-We can say that the rows of the initial becoming the columns of the transpose matrix.
+We can say that the rows of the initial becoming the columns of the transpose matrix. Now several interesting properties for inverse and transpose matrices arise:
+
+$$\mathbf{A} \cdot \mathbf{A}^{-1} = \mathbf{I} =  \mathbf{A}^{-1}  \cdot \mathbf{A}$$
+
+$$\mathbf{(AB)}^{-1} = \mathbf{A}^{-1} \cdot \mathbf{B}^{-1}$$
+
+$$(\mathbf{A+B})^{-1} \neq \mathbf{A}^{-1} + \mathbf{B}^{-1}$$
+
+$$(\mathbf{A}^T)^{T} = \mathbf{A}$$
+
+$$\mathbf{(AB)}^{T} = \mathbf{B}^{T} \cdot \mathbf{A}^{T}$$
+
+$$(\mathbf{A+B})^{T} = \mathbf{A}^{T} + \mathbf{B}^{T}$$
 
 
 #### Linear systems
+
+A simply way to understand the usefulness of `matrices` and `vectors` stems from the linear system word. As you might recall from the high-school. We can define as` linear system` a collection of linear equations that involve the same set of variables. For example:
+
+$$1w_1 + 4 w_2 + 6 w_3 = 1$$
+
+$$2w_1 + 4 w_2 + 7 w_3 = 2$$
+
+$$1w_1 + 5 w_2 + 7 w_3 = 3$$
+
+Now, if we define as:
+
+$$\mathbf{X} = \begin{bmatrix}
+1 & 2 & 1 \newline
+4 & 4 & 5 \newline
+6 & 7 & 7 
+\end{bmatrix} \in \mathbb{R}^{3 \times 3}$$
+
+And then we can define $\mathbf{w} = [w_1, w_2, w_3] \in \mathbb{R}^{3 \times 1}$ and $\mathbf{y} = [y_1, y_2, y_3] = [1, 2, 3] \in \mathbb{R}^{3 \times 1}$
+
+then we can simply write $\mathbf{X} \cdot \mathbf{w} = \mathbf{y}$ or simply $\mathbf{y} = \mathbf{X} \cdot \mathbf{w}$ which stems from the properties of matrix multiplication. So in essence we can see the matrix multiplication as a simple way to represent linear equations of multiple variables $\mathbf{w} = [w_1, w_2, w_3]$. 
+
+We can use also the following representation:
+
+$$
+\begin{pmatrix}
+1 & 2 & 1 \newline
+4 & 4 & 5 \newline
+6 & 7 & 7 
+\end{pmatrix}
+\begin{pmatrix}
+w_1 \newline
+w_2 \newline
+w_3
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 \newline
+2 \newline
+3
+\end{pmatrix}
+$$
+
+or 
+
+
+
+It can be proven that by using also the matrix properties for inverse matrices we can solve this linear calculate the variables $\mathbf{w}$ as follows: $\mathbf{w} = \mathbf{X}^{-1} \cdot \mathbf{y}$.
 
 ## Linear models in Machine learning
 
@@ -344,5 +403,10 @@ The main key-home messages for this page is that information and human observati
 
 The next chapter will be an introduction to machine learning. We will provide the key terminology and some basic categorization that will be useful throughout this course.
 
+### Model
+
+### Learning
+
+### Tasks
 
 [back](./)
