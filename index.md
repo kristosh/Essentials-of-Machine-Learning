@@ -27,7 +27,7 @@ The course aims to provide the necessary introductory knowledge for Machine Lear
 * Multiple choices exam 70%
 * Three individual assignments 30%
 * A final weighted and rounded average of 6.0 is required to pass the course.
-* A minimum of 5.5 in each of the three assessments is required.
+* A minimum of 5.5 in each of the three assessments is required and the exams.
 * A non-completed assignment is evaluated as 1.0.
 * Only the final grade will be rounded (.49 rounded down and .5 rounded up)
 * Students who are entitled to more exam/retake time must report to info@sbb.leidenuniv.nl 10 days before the exam/retake takes place.
@@ -37,6 +37,8 @@ The course aims to provide the necessary introductory knowledge for Machine Lear
 [Introduction to Machine Learning and Mathematics for ML](./mathintro.html).
 
 [Introduction to Machine Learning and coding.](./codeintro.html).
+
+[Introduction to Machine Learning.](./codeintro.html).
 
 <!-- There should be whitespace between paragraphs.
 
@@ -127,7 +129,7 @@ end
 ### Small image
 
 ### Large image
-
+§
 
 ### Definition lists can be used with HTML syntax.
 
