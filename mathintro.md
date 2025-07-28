@@ -44,6 +44,49 @@ Data exists in different flavours. First and foremost could be numerical data: i
 - Categorical Data
 - Numerical Data
 
+### Example of data
+
+Here we will represent a simple example of gathering data about several people: `name`, `gender`, `degree`, `postcode`, `age`, `salary` with the observation to be each different person, and we would like to create an ML algorithm that given the info for these people to estimate a prediction for their salary. We can say that our observation is the different people in the Table 1.1 while the each characteristic can be called a `feature`.
+
+$$\begin{aligned}
+& \text {Table 1.1. A collected dataset of people and their salaries. }\\
+&\begin{array}{cccc}
+\hline \hline \text { Name } & \text { Gender} & \text { Degree} & \text { postcode } & \text { age } & \text { salary } \\
+\hline David & M & PhD & 1011MK & 41 & 9900$ \\
+James & M & BsC & 1223LK & 19 & 1780$ \\
+Dale & M & PhD & 2122JJ & 27 & 7560$ \\
+Laura & F & MSc & 1212NK &  19 & 1460$\\
+Donna & F & MSc & 1112AA & 20 & 1400$\\
+\hline
+\end{array}
+\end{aligned}$$
+
+Even when we have data in tabular format, there are still choices to be
+made to obtain a numerical representation. For example, in Table 8.1, the
+gender column (a categorical variable) may be converted into numbers 0
+representing “Male” and 1 representing “Female”. Alternatively, the gender
+could be represented by numbers −1, +1, respectively (as shown in
+Table 8.2). Furthermore, it is often important to use domain knowledge
+when constructing the representation, such as knowing that university
+degrees progress from bachelor’s to master’s to PhD or realizing that the
+postcode provided is not just a string of characters but actually encodes
+an area in London.
+
+
+
+$$\begin{aligned}
+& \text {Table 1.2. Transformed data into numerical representation }\\
+&\begin{array}{cccc}
+\hline \hline \text { Name } & \text { Gender} & \text { Degree} & \text { Latitude } & \text { age } & \text { salary } \\
+\hline 1 & 1 & 3 & 51.507 & 41 & 9.9k \\
+2 & 1 & 1 & 51.5074 & 19 & 1.7k \\
+3 & 1 & 3 & 51.607 & 27 & 7.5k$ \\
+4 & 2 & 2 & 51.207 &  19 & 1.6k\\
+5 & 2 & 1 & 51.407 & 20 & 1.6k\\
+\hline
+\end{array}
+\end{aligned}$$
+
 ## Data as vectors and matrices
 
 While as we just mentioned not all data are inherently numerical, from the computer perspective, it is always necessary to transform these data into a numerical representation. Thus, when we talk about digital images we talk about pixel numerical representation. Regarding textual data, each character letter, digit, symbol is assigned a number via an encoding standard, such as ASCII or Unicode (pls check this site for further information). Another example concerns auditory data which when we digitalize it, we actually captured the the amplitude of sound waves over time.
@@ -69,7 +112,9 @@ Once we represent our observations in vectors and visualize them in the cartesia
   <img src="images/addition.png" alt="Sublime's custom image"/>
 </p>
 
-As you might recall the addition of the vectors in two-dimensions works as follows: you can start with the first vector which point to the position $\mathbf{v}_1 = [1, 1]$ and then you add one in the x-axis and 2 in the y-axis. The result of this addition is another vector that points to $[2, 3]$. Another simply example is the multiplication of a vector with the scalar. For instance $\mathbf{v}_3 = 2 \cdot \mathbf{v}_1 = [2, 2]$
+As you might recall the addition of the vectors in two-dimensions works as follows: you can start with the first vector which point to the position $\mathbf{v}_1 = [1, 1]$ and then you add one in the x-axis and 2 in the y-axis. The result of this addition is another vector that points to $[2, 3]$. This operation can be considered as a `tip and tail` addition. The tail here refers to the starting point of the vector, while the tip (or head) is the ending point, typically indicated by an arrowhead
+
+Another simply example is the multiplication of a vector with the scalar. For instance $\mathbf{v}_3 = 2 \cdot \mathbf{v}_1 = [2, 2]$
 
 <p align="center">
   <img src="images/scaled.png" alt="Sublime's custom image"/>
@@ -333,6 +378,8 @@ or
 
 It can be proven that by using also the matrix properties for inverse matrices we can solve this linear calculate the variables $\mathbf{w}$ as follows: $\mathbf{w} = \mathbf{X}^{-1} \cdot \mathbf{y}$.
 
+For advanced topics in Linear Algebra you can have a look in this page [Advanced topics in Linear Algebra](./mlintro.html).
+
 ## Linear models in Machine learning
 
 But ok seriously, why do we even mentioned all these calculations for vectors and matrices. We are just interested in data and making machines learning patterns out of these data.
@@ -403,10 +450,14 @@ The main key-home messages for this page is that information and human observati
 
 The next chapter will be an introduction to machine learning. We will provide the key terminology and some basic categorization that will be useful throughout this course.
 
+## The ingredients of ML
+
 ### Model
 
 ### Learning
 
 ### Tasks
+
+### Features
 
 [back](./)
