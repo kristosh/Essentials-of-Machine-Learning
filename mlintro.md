@@ -40,6 +40,10 @@ Multiply any vector by a number (scalar) and still get another vector in the spa
 
 ## Linear independence
 
+Linear independence it is an important feature of vectors and a set of vectors which states the following: Having a set of vector $\{ \mathbf{x}_1, \mathbf{x}_2, \cdots \mathbf{x}_n  \}$ with $\mathbf{x}_i \in \mathbb{R}^{d}$, the vectors are linearly independent if and only if:
+
+$a_1 \cdot \mathbf{x}_1 + a_2 \cdot \mathbf{x}_2 + \cdots + a_n \cdot \mathbf{x}_n = 0$ that is only the case when $a_1 = a_2 = \cdots = \a_n$
+
 ## Basis and Rnak
 
 ## Linear mappings
