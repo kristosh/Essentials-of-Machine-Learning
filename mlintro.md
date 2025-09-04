@@ -28,6 +28,7 @@ Here we can see just two vectors in two dimesions, but in the vector space of tw
 
 The same goes with the vectors belongs to three-dimensional space like $\mathbf{v}_1 = [1, 1, 0] \in \mathbb{R}^{2}$ and $\mathbf{v}_2 = [1, 2, 1]$. In this case, we will need to visualize the vectors in three-dimensions 
 
+
 ### example with three dimensional vectors
 
 A vector space is a collection of things called vectors, where you can:

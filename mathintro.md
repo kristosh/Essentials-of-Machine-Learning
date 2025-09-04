@@ -331,7 +331,9 @@ $$(\mathbf{A+B})^{T} = \mathbf{A}^{T} + \mathbf{B}^{T}$$
 
 #### Linear systems
 
-A simply way to understand the usefulness of `matrices` and `vectors` stems from the linear system word. As you might recall from the high-school. We can define as` linear system` a collection of linear equations that involve the same set of variables. For example:
+A simply way to understand the usefulness of `matrices` and `vectors` stems from the linear system word. As you might recall from the high-school. We can define as` linear system` a collection of linear equations that involve the same set of variables. 
+
+Let us for a second try to solve the following problem: Factory A uses one machine of type $w_1$ 4 machines of type $w_2$ and 6 machines of type $w_3$ to produce a battery, while factory B  uses 2, 4, 7 to produce two batteries and factory C 1, 5, 7 correspondingly to produce 3 batteries. If we assume that all three machines are working in exactly the same way, we can express the previous problem as follows:
 
 $$1w_1 + 4 w_2 + 6 w_3 = 1$$
 
@@ -376,9 +378,81 @@ or
 
 
 
-It can be proven that by using also the matrix properties for inverse matrices we can solve this linear calculate the variables $\mathbf{w}$ as follows: $\mathbf{w} = \mathbf{X}^{-1} \cdot \mathbf{y}$.
+It can be proven that by using also the matrix properties for inverse matrices we can solve this linear calculate the variables $\mathbf{w}$ as follows: $\mathbf{w} = \mathbf{X}^{-1} \cdot \mathbf{y}$. Thus, we have transformed the problem to a linear system and used vector/matrices and linear algebra operations to find a solution. That is something that we need to do also extensively in machine learning.
 
 For advanced topics in Linear Algebra you can have a look in this page [Advanced topics in Linear Algebra](./mlintro.html).
+
+## Matrix transformations
+
+Another way to think about matrix-vector multiplication as functions. The idea here is that when we perform $\mathbf{X} \cdot \mathbf{w} = \mathbf{y}$ then we can see 
+$\mathbf{w}$ as our input and $\mathbf{y}$ out output. Matrix $\mathbf{X} $ can be considered as a function transformation f that maps input vector to the output vector. We can say that $\mathbf{X} \in \mathbb{R}^{n \times n}$ what it does is to receive an matrix $\mathbf{w} \in \mathbb{R}^{n}$ and it spits out a vector $\mathbf{y} \in \mathbb{R}^{n}$. Depending of the dimensionality of the matrix $\mathbf{X}$ this transformation could keep the same dimensionality or change the dimensionality of the output vector.
+
+## Distance between vectors
+
+So far we have seen that we can express instance that represent observations from real-world (or experiments) as vectors. Each different value of the vector that is called a `feature` represents a different measurement for the instance (or otherwise called `dimension`). It is really useful also to introduce a notion of distance with which we can measure the closeness of the vectors. In this way, we can compare different instances and judge which one are close or far to each other. If our vectors represents queries in browser and web sites, we will need a distance measurement which web-site vectors are close with our query-vector. Having a way to measure this, we can easily create a simple web browser or even a recommendation system.
+
+If we have two vectors $\mathbf{x} = (x_1, x_2, \cdots, x_n )$ and  $\mathbf{y} = (y_1, y_2, \cdots, y_n)$ a very popular distance is the Euclidean distance which can be defined as:
+
+$$
+\text{Dis}_2(\mathbf{x}, \mathbf{y}) 
+= \sqrt{\sum_{j=1}^{d} (x_j - y_j)^2} 
+= \sqrt{(\mathbf{x} - \mathbf{y})^\top (\mathbf{x} - \mathbf{y})}
+$$
+
+
+Another way is to use 1-norm distance which is the following:
+
+$$
+\text{Dis}_1(\mathbf{x}, \mathbf{y}) 
+= {\sum_{j=1}^{d} |(x_j - y_j)|} 
+
+$$
+
+The generalized version of the previous distances is called `Minkowski distance` and it is as follows:
+
+$$
+\text{Dis}_p(\mathbf{x}, \mathbf{y})  = \Bigg({\sum_{j=1}^{d} (x_j - y_j)^p} \Bigg)^{1/p} 
+
+$$
+
+The main take-home message in this sub-section is that we can make use one of the previous tools as a means to gauge the closeness of two vectors. By employing such a tool we can create powerful Machine Learning tools.
+
+## Vectors as datasets
+
+Now lets say that we are conducting an experiment and we gather observations (`instances`) that lives in two dimensions. We can plot the results of these observations in a cartesian two-dimensional plot as follows: 
+ 
+<p align="center">
+  <img src="images/2d.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+If our observations regards students and the `features` are student grades on Mathematics and Physics in high school.
+
+Given that we know that these observations belongs to two distinct classes (lets say bachelor and master students) and these classes can be represented as follows:
+
+<p align="center">
+  <img src="images/2dc.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+
+Now, two popular techniques in Machine learning is to assign are clustering and classification. In the first category, we are trying to assign for each instance a belonging class. In this case, we only have information about the instances. In the latter, while we would like to do the same thing, however, in this case, we do already have information about the class belonging of each sample. We thus want to use also this information to learn a way to separate between the known classes given the annotated information.
+
+Thus, knowing the class belonging, we are looking for a line that separates the two classes. That can be seen in the following image;
+
+<p align="center">
+  <img src="images/2dcc.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+Of course the most of the problems lies in a higher dimensionality that the previous problem. We can consider the case of three dimensions which can be also visualized as:
+
+<p align="center">
+  <img src="images/3d.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+<p align="center">
+  <img src="images/3dc.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+But we can also speak for higher than three dimensions. This is the case of the most interesting problems, however, it is impossible to visualize the values of these problems in a similar way. In this course, to help you with the understanding of key concepts we will make use of 2 or 3 dimensions to explain nuances and then, we will assume that the same concepts can be generalized in higher dimensions.
 
 ## Linear models in Machine learning
 
