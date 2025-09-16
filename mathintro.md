@@ -524,6 +524,51 @@ The main key-home messages for this page is that information and human observati
 
 The next chapter will be an introduction to machine learning. We will provide the key terminology and some basic categorization that will be useful throughout this course.
 
+## Geometry of linear classifiers
+
+Let us assume that we do have a linear separable binary dataset (class A and B) as depicted in the following figure:
+
+<p align="center">
+  <img src="images/linear_model_1.png" alt="Sublime's custom image" style="width:60%"/>
+</p>
+
+It is clear that we can find a line that separates the two classes. For instance, the following equation $y = -x1 -x2 + 9 = 0$ could separate the two classes. We can alternative write :$y = \mathbf{w}^{T}\mathbf{x} + w_0$. We thus introduce some parameters $\mathbf{w}, b$ and the 
+idea is to tune these parameters to find a decision line that separates the two classes. Our data lives in two dimensions $\mathbf{x} \in \mathbb{R}^{2}$. Thus, the linear function maps input $y: \mathbb{R}^2 \to \mathbb{R}$ to a 
+value and when $y = 0$ we have the decision boundary for the two classes and when $y>0$ we do have a region for the class B and when $y<0$ for class A.
+
+Βy tuning these parameters $\mathbf{w}, b$, for instance $\mathbf{w}^{T} = [-1, -1]$ and $b = 9$, we found a way to separate the two given classes. In principle, the idea behind linear classification is to find the ideal parameters that can separate the two classes.
+In this chapter, we will discuss the geometry behind linear classification and several strategies to optimize and find good parameters.
+
+Imagine that we do have two vectors $\mathbf{x}_A, \mathbf{x}_B$ that live in the decision boundary line $y = 0$. Thus, by definition, $y_A = y_B = 0$ or we can develop further, 
+
+$$\mathbf{w}^T \mathbf{x}_A + b = \mathbf{w}^T \mathbf{x}_B + b$$ by performing simple vector calculations we have:
+$$\mathbf{w}^T ( \mathbf{x}_A - \mathbf{x}_B) = 0$$
+
+We already have mentioned that when the dot product of two vectors is zero then, the two vectors are orthogonal. Thus, $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other. Now, what we need to take into account also is that 
+vector $\mathbf{x}_A - \mathbf{x}_B$ is parallel to the decision boundary. Eventually, the vector $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other (or perpendicular). That is really important to note, that the vector of weights
+always point perpendicular to the decision boundary. It is also easy to extract that the parameter $w_0$ or sometimes $b$ is the offset of the line and reveals how far the line is from the original $(0, 0)$.
+
+We know also that $ y= \mathbf{w}^{T}\mathbf{x} =0$ is a parallel line to our decision boundary, but this line passes through the origin. 
+
+Officially, to compute the distance between the boundary and the origin we will need to pick a vector that lies in in boundary and calculate the projection of this vector to the intercept $\mathbf{w}$. Let's say that we pick $\mathbf{x}^{'}$ then this projection is:
+
+<p align="center">
+  <img src="images/SVM_2.png" alt="Sublime's custom image" style="width:60%"/>
+</p>
+
+$$ d = \frac{\mathbf{w}^{T}\mathbf{x}}{||\mathbf{w}||}$$
+
+with $\mathbf{w}^{T}\mathbf{x} + w_0 = 0$, thus:
+
+$$d = \frac{-w_0}{||\mathbf{w}||}$$
+
+Finally, we can conclude that the general distance a vector in space (not necessarily a vector that lives in the boundary) can be computed as:
+
+
+$$d = \frac{y(\mathbf{x})}{||\mathbf{w}||}$$ 
+
+the distance to the surface.
+
 ## The ingredients of ML
 
 ### Model
