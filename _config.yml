@@ -7,3 +7,7 @@ theme: jekyll-theme-cayman
 kramdown:
   input: GFM
   math_engine: mathjax # you can also set this field to 'katex'
+
+
+github:
+  is_project_page: false
