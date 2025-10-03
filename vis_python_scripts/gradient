@@ -1,0 +1,53 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Function and derivatives
+def f(x): return x**2
+def f1(x): return 2*x
+def f2(x): return 2
+
+# Domain for plotting
+x = np.linspace(-5, 5, 400)
+y = f(x)
+y1 = f1(x)
+
+# Critical point
+x_crit = 0
+y_crit = f(x_crit)
+
+# Plot setup
+fig, ax = plt.subplots(figsize=(8,6))
+
+# Plot f(x)
+ax.plot(x, y, label=r'$f(x)=x^2$', color='tab:red', linewidth=2)
+
+# Plot derivative f'(x)
+ax.plot(x, y1, label=r"$f'(x)=2x$", color='tab:blue', linewidth=2, linestyle='--')
+
+# Mark critical point
+ax.plot(x_crit, y_crit, 'ko', markersize=6)
+ax.annotate(r'local minimum $(0,0)$',
+            xy=(x_crit, y_crit),
+            xytext=(-2.5, 3),
+            arrowprops=dict(arrowstyle='->', color='black'),
+            fontsize=11)
+
+# Tangent line at x=0
+# tangent_x = np.linspace(-4, 4, 10)
+# tangent_y = f1(0)*(tangent_x - 0) + f(0)  # slope 0 => horizontal
+# ax.plot(tangent_x, tangent_y, color='gray', linestyle=':', label='tangent at x=0 (slope 0)')
+
+# Labels, legend, grid
+ax.set_xlabel('x', fontweight='bold')
+ax.set_ylabel('y', fontweight='bold')
+ax.set_title('Function $f(x)=x^2$ and its derivative $f\'(x)=2x$', fontweight='bold')
+ax.legend()
+ax.grid(alpha=0.4)
+
+# Axes lines
+plt.axhline(0, color='black', linewidth=1)
+plt.axvline(0, color='black', linewidth=1)
+
+ax.set_xlim(-3, 3)
+ax.set_ylim(-6, 10)
+plt.show()

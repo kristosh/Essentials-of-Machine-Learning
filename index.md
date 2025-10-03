@@ -40,6 +40,8 @@ The course aims to provide the necessary introductory knowledge for Machine Lear
 
 [Introduction to Machine Learning.](./codeintro.html).
 
+[Introduction to Calculus.](./optimization.html).
+
 <!-- There should be whitespace between paragraphs.
 
 There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.

@@ -548,17 +548,17 @@ We already have mentioned that when the dot product of two vectors is zero then,
 vector $\mathbf{x}_A - \mathbf{x}_B$ is parallel to the decision boundary. Eventually, the vector $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other (or perpendicular). That is really important to note, that the vector of weights
 always point perpendicular to the decision boundary. It is also easy to extract that the parameter $w_0$ or sometimes $b$ is the offset of the line and reveals how far the line is from the original $(0, 0)$.
 
-We know also that $ y= \mathbf{w}^{T}\mathbf{x} =0$ is a parallel line to our decision boundary, but this line passes through the origin. 
-
-Officially, to compute the distance between the boundary and the origin we will need to pick a vector that lies in in boundary and calculate the projection of this vector to the intercept $\mathbf{w}$. Let's say that we pick $\mathbf{x}^{'}$ then this projection is:
-
 <p align="center">
   <img src="images/SVM_2.png" alt="Sublime's custom image" style="width:60%"/>
 </p>
 
+We know also that $ y= \mathbf{w}^{T}\mathbf{x} =0$ is a parallel line to our decision boundary, but this line passes through the origin. 
+
+Officially, to compute the distance between the boundary and the origin we will need to pick a vector that lies in in boundary and calculate the projection of this vector to the intercept $\mathbf{w}$. Let's say that we pick $\mathbf{x}^{'}$ then this projection is:
+
 $$ d = \frac{\mathbf{w}^{T}\mathbf{x}}{||\mathbf{w}||}$$
 
-with $\mathbf{w}^{T}\mathbf{x} + w_0 = 0$, thus:
+since $\mathbf{w}^{T}\mathbf{x} + w_0 = 0$, we can write:
 
 $$d = \frac{-w_0}{||\mathbf{w}||}$$
 
@@ -567,7 +567,7 @@ Finally, we can conclude that the general distance a vector in space (not necess
 
 $$d = \frac{y(\mathbf{x})}{||\mathbf{w}||}$$ 
 
-the distance to the surface.
+the distance to the surface. The main principle behind SVM is that we would like to find parameters $\mathbf{w}, b$ in such a way that the distance of the closest vectors to the decision boundary will be maximized.
 
 ## The ingredients of ML
 
