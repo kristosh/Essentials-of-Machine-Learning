@@ -1,26 +1,33 @@
 ---
 layout: default
 title: Introduction to Machine Learning mathematics.
-description: Data science and Mathematics for Machine Learning
+description: Data science and Mathematics for Machine Learning.
 ---
 
 ## Machine Learning definition
 
+We will start this tutorial by introducing the concept of Machine Learning (ML). A popular definition regarding ML could be the following:
+
+
 > Machine learning (ML) domain concerns the designing of algorithms that automatically extracts interesting information from knowledge sources that we call data. 
 
-Machine learning (ML) is data-driven and the data is at core of machine learning. The goals is to design general purposes machine algorithms with which we can extract automatically interesting patterns from the data that are not necessarily dependent in expertise domain. For instance having a huge corpus of textual data from Wikipedia we can automatically extract information about these Wikipedia sites such as the topic of each page but also event analysis or sentiment analysis in reviews from webpages such as IMDB or Google reviews.
+Machine learning (ML) is data-driven and the `data` is at core of machine learning. The goals is to design `general purposes machine algorithms` with which we can extract automatically `interesting patterns` from the data that are not necessarily dependent in expertise domain. For instance having a huge corpus of textual data from Wikipedia we can automatically extract information about these Wikipedia sites such as the topic of each page but also event analysis or sentiment analysis in reviews from webpages such as the IMDB or Google reviews. For instance, let's say that we have the following review from the IMDB:
 
-For instance, let's say that we have the following review from IMDB:
+> Horrible script with mediocre acting. This was so bad I could not finish it. The actresses are so bad at acting it feels like a bad comedy from minute one. The high rated reviews is obviously from friend/family and is pure BS.
 
-> Horrible script with mediocre acting. This was so bad I couldn´t finish it. The actresses are so bad at acting it feels like a bad comedy from minute one. The high rated reviews is obviously from friend/family and is pure BS.
+In this case, we create a ML algorithm that could automatically recognize that this is a review has a `negative` sentiment. We call this type of ML application: `sentiment analysis` or `sentiment recognition`.
 
-In this case, with ML we would like to create a software that will be able to automatically recognize that this is a review with a `negative` sentiment.
+Other examples of tasks that concern ML are `object recognition`, `recommendation systems`, `text generation`, `voice detection`, `image generation`, `stock market prediction` etc. Some of the ML techniques require some expertise when collecting the data and some annotation of the data. For example when we collect object as images we can annotate the content of the images with what it can be found within these images, or we can have information about the houses and annotate them with the prices of the houses. There are some cases, that is not possible to do that, or it is not necessary to annotate these data like when we mine text from the web. 
 
-Other examples of tasks that concern ML are object recognition, music recommendation, text generation, voice detection, image generation, stock market prediction etc. Some of the ML techniques require some expertise when collecting the data and some annotation of the data. For example when we collect object as images we can annotate the content of the images with what it can be found within these images, or we can have information about the houses and annotate them with the prices of the houses. There are some cases, that is not possible to do that, or it is not necessary to annotate these data like when we mine text from the web. 
+The ML systems are based on three key concepts which are the following: `data`, `the task` and finally the `the model`. 
 
-## Data and the concept of a dataset
+> We could say that in ML we use of a `model` to extract interesting patterns from our `data` to perform a specific `task`.
 
-However, so far, we talked about `data` and `datasets` that are crucial on ML but we haven't gave any definition on what we mean when we talk about `data` and `datasets`. There are actually multiple definitions for the word `data`. We will try to make sense for this word by providing several definitions for this word:
+In the following section, we will talk about the first concept of ML that is the `data`.
+
+## From data to datasets, vectors and matrices
+
+So far, we talked about `data` that are crucial concept on ML but we haven't gave any definition on what we mean when we talk about `data` and as a consequence what is a `dataset`. There are actually multiple definitions for the word `data`. We will try to make sense for this word by providing several definitions for this word:
 
 > Data refers to recorded observations or measurable pieces of information, often collected from experiments, transactions, sensors, texts, or user behavior, that are used to represent phenomena, derive insights, or inform decision-making through analysis.
 
@@ -28,7 +35,17 @@ However, so far, we talked about `data` and `datasets` that are crucial on ML bu
 
 > Data are representations of variables measured from the real world, which can be used to model and infer patterns or causality.
 
-So central to the concept of data is the representation of information about the real world through numerical or other representations about an under study domain that can be found or produced extracted or post processed. That involves information that we exchange as human beings or measurements that derives from scientific experiments and eventually are structured and presented in a formatted and formal way. These observations about an under study phenomenon are called `observations` or `instances`. For instance if we would like to study the market value of houses in Amsterdam, we could gather information about a huge number of houses (which are our `observations` or `instances`) and composed from several bits of info like: `neighborhood`, `size`, `number of rooms`, `year of construction`, `has a balcony`, `distance from the nearest tram stop`, `condition of the interior`, `furniture` etc. These bits of information in the jargon of ML is called `feature`
+So central to the concept of data is the representation of information about the real world through numerical or other representations about an `under study` domain that can be found or produced extracted or post processed. That involves information that we exchange as human beings or measurements that derives from scientific experiments and eventually are structured and presented in a formatted and formal way. These observations about an under study phenomenon are called `observations` or `instances`. For instance if we would like to study the market value of houses in Amsterdam, we could gather information about a huge number of houses (which are our `observations` or `instances`) and composed from several bits of info like: 
+
+- `neighborhood`, 
+- `size`, 
+- `number of rooms`, 
+- `year of construction`,
+- `has a balcony`, 
+- `distance from the nearest tram stop`, 
+- `condition of the interior`, `furniture` etc. 
+
+These bits of information in the nomenclature of ML is called `features`.
 
 When we talk about a `dataset` usually we refer to structure data that are referring to a specific under-study problem by computer. So having collected several `observations` about these data we can place them in a data structure. These datasets contains multiple observations about our problems and they can be annotated (or not) and curated by experts in the field of study.
 
@@ -37,11 +54,11 @@ When we talk about a `dataset` usually we refer to structure data that are refer
 
 Data exists in different flavours. First and foremost could be numerical data: imagine for example the measurements of scientific tools. Scientific instruments used to quantify physical properties. These tools range from simple rulers and graduated cylinders to more advanced devices like micrometers, pH meters, and data loggers. They could be also textual data that can be found for instance in social media in forums forums etc. Could be digitalized images and audio signals. It could be boolean values (`True` or `False`). We can actually group the data into the following categories:
 
-- Structure data
-- Unstructured data
-- Semi-Structured Data
-- Time series data
-- Categorical Data
+- Structure data (tabular data, spreadsheet).
+- Unstructured data (text, images).
+- Semi-Structured Data (json files).
+- Time series data (audio, stock market values).
+- Categorical Data (gender, race, etcetera).
 - Numerical Data
 
 ### Example of data
@@ -62,13 +79,13 @@ Donna & F & MSc & 1112AA & 20 & 1400$\\
 \end{aligned}$$
 
 Even when we have data in tabular format, there are still choices to be
-made to obtain a numerical representation. For example, in Table 8.1, the
+made to obtain a numerical representation. For example, in Table 1.1, the
 gender column (a categorical variable) may be converted into numbers 0
-representing “Male” and 1 representing “Female”. Alternatively, the gender
-could be represented by numbers −1, +1, respectively (as shown in
-Table 8.2). Furthermore, it is often important to use domain knowledge
+representing `Male` and 1 representing `Female`. Alternatively, the gender
+could be represented by numbers `−1`, `+1`, respectively (as shown in
+Table 1.2). Furthermore, it is often important to use domain knowledge
 when constructing the representation, such as knowing that university
-degrees progress from bachelor’s to master’s to PhD or realizing that the
+degrees progress from `bachelor’s` to `master’s` to `PhD` or realizing that the
 postcode provided is not just a string of characters but actually encodes
 an area in London.
 
@@ -89,12 +106,36 @@ $$\begin{aligned}
 
 ## Data as vectors and matrices
 
-While as we just mentioned not all data are inherently numerical, from the computer perspective, it is always necessary to transform these data into a numerical representation. Thus, when we talk about digital images we talk about pixel numerical representation. Regarding textual data, each character letter, digit, symbol is assigned a number via an encoding standard, such as ASCII or Unicode (pls check this site for further information). Another example concerns auditory data which when we digitalize it, we actually captured the the amplitude of sound waves over time.
+While as we just mentioned not all data are inherently numerical, from the computer perspective, it is always necessary to transform these data into a numerical representation. Thus, when we talk about digital images we talk about pixel numerical representation. Regarding textual data, each character letter, digit, symbol is assigned a number via an encoding standard, such as `ASCII` or `Unicode` (pls check this site for further information). Another example concerns auditory data which when we digitalize it, we actually captured the the amplitude of sound waves over time.
 
-For comprehensive purposes of the humans and computers, when we collect, store and share these data we need to make use of placeholders, entities that can store information and can be easy to represent and manipulate them from computer and mathematical perspective. Hence, we can introduce in our terminology the concept of a `vector` as the main placeholder of `data`. Dataset as we mentioned before are usually composed with a set of multiple observations, for instance when we do have a set of images we can say that each image each a different `observation` or a different `instance`. Each `instance` could be eventually be represented by a corresponding `vector`. As we said the dataset is a collection of observations and thus a collection of `vectors`. We can introduce also the concept of a `matrix` as a set of multiple `vectors` grouped together.
+For comprehensive purposes of the humans and computers, when we collect, store and share these data we need to make use of placeholders, entities that can store information and can be easy to represent and manipulate them from computer and mathematical perspective. Hence, we can introduce in our terminology the concept of a `vector` as the main placeholder of `data`.  `Vectors` are used to store information about observations in our data. In the previous example, each row of the table (each different person) is considered an `observation` and is represented by `vectors`.
+
+Dataset as we mentioned before are usually composed with a set of multiple observations, for instance when we do have a set of images we can say that each image each a different `observation` or a different `instance`. Each `instance` could be eventually be represented by a corresponding `vector`. As we said the dataset is a collection of observations and thus a collection of `vectors`. We can introduce also the concept of a `matrix` as a set of multiple `vectors` grouped together.
+
+Thus, a vector can be represented as $\mathbf{x}$ and it can be for instances:
+
+$$\mathbf{x}_1 = \{1, 1, 3, 41.507, 41, 9.9 \}$$ 
+
+and  
+
+$$\mathbf{x}_2 = \{2, 1, 1, 51.5074, 19, 1.7 \}$$ 
+
+while the 
+whole dataset can be represented by the following matrix:
+
+$$
+\mathbf{X} = \begin{pmatrix}
+1 & 1 & 3 & 51.507 & 41 & 9.9 \\
+2 & 1 & 1 & 51.5074 & 19 & 1.7 \\
+3 & 1 & 3 & 51.607 & 27 & 7.5 \\
+4 & 2 & 2 & 51.207 & 19 & 1.6 \\
+5 & 2 & 1 & 51.407 & 20 & 1.6 \\
+\end{pmatrix}$$
 
 ## Intro to Linear Algebra
 
+Vectors could be regarded as we saw so far, as placeholders from the `computer science` perspective, but at the same time, they can be perceived as objects in space and could be manipulated by linear algebra tools.
+ 
 ### Vectors
 
 The vectors many of us know from school are called `geometric vectors`, which are usually denoted by a small arrow above the letter, e.g. $\vec{v_1}$ and $\vec{v_2}$. In this tutorial, we will simply denote the vectors as $\mathbf{v}_1$, $\mathbf{v}_2$ as a collection of numerical values. For example we can have that $\mathbf{v}_1 = [1, 1]$ and $\mathbf{v}_2 = [1, 2]$. That are example of two dimensional vectors that lies on the cartesian space $\{x, y\}$. Each dimension of this vector it is called a `feature` and can represent a characteristic value for the observation. For example, these two value of the vector $\mathbf{v}_1$ could be the values of an image that contains just two pixels.
