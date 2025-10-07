@@ -106,13 +106,14 @@ $$\begin{aligned}
 
 ## Data as vectors and matrices
 
-While as we just mentioned not all data are inherently numerical, from the computer perspective, it is always necessary to transform these data into a numerical representation. Thus, when we talk about digital images we talk about pixel numerical representation. Regarding textual data, each character letter, digit, symbol is assigned a number via an encoding standard, such as `ASCII` or `Unicode` (pls check this site for further information). Another example concerns auditory data which when we digitalize it, we actually captured the the amplitude of sound waves over time.
+We just saw that not all data are inherently numerical, and from the computer perspective, it is always necessary to transform these data into a numerical representation. Thus, when we talk about digital images we talk about pixel numerical representation. Regarding textual data, each character letter, digit, symbol is assigned a number via an encoding standard, such as `ASCII` or `Unicode` (pls check this site for further information). Another example concerns auditory data which when we digitalize it, we actually captured the the amplitude of sound waves over time.
+
 
 For comprehensive purposes of the humans and computers, when we collect, store and share these data we need to make use of placeholders, entities that can store information and can be easy to represent and manipulate them from computer and mathematical perspective. Hence, we can introduce in our terminology the concept of a `vector` as the main placeholder of `data`.  `Vectors` are used to store information about observations in our data. In the previous example, each row of the table (each different person) is considered an `observation` and is represented by `vectors`.
 
 Dataset as we mentioned before are usually composed with a set of multiple observations, for instance when we do have a set of images we can say that each image each a different `observation` or a different `instance`. Each `instance` could be eventually be represented by a corresponding `vector`. As we said the dataset is a collection of observations and thus a collection of `vectors`. We can introduce also the concept of a `matrix` as a set of multiple `vectors` grouped together.
 
-Thus, a vector can be represented as $\mathbf{x}$ and it can be for instances:
+Thus, a vector (an single observation or instance) can be represented as $\mathbf{x}$, so we can have:
 
 $$\mathbf{x}_1 = \{1, 1, 3, 41.507, 41, 9.9 \}$$ 
 
@@ -120,8 +121,7 @@ and
 
 $$\mathbf{x}_2 = \{2, 1, 1, 51.5074, 19, 1.7 \}$$ 
 
-while the 
-whole dataset can be represented by the following matrix:
+while the whole dataset can be represented by the following matrix:
 
 $$
 \mathbf{X} = \begin{pmatrix}
@@ -134,11 +134,19 @@ $$
 
 ## Intro to Linear Algebra
 
-Vectors could be regarded as we saw so far, as placeholders from the `computer science` perspective, but at the same time, they can be perceived as objects in space and could be manipulated by linear algebra tools.
+Vectors could be regarded as we saw so far, as placeholders from the `computer science` perspective, but at the same time, they can be perceived as objects in the cartesian space and could be manipulated by Linear Algebra tools as we have already encounter from high-school mathematics courses. They have length adn direction adn they live in a multi-dimensional space. They are called also `geometric vectors`.
  
-### Vectors
+### Geometric Vectors
 
-The vectors many of us know from school are called `geometric vectors`, which are usually denoted by a small arrow above the letter, e.g. $\vec{v_1}$ and $\vec{v_2}$. In this tutorial, we will simply denote the vectors as $\mathbf{v}_1$, $\mathbf{v}_2$ as a collection of numerical values. For example we can have that $\mathbf{v}_1 = [1, 1]$ and $\mathbf{v}_2 = [1, 2]$. That are example of two dimensional vectors that lies on the cartesian space $\{x, y\}$. Each dimension of this vector it is called a `feature` and can represent a characteristic value for the observation. For example, these two value of the vector $\mathbf{v}_1$ could be the values of an image that contains just two pixels.
+These `geometric vectors` are usually denoted by a small arrow above the letter, e.g. $\vec{v_1}$ and $\vec{v_2}$. In this tutorial, we will simply denote the vectors as $\mathbf{v}_1$, $\mathbf{v}_2$ as a collection of numerical values. For example we can have that:
+
+$$\mathbf{v}_1 = [1, 1]$$
+
+and 
+ 
+$$\mathbf{v}_2 = [1, 2]$$
+ 
+These are examples of two dimensional vectors that lie on the cartesian space with coordinates $\{x, y\}$. Each dimension (or `coordinate`) of this vector it is called a `feature` and can represent a characteristic value for the observation. For example, these two value of the vector $\mathbf{v}_1$ could be the values of an image that contains just two pixels.
 
 You may recall from high-school that these vectors can be visualized in the cartesian 2-dimensional space as:
 
@@ -146,28 +154,42 @@ You may recall from high-school that these vectors can be visualized in the cart
   <img src="images/vectors.png" alt="Sublime's custom image"/>
 </p>
 
-Once we represent our observations in vectors and visualize them in the cartesian space we can actually perform some basic mathematical computations. One simple and straightforward example is to add these two vectors. That can be represented as $\mathbf{v}_1 + \mathbf{v}_2 = [2, 3]$ That is represented by the following image:
+Once we represent our observations in vectors and visualize them in the cartesian space we can actually perform some basic mathematical computations. One simple and straightforward example is to add these two vectors. That can be represented as 
+
+$$\mathbf{v}_1 + \mathbf{v}_2 = [2, 3]$$ 
+
+That is represented by the following image:
 
 
 <p align="center">
   <img src="images/addition.png" alt="Sublime's custom image"/>
 </p>
 
-As you might recall the addition of the vectors in two-dimensions works as follows: you can start with the first vector which point to the position $\mathbf{v}_1 = [1, 1]$ and then you add one in the x-axis and 2 in the y-axis. The result of this addition is another vector that points to $[2, 3]$. This operation can be considered as a `tip and tail` addition. The tail here refers to the starting point of the vector, while the tip (or head) is the ending point, typically indicated by an arrowhead
+As you might recall the addition of the vectors in two-dimensions works as follows: you can start with the first vector which point to the position $\mathbf{v}_1 = [1, 1]$ and then you add one in the `x-axis` and 2 in the `y-axis`. The result of this addition is another vector that points to $\mathbf{v}_1 + \mathbf{v}_2 = [2, 3]$. This operation can be considered as a `tip and tail` addition. The tail here refers to the starting point of the vector, while the tip (or head) is the ending point, typically indicated by an arrowhead
 
-Another simply example is the multiplication of a vector with the scalar. For instance $\mathbf{v}_3 = 2 \cdot \mathbf{v}_1 = [2, 2]$
+Another simply example is the multiplication of a vector with the scalar. For instance 
+
+$$\mathbf{v}_3 = 2 \cdot \mathbf{v}_1 = [2, 2]$$
 
 <p align="center">
   <img src="images/scaled.png" alt="Sublime's custom image"/>
 </p>
 
+### Vector subtraction
+
+What if we would like to subtract two vectors. In this case, we can simple perform vector addition, however, instead of adding the two vectors directly, we will need to add the negative of a vector, an operation that looks as follows: 
+
+$$\mathbf{v3} = \mathbf{v1} - \mathbf{v2} = \mathbf{v1} + (-\mathbf{v2})$$
+
+So in our example $\mathbf{v3} = [0, -1]$
+
 ### Inner product
 
-A really important computation in Linear algebra is called `inner product`. If we stick with the above-mentioned vectors we can calculate the following entity $\mathbf{v}_4 =\mathbf{v}_1 \cdot \mathbf{v}_2  = 1 \cdot 1 + 1 \cdot 2 = 3$. Eventually, we end up calculating a scalar value which represents the similarity of these two vectors. It shows actually if these two vectors point to the same direction they are perpendicular or point to opposite direction. Thus, the inner product:
+A really important concept in Linear algebra is called `inner product`. If we stick with the above-mentioned vectors we can calculate the following entity $\mathbf{v}_4 =\mathbf{v}_1 \cdot \mathbf{v}_2  = 1 \cdot 1 + 1 \cdot 2 = 3$. Eventually, we end up calculating a scalar value which represents the similarity of these two vectors. It shows actually if these two vectors point to the same direction they are perpendicular or point to opposite direction. Thus, the inner product:
 
-- Is positive if the angle between vectors is less than 90°,
+- Is positive if the angle between vectors is less than $90^\circ$,
 - Zero if the vectors are orthogonal (perpendicular),
-- Negative if the angle is greater than 90°.
+- Negative if the angle is greater than $90^\circ$.
 
 Another thing to keep in mind is that this product relates also with the angle between the two vectors. It ends up being as follows:
 
@@ -175,9 +197,11 @@ Another thing to keep in mind is that this product relates also with the angle b
 $$\mathbf{v}_1 \cdot \mathbf{v}_2 = \lVert \mathbf{v}_1  \lVert  \lVert  \mathbf{v}_2 \lVert   \cdot cos(\theta)$$
 
 
-The norm of a vector $\lVert \mathbf{v}_1 \lVert = \sqrt{1^2 + 1^2 } = \sqrt{2} $, $\lVert \mathbf{v}_2 \lVert = \sqrt{1^2 + 2^2 } = \sqrt{5} $  represents the length of the vector.
+The norm of a vector 
 
-We can also re-write as:
+$$\lVert \mathbf{v}_1 \lVert = \sqrt{1^2 + 1^2 } = \sqrt{2} \text{, }\lVert \mathbf{v}_2 \lVert = \sqrt{1^2 + 2^2 } = \sqrt{5} $$  
+
+represents the length of the vector. We can also re-write as:
 
 $$\lVert \mathbf{v}_1^{2} \lVert = 1^2 + 1^2 $$
 
@@ -187,7 +211,7 @@ $$cos(\theta) = \frac{\mathbf{v}_1 \cdot \mathbf{v}_2}{\lVert \mathbf{v}_1 \lVer
 
 ### Matrices
 
-Now if we would like to create a placeholder in order to store multiple vectors together, we can construct a `matrix`. A matrix could encapsulate the given set of observation into a rectangular entity that looks like an extended version of a vector. For instance given the observation $\mathbf{v}_1, \mathbf{v}_2$ we can group them together into a `dataset` or a `matrix` as follows:
+Now if we would like to create a placeholder in order to store multiple vectors together (so multiple instances), we can construct a `matrix`. A matrix could encapsulate the given set of observation into a rectangular entity that looks like an extended version of a vector. For instance given the observation $\mathbf{v}_1, \mathbf{v}_2$ we can group them together into a `dataset` or a `matrix` as follows:
 
 $$D = \begin{bmatrix}
 1 & 1 \newline
@@ -372,9 +396,9 @@ $$(\mathbf{A+B})^{T} = \mathbf{A}^{T} + \mathbf{B}^{T}$$
 
 #### Linear systems
 
-A simply way to understand the usefulness of `matrices` and `vectors` stems from the linear system word. As you might recall from the high-school. We can define as` linear system` a collection of linear equations that involve the same set of variables. 
+A simply way to understand the usefulness of `matrices` and `vectors` stems from the linear system world. As you might recall from the high-school. We can define as` linear system` a collection of linear equations that involve the same set of variables. 
 
-Let us for a second try to solve the following problem: Factory A uses one machine of type $w_1$ 4 machines of type $w_2$ and 6 machines of type $w_3$ to produce a battery, while factory B  uses 2, 4, 7 to produce two batteries and factory C 1, 5, 7 correspondingly to produce 3 batteries. If we assume that all three machines are working in exactly the same way, we can express the previous problem as follows:
+Let us for a second try to solve the following problem: Factory $A$ uses one machine of type $w_1$, 4 machines of type $w_2$, and 6 machines of type $w_3$ to produce a battery, while factory $B$ uses 2, 4, 7 to produce two batteries and factory $C$ employs 1, 5, 7 correspondingly to produce 3 batteries. If we assume that all three machines are working in exactly the same way, we can express the previous problem as follows:
 
 $$1w_1 + 4 w_2 + 6 w_3 = 1$$
 
@@ -415,11 +439,14 @@ w_3
 \end{pmatrix}
 $$
 
-or 
+Since we do know that both three factories using their machine with the same optimal way, we can compute how much each machine contributes to the construction of a battery. To do that we will need to solve the linear system of equations with respect to $w_1, w_1, w_3$. That seems feasible since we do have a linear system of three equations with three unknown variables.
 
 
+It can be proven that by using also the matrix properties for inverse matrices we can solve this linear equation problem and calculate the variables $\mathbf{w}$ as follows: 
 
-It can be proven that by using also the matrix properties for inverse matrices we can solve this linear calculate the variables $\mathbf{w}$ as follows: $\mathbf{w} = \mathbf{X}^{-1} \cdot \mathbf{y}$. Thus, we have transformed the problem to a linear system and used vector/matrices and linear algebra operations to find a solution. That is something that we need to do also extensively in machine learning.
+$$\mathbf{w} = \mathbf{X}^{-1} \cdot \mathbf{y}$$
+
+Thus, we have transformed the linear equation problem to matrix inverse and matrix computation in order to find a solution. That is something that we need to keep in mind that is omnipotent in machine learning. We are usually trying to solve a similar equation given a matrix $\mathbf{X}$ that represents our `data`.
 
 For advanced topics in Linear Algebra you can have a look in this page [Advanced topics in Linear Algebra](./mlintro.html).
 
