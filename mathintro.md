@@ -183,6 +183,8 @@ $$\mathbf{v3} = \mathbf{v1} - \mathbf{v2} = \mathbf{v1} + (-\mathbf{v2})$$
 
 So in our example $\mathbf{v3} = [0, -1]$
 
+One remark here that is good to remember is that the vectors in our example live in the two-dimensional space, and thus, it is easy to visualize. However, they could easily live in a higher dimensionality, which is also more practical, since the most interesting problems lives in a high-dimension. The only problem is that unfortunately, we cannot visualize these vectors. Thus, in this tutorial, we are usually employ two-dimensional vectors as example since it is easy also to visualize them.
+
 ### Inner product
 
 A really important concept in Linear algebra is called `inner product`. If we stick with the above-mentioned vectors we can calculate the following entity $\mathbf{v}_4 =\mathbf{v}_1 \cdot \mathbf{v}_2  = 1 \cdot 1 + 1 \cdot 2 = 3$. Eventually, we end up calculating a scalar value which represents the similarity of these two vectors. It shows actually if these two vectors point to the same direction they are perpendicular or point to opposite direction. Thus, the inner product:
@@ -208,6 +210,9 @@ $$\lVert \mathbf{v}_1^{2} \lVert = 1^2 + 1^2 $$
 and the angle between the two vectors as:
 
 $$cos(\theta) = \frac{\mathbf{v}_1 \cdot \mathbf{v}_2}{\lVert \mathbf{v}_1 \lVert  \lVert \mathbf{v}_2 \lVert }$$
+
+
+### Vector projections
 
 ### Matrices
 
@@ -455,9 +460,57 @@ For advanced topics in Linear Algebra you can have a look in this page [Advanced
 Another way to think about matrix-vector multiplication as functions. The idea here is that when we perform $\mathbf{X} \cdot \mathbf{w} = \mathbf{y}$ then we can see 
 $\mathbf{w}$ as our input and $\mathbf{y}$ out output. Matrix $\mathbf{X} $ can be considered as a function transformation f that maps input vector to the output vector. We can say that $\mathbf{X} \in \mathbb{R}^{n \times n}$ what it does is to receive an matrix $\mathbf{w} \in \mathbb{R}^{n}$ and it spits out a vector $\mathbf{y} \in \mathbb{R}^{n}$. Depending of the dimensionality of the matrix $\mathbf{X}$ this transformation could keep the same dimensionality or change the dimensionality of the output vector.
 
+A nice outcome of the above is that we can even visualize the affect of matrix transformation. Therefore, in this part of the tutorial we will put forwards some classic examples of matrix transformation that can help grasp some intuitions on what it means to multiple a vector with the matrix. Let us say that we do have a vector: 
+
+$$\mathbf{v}_2 = [1, 2]$$
+
+and the matrix:
+
+$$\mathbf{I}_2 = \begin{pmatrix}
+1 & 0  \newline
+0 & 1 
+\end{pmatrix}$$
+
+If we multiple $\mathbf{v}_2 \cdot \mathbf{I}_2$ its easy to figure out that we end up having as a result the same vector $[1, 2]$.
+
+If we instead multiply $\mathbf{v}_2$ with matrix $\mathbf{A}$:
+
+$$\mathbf{A} = \begin{pmatrix}
+a & 0  \newline
+0 & b 
+\end{pmatrix}$$
+
+That will return a slightly different vector which is $[a, 2\cdot b]$, so this diagonal-matrix $\mathbf{A}$ (only the diagonal values are non-zero) scales the values of the vector. Another example matrix is:
+
+$$\mathbf{A} = \begin{pmatrix}
+1 & 0  \newline
+0 & -1 
+\end{pmatrix}$$
+
+which actually flips the y-axis of the vector in the negative direction. As a final example, we have matrix $\mathbf{C}$:
+
+$$\mathbf{C} = \begin{pmatrix}
+0 & -1  \newline
+1 & 0 
+\end{pmatrix}$$
+
+which actually rotates a vector $90^\circ$. This can be validated by the following:
+
+
+$$\mathbf{v}_2 \cdot \mathbf{C} = [1, 2] \cdot \begin{pmatrix}
+0 & -1  \newline
+1 & 0 
+\end{pmatrix} = [-2,  1]$$
+
+To better understand what happened, we can visualize vector $\mathbf{v}_2$ and the result of transformation:
+
+<p align="center">
+  <img src="images/trans.png" alt="Sublime's custom image" style="width:60%"/>
+</p>
+
 ## Distance between vectors
 
-So far we have seen that we can express instance that represent observations from real-world (or experiments) as vectors. Each different value of the vector that is called a `feature` represents a different measurement for the instance (or otherwise called `dimension`). It is really useful also to introduce a notion of distance with which we can measure the closeness of the vectors. In this way, we can compare different instances and judge which one are close or far to each other. If our vectors represents queries in browser and web sites, we will need a distance measurement which web-site vectors are close with our query-vector. Having a way to measure this, we can easily create a simple web browser or even a recommendation system.
+So far we have seen that we can express instance that represent observations from real-world (or experiments) as vectors. Each different value of the vector that is called a `feature` represents a different measurement for the instance (or otherwise called `dimension`). It is really useful also to introduce a notion of distance with which we can measure the closeness of vectors. In this way, we can compare different instances and judge which one are close or far to each other. If our vectors represents queries in browser and web sites, we will need a distance measurement which web-site vectors are close with our query-vector. Having a way to measure this, we can easily create a simple web browser or even a recommendation system.
 
 If we have two vectors $\mathbf{x} = (x_1, x_2, \cdots, x_n )$ and  $\mathbf{y} = (y_1, y_2, \cdots, y_n)$ a very popular distance is the Euclidean distance which can be defined as:
 
@@ -526,11 +579,11 @@ But we can also speak for higher than three dimensions. This is the case of the 
 
 But ok seriously, why do we even mentioned all these calculations for vectors and matrices. We are just interested in data and making machines learning patterns out of these data.
 
-The reason why we mess with these placeholders is multi-facet. Firstly, is somehow intuitive to place numerical entities in boxes that look like `vector, matrices`. Moreover, it ends up being a convenient abstract representation of how the placeholders in computer looks like. We can use a lot of calculation tools that are provided by linear algebra and calculus and optimization to work with our data. Having placed all our data observations in placeholders (`vectors`) we can now make use of computation tools to measure similarities and be able to group together things. `Python` has a lot of nice packages that we can use to process our data. You can find more info here.
+The reason why we mess with these placeholders and their mathematical properties is multi-facet. Firstly, is somehow intuitive to place numerical entities in boxes that look like `vector, matrices`. Moreover, it ends up being a convenient abstract representation of how the placeholders in computer looks like. We can use a lot of calculation tools that are provided by linear algebra and calculus and optimization to work with our data. Having placed all our data observations in placeholders (`vectors`) we can now make use of computation tools to measure similarities and be able to group together things. `Python` has a lot of nice packages that we can use to process our data. You will familiarize with them in the three assignments of this course. More info regarding the assignment you will be able to find here.
 
 #### Example MNIST
 
-As an example lets say that we would like to study images with handwritten digits and the classification into the corresponding digits. For that purpose, we can are employ a set of image-examples the notorious [MNIST dataset](https://en.wikipedia.org/wiki/MNIST_database) that contains 70.000 gray scale images of handwritten digits (with pixel size of $28 \times 28$) which are `named` (or `labelled`) after the digit that they represent. So there is a way to know what each image represents. That type of `naming` is called a `label` or an `annotation`. We can represent this label using an integer variable that takes the following values $t = \{0, 1, 2, ..., 9\}$.
+As an example, lets say that we would like to study images with handwritten digits and the classification into the corresponding digits. For that purpose, we can are employ a set of image-examples the notorious [MNIST dataset](https://en.wikipedia.org/wiki/MNIST_database) that contains 70.000 gray scale images of handwritten digits (with pixel size of $28 \times 28$) which are `named` (or `labelled`) after the digit that they represent. So there is a way to know what each image represents. That type of `naming` is called a `label` or an `annotation`. We can represent this label using an integer variable that takes the following values $t = \{0, 1, 2, ..., 9\}$.
 
 Each input image can be represented as a vector after placing each row next to each other. Eventually, instead of $28$ rows with $28$ columns we can end up having $1$ row with $784$ columns. We can actually use as placeholder a vector $\mathbf{x} \in \mathbb{R}^{784}$. We can store all the vector-images in one big matrix:
 
@@ -541,20 +594,23 @@ $$ \mathbf{X} = \begin{bmatrix}
 \text{---} &  \mathbf{x}_n  & \text{---}
 \end{bmatrix} \in \mathbb{R}^{70000 \times 784}$$
 
-Where each row is represented by a vector $\mathbf{x}_i$. The task is extract useful information and patterns from these data. For example in digit-classification, we would like to build a ML model to predict automatically the digits in MNIST images without using the information from the naming or the labels. Once we build this system, we can apply to each image that contains handwritten digits and create our [OCR software](https://en.wikipedia.org/wiki/Optical_character_recognition).
+Where each row is represented by a vector $\mathbf{x}_i$. Out task is to extract useful information and patterns from these data. For example in digit-classification, we would like to build a ML model to predict automatically the digits in MNIST images without using the information from the naming or the labels. Once we build this system, we can apply to each image that contains handwritten digits and create our [OCR software](https://en.wikipedia.org/wiki/Optical_character_recognition).
 
 Now back to the MNIST dataset. We can actually place all the labels for each image in a single vector $\mathbf{t} \in {\(0, 1, 2, ..., 9\)}^{70000}$.
 
-A simple approach to create our first classifier (our machine learning model) is as follows: introduce some parameters (we can call them also variables) $\mathbf{w}$. Then, we simply :), will need to tune these parameters in such a way that each time that we will have an observation $\mathbf{x}^{\prime}$ if we multiply (by using the `inner product` from linear algebra that discussed before) with parameters $\mathbf{w}$ the output should be a numerical value that will represent the digit that the input observation contains.
+A simple approach to create our first classifier (our machine learning model) is as follows: 
+
+- Introduce some parameters (we can call them also variables) $\mathbf{w}$. 
+- Then, we simply :) need to tune these parameters in such a way that each time that we will have an observation $\mathbf{x}^{\prime}$ if we multiply (by using the `inner product` discussed before) with parameters $\mathbf{w}$ the output should be a numerical value that will represent the digit that the input observation contains.
 
 $$y = \mathbf{w} \cdot  \mathbf{x}^{\prime}$$
 
-of a bit more elaborate (using some linear or non-linear function $f$ or our choice) 
+of a bit more advanced way is to use some non-linear function $f$ or our choice:
 
 $$y =  f(\mathbf{w} \cdot  \mathbf{x}^{\prime}) \in \mathbb{R}$$
 
 
-Thus, if the input image looks as follows:
+In the lecture on classification, SVM and Neural Networks we will learn more on this. Thus, if the input image looks as follows:
 
 <p align="center">
   <img src="images/nine.png" alt="Sublime's custom image"/>
@@ -578,19 +634,19 @@ or
 
 $$\mathbf{y} = f(\mathbf{X} \cdot \mathbf{w})$$
 
-now a very good question is the following: `how can we set meaningful values to parameters` $\mathbf{w}$?. 
+Now a very good question is the following: `how can we set meaningful values to parameters` $\mathbf{w}$?. 
 
-We can start by setting these parameters randomly. Then we can calculate the output vector $\mathbf{y}$. This vector represents now the predictions of the model during the `training process`. However, given that we initialize the parameters $\mathbf{w}$ randomly there is not any quarantee that the values $\mathbf{y}$ could represent the MNIST digits. However, we already have some information about what this vector should be and this is the annotations that are stored and place in vector $\mathbf{t}$.
+- We can start by setting these parameters randomly. Then we can calculate the output vector $\mathbf{y}$. 
+- This vector represents now the predictions of the model during the `training process`. 
+- However, given that we initialize the parameters $\mathbf{w}$ randomly there is not any quarantee that the values $\mathbf{y}$ could represent the MNIST digits. At the same time, we already know what this vector should be and this is the annotations that are stored and place in vector $\mathbf{t}$.
+- We should thus find a way to measure the distance between the predictions $\mathbf{y}$ and the annotations $\mathbf{t}$ and then update the values of $\mathbf{w}$ in a way that this distance between the two vectors is minimized.
+- Why not using the distance metrics that we discuss before and measure the divergence between output and desired output?
 
-We should thus find a way to measure the distance between the predictions $\mathbf{y}$ and the annotations $\mathbf{t}$ and then update the values of $\mathbf{w}$ in a way that this distance between the two vectors is minimized.
+Hooray, we have just given a simple explanation of how classification and supervised learning works in Machine Learning. 
 
-We then need to find a way to measure the distance between predictions and labels and then a way to update the weights $\mathbf{w}$ in order to minimize this distance. 
-
-Hooray, we have just given a simple explanation of how classification and supervised learning works in Machine Learning. Of course, the whole training problem is a lot more elaborate that our description. Hence, a learning objective for this course is to make clear on how ML algorithms works. Furthermore, there is a huge range of problems beyond classification that ML deals with like: `regression`, `clustering`, `dimensionality reduction` and `generation` of data that we will revise in this course. Finally, you should also note that the example that we have place is an example of parameter-based classification, but classification can be done also without using explicitly new parameters $\mathbf{w}$ and by only creating rules based on data (for instance in the case of decision trees).
+Of course, the whole training problem is a lot more involved that our previous description. Hence, the learning objective for this course is to make clear on how ML algorithms works and how the above-mentioned steps works in practice. Furthermore, there is a huge range of problems beyond classification that ML deals with like: `regression`, `clustering`, `dimensionality reduction` and `generation` of data that we will revise in this course. Finally, you should also note that the example that we have place is an example of parameter-based classification, but classification can be done also without using explicitly new parameters $\mathbf{w}$ and by only creating rules based on data (for instance in the case of `decision trees`).
 
 The main key-home messages for this page is that information and human observations are represented by data can be stored in placeholders which can be manipulated by computers using Linear algebra principles. ML is using Linear Algebra `magic` to do its job. 
-
-The next chapter will be an introduction to machine learning. We will provide the key terminology and some basic categorization that will be useful throughout this course.
 
 ## Geometry of linear classifiers
 
