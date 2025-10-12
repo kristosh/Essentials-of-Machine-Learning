@@ -538,6 +538,21 @@ $$
 
 The main take-home message in this sub-section is that we can make use one of the previous tools as a means to gauge the closeness of two vectors. By employing such a tool we can create powerful Machine Learning tools.
 
+### Vector projection (and rejection)
+In Linear Algebra we call orthogonal projection of vector $\vec{a}$ to $\vec{b}$ (from the below figure) and the legs (or catheti) to hypotenuse that is $\vec{a}$ are $\vec{r1}$ and $\vec{r2}$. The leg that is parallel with the 
+vector $\vec{b}$ is the actually projection that we are looking for $\vec{r1}$.
+<p align="center">
+  <img src="images/vector_projection.png" alt="Sublime's custom image" style="width:45%"/>
+</p>
+
+This projection is calculated as:
+
+$$p_\vec{b} \vec{a} = \frac{a \cdot b}{||a||||b||} b$$
+
+while just the length of the projection is 
+
+$$d = \frac{a \cdot b}{||a||||b||} $$
+
 ## Vectors as datasets
 
 Now lets say that we are conducting an experiment and we gather observations (`instances`) that lives in two dimensions. We can plot the results of these observations in a cartesian two-dimensional plot as follows: 
@@ -635,40 +650,42 @@ Note that we can have instead of a scalar a vector as an output. This vector cou
 
 ### Tuning phase for the parameters (training phase)
 
-It is important of course to figure out a good way to tune the parameters $\mathbf{w}$ in such a way that the above classification task will be resolved. The process of tuning these parameters is called in machine learning `training` or `learning` process. 
+It is important of course to figure out a good way to tune the parameters $\mathbf{w}$ in such a way that the above classification task will be resolved. The process of tuning these parameters is called in machine learning `training` or `learning process`. 
 
-To introduce this process we will introduce a very simplistic example that works as a basis to understand the whole process. During the lecture we will analyze more detailed approaches that work in reality.
-For now, we will stick with a simplistic blueprint for performing linear classification.
+We will introduce this process with a very simplistic example that works as a basis to understand the whole concept. This should work as a mere blueprint in order to grasp the idea behind training a ML algorithm. During the lecture we will analyze more detailed approaches that work in practice for multiple tasks (classification, regression, clustering etcetera). 
 
-Firstly, we will make a simplistic hypothesis that our data are linearly separable which means that there is a line or a surface plane in multi-dimensional space that could separate each different class of the problem.
+Firstly, we will start by making a simplistic hypothesis that our data are linearly separable meaning that we could find a simple line or a surface plane in multi-dimensional space that could separate each different class for our problem.
 
-This should be done by just performing a simple linear operation between the data in the dataset and the introduced parameters $\mathbf{w}$. For example we can consider the following:
+This should be done by just performing a simple linear operation between the data in the dataset and the introduced parameters $\mathbf{w}$. This operation looks like:
 
 $$\mathbf{y} = \mathbf{X} \cdot \mathbf{w}$$ 
 
-Now a very good question is the following: `how can we engineer meaningful values to these parameters` $\mathbf{w}$?. 
+Now a very good question is the following: `how can we engineer meaningful values to these parameters` $\mathbf{w}$ to perform handwritten classification? The next step gives a simplistic example that could be the starting skeleton 
+of a ML algorithm:
 
-- First thing first, is to access in a dataset of handwriting images (MNIST) that contains some annotation or label describing whats the digit representation of its image.
+- First thing first, is to access a dataset of handwriting images (MNIST) that contains some annotation or label describing whats the digit representation of its image.
 - Each image $\mathbf{x}_i$ contains a label $t_i$.
-- We can split this dataset into two sets: training and test set. The training set we will make it use during the training phase that we will tune the parameters of the model
-- The test set we will use it at the end to evaluate the performance of our new model.
+- We can split this dataset into two sets: training and test set. The training set we will make it use during the training phase that we will tune the parameters of the model.
+- Them, the test set will be used for evaluating the quality of the tuned parameters of our new model.
 
-Having prepared our data now we can proceed in the so-called training process, which looks usually as follows (note that this is a very simplistic example):
+Having prepared our data now we can proceed in the so-called training process, which is usually as follows (another reminder that his is a very simplistic example):
 
-- We start by tuning these parameters $\mathbf{w}$ randomly. Having done that, now, we can calculate the output $\mathbf{y}$.  
-- However, given that we initialize the parameters $\mathbf{w}$ randomly there is not any quarantee that the values $\mathbf{y}$ could codify meaningful MNIST digits. 
-- Meanwhile, we already know how this output should be which is actually the annotations that are stored and place in the label $\mathbf{t}$.
-- We should thus find a way to measure the distance between the predictions $\mathbf{y}$ and the annotations $\mathbf{t}$ and then update the values of $\mathbf{w}$ in a way that this distance between the two vectors is minimized.
-- And why not using the distance metrics that we discuss before and measure the divergence between output and desired output? 
+- We start by tuning these parameters $\mathbf{w}$ randomly. Having done that, now, we can calculate the output $\mathbf{y}$ using the previous linear equation $$\mathbf{y} = \mathbf{X} \cdot \mathbf{w}.  
+- However, given that we initialize the parameters $\mathbf{w}$ randomly there is not any quarantee that the values $\mathbf{y}$ could codify any meaningful information related to MNIST dataset. 
+- Meanwhile, we already know how this output should be (the stored label information $\mathbf{t}$).
+- It is natural to measure the distance between the predictions $\mathbf{y}$ and the annotations $\mathbf{t}$ and then update the values of $\mathbf{w}$ in a way that this distance (think about the distance metrics we talked before) between the two vectors is minimized. 
 - In this way, we can measure the total error between the model output and the real labels. This is called alternative loss function or error function.
 - Then we can use this loss output as a compass to modify our parameters $\mathbf{w}$ and direct them towards minimizing this entity. After all, we want to minimize this distance between correct label and the predicted values.
-- Throughout this course, we will check several key ways of tuning our parameters given this error calculation.
+- Throughout this course, we will analyze several key ways of tuning our parameters given this error calculation.
 
-Hooray, we have just given a simple explanation of how classification and supervised learning works in Machine Learning. 
+Hooray, we have just given a very simple explanation of how classification and supervised learning works in Machine Learning.
 
-Of course, the whole training problem is a lot more involved that our previous description. Hence, the learning objective for this course is to make clear on how ML algorithms works and how the above-mentioned steps works in practice. Furthermore, there is a huge range of problems beyond classification that ML deals with like: `regression`, `clustering`, `dimensionality reduction` and `generation` of data that we will revise in this course. Finally, you should also note that the example that we have place is an example of parameter-based classification, but classification can be done also without using explicitly new parameters $\mathbf{w}$ and by only creating rules based on data (for instance in the case of `decision trees`).
+Of course, the whole training problem is a lot more involved that our previous description. One of the initial hypothesis that we made is that our data are linearly separable and we can use a surface to separate its classes. However, this is
+not the case in the most of the data. This example meant to be a gentle introduction on how the linear classification looks like.
 
-The main key-home messages for this page is that information and human observations are represented by data can be stored in placeholders which can be manipulated by computers using Linear algebra principles. ML is using Linear Algebra `magic` to do its job. 
+Hence, the learning objective for this course is to make clear on how ML algorithms works and how the above-mentioned steps works in practice in more details. Furthermore, there is a huge range of problems beyond classification that ML deals with like: `regression`, `clustering`, `dimensionality reduction` and `generation` of data that we will revise in this course. Finally, you should also note that the example that we have place is an example of parameter-based classification, but classification can be done also without using explicitly new parameters $\mathbf{w}$ and by only creating rules based on data (for instance in the case of `decision trees`).
+
+The main key-home messages for this page is that information and human observations are represented by data can be stored in placeholders which can be manipulated by computers using Linear algebra principles. ML is using Linear Algebra `tool` to do its job and tune the parameters in the desired way. 
 
 ## Geometry of linear classifiers
 
@@ -678,31 +695,49 @@ Let us assume that we do have a linear separable binary dataset (class A and B) 
   <img src="images/linear_model_1.png" alt="Sublime's custom image" style="width:60%"/>
 </p>
 
-It is clear that we can find a line that separates the two classes. For instance, the following equation $y = -x1 -x2 + 9 = 0$ could separate the two classes. We can alternative write :$y = \mathbf{w}^{T}\mathbf{x} + w_0$. We thus introduce some parameters $\mathbf{w}, b$ and the 
-idea is to tune these parameters to find a decision line that separates the two classes. Our data lives in two dimensions $\mathbf{x} \in \mathbb{R}^{2}$. Thus, the linear function maps input $y: \mathbb{R}^2 \to \mathbb{R}$ to a 
-value and when $y = 0$ we have the decision boundary for the two classes and when $y>0$ we do have a region for the class B and when $y<0$ for class A.
+It is clear that we can find a line that separates the two classes. For instance, the following equation 
 
-Βy tuning these parameters $\mathbf{w}, b$, for instance $\mathbf{w}^{T} = [-1, -1]$ and $b = 9$, we found a way to separate the two given classes. In principle, the idea behind linear classification is to find the ideal parameters that can separate the two classes.
-In this chapter, we will discuss the geometry behind linear classification and several strategies to optimize and find good parameters.
+$$y = -x1 -x2 + 9 = 0$$
 
-Imagine that we do have two vectors $\mathbf{x}_A, \mathbf{x}_B$ that live in the decision boundary line $y = 0$. Thus, by definition, $y_A = y_B = 0$ or we can develop further, 
+could separate the two classes. We can alternative write :
 
-$$\mathbf{w}^T \mathbf{x}_A + b = \mathbf{w}^T \mathbf{x}_B + b$$ by performing simple vector calculations we have:
+$$y = \mathbf{w}^{T}\mathbf{x} + w_0$$
+
+We thus introduce some parameters $\mathbf{w}, w_0$ (parameter $w_0$ is also called sometimes $b$) and the idea is to tune these parameters to find a decision line that separates the two classes. Our data lives in two dimensions $\mathbf{x} \in \mathbb{R}^{2}$. Thus, the linear function maps input $y: \mathbb{R}^2 \to \mathbb{R}$ to a 
+value and when $y = 0$ we have the decision boundary for the two classes and when $y>0$ we do have a region for the class B and when $y<0$ for class A. Βy tuning these parameters $\mathbf{w}, w_0$, for instance $\mathbf{w}^{T} = [-1, -1]$ and $w_0 = 9$, we found a way to separate the two given classes. 
+
+In principle, the idea behind linear classification is to find the ideal parameters that can separate the two classes. In this chapter, we will discuss the geometry behind linear classification and several strategies to optimize and find good parameters.
+
+### Simple geometry exercise using linear algebra
+
+Imagine that we do have two vectors $\mathbf{x}_A, \mathbf{x}_B$ that live in the decision boundary line . For the points that live int he decision line we know that this is true $y = 0$. Thus, by definition, $y_A = y_B = 0$ or we can develop further, 
+
+$$\mathbf{w}^T \mathbf{x}_A + b = \mathbf{w}^T \mathbf{x}_B + b = 0$$ 
+
+and by performing simple vector calculations we have:
+
 $$\mathbf{w}^T ( \mathbf{x}_A - \mathbf{x}_B) = 0$$
 
 We already have mentioned that when the dot product of two vectors is zero then, the two vectors are orthogonal. Thus, $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other. Now, what we need to take into account also is that 
-vector $\mathbf{x}_A - \mathbf{x}_B$ is parallel to the decision boundary. Eventually, the vector $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other (or perpendicular). That is really important to note, that the vector of weights
-always point perpendicular to the decision boundary. It is also easy to extract that the parameter $w_0$ or sometimes $b$ is the offset of the line and reveals how far the line is from the original $(0, 0)$.
+vector $\mathbf{x}_A - \mathbf{x}_B$ is parallel to the decision boundary. Eventually, the vector $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other (or perpendicular). It is also well-known in linear 
+algebra that the subtraction of two vector that lie in the same line, the result of subtraction will always point parallel to the line itself. Thus the final conclusion, that the vector of weights
+always point perpendicular to the decision boundary. This gives us the `slope` of the line.
+
+It is also easy to extract that the parameter $w_0$ or sometimes $b$ is the `offset` of the line and reveals how far the line is from the original $(0, 0)$. 
 
 <p align="center">
   <img src="images/SVM_2.png" alt="Sublime's custom image" style="width:60%"/>
 </p>
 
-We know also that $ y= \mathbf{w}^{T}\mathbf{x} =0$ is a parallel line to our decision boundary, but this line passes through the origin. 
+We know also that 
 
-Officially, to compute the distance between the boundary and the origin we will need to pick a vector that lies in in boundary and calculate the projection of this vector to the intercept $\mathbf{w}$. Let's say that we pick $\mathbf{x}^{'}$ then this projection is:
+$$y= \mathbf{w}^{T}\mathbf{x} =0$$ 
 
-$$ d = \frac{\mathbf{w}^{T}\mathbf{x}}{||\mathbf{w}||}$$
+is a vector that point to the decision line, but it also passes through the origin. 
+
+Officially, to compute the distance between the boundary and the origin we will need to pick this vector that lies in in boundary and calculate the projection of this vector to the intercept $\mathbf{w}$. That is actually the case due to the Euclidean distance. We saw before that the projection of a vector over another is computed as:
+
+$$d = \frac{\mathbf{w}^{T}\mathbf{x}}{||\mathbf{w}||}$$
 
 since $\mathbf{w}^{T}\mathbf{x} + w_0 = 0$, we can write:
 
@@ -713,7 +748,8 @@ Finally, we can conclude that the general distance a vector in space (not necess
 
 $$d = \frac{y(\mathbf{x})}{||\mathbf{w}||}$$ 
 
-the distance to the surface. The main principle behind SVM is that we would like to find parameters $\mathbf{w}, b$ in such a way that the distance of the closest vectors to the decision boundary will be maximized.
+the distance to the surface. The proof for that should be considered as a given, by you can always ask us if you want further explanation on this. 
+The main principle behind Support Vector Machines (SVM) is that we would like to find parameters $\mathbf{w}, w_0$ in such a way that the distance of the closest vectors to the decision boundary will be maximized.
 
 ## The ingredients of ML
 
