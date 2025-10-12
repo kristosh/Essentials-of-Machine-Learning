@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Introduction to Machine Learning mathematics.
-description: Data science and Mathematics for Machine Learning.
+description: From linear algebra to linear classification
 ---
 
 ## Machine Learning definition
@@ -579,11 +579,17 @@ But we can also speak for higher than three dimensions. This is the case of the 
 
 But ok seriously, why do we even mentioned all these calculations for vectors and matrices. We are just interested in data and making machines learning patterns out of these data.
 
-The reason why we mess with these placeholders and their mathematical properties is multi-facet. Firstly, is somehow intuitive to place numerical entities in boxes that look like `vector, matrices`. Moreover, it ends up being a convenient abstract representation of how the placeholders in computer looks like. We can use a lot of calculation tools that are provided by linear algebra and calculus and optimization to work with our data. Having placed all our data observations in placeholders (`vectors`) we can now make use of computation tools to measure similarities and be able to group together things. `Python` has a lot of nice packages that we can use to process our data. You will familiarize with them in the three assignments of this course. More info regarding the assignment you will be able to find here.
+The reason why we mess with these placeholders and their mathematical properties is multi-facet. Firstly, is somehow intuitive to place numerical entities in boxes that look like `vector, matrices`.
+Moreover, it ends up being a convenient abstract representation of how the placeholders in computer looks like. 
+We can use a lot of calculation tools that are provided by linear algebra and calculus and optimization to work with our data. 
+Having placed all our data observations in placeholders (`vectors`) we can now make use of computation tools to measure similarities and be able to group together things. 
+`Python` has a lot of nice packages that we can use to process our data. You will familiarize with them in the three assignments of this course. More info regarding the assignment you will be able to find here.
+
+In the following paragraphs, we will introduce an example of  a `dataset` and a `model` that performs the task of `linear classification`.
 
 #### Example MNIST
 
-As an example, lets say that we would like to study images with handwritten digits and the classification into the corresponding digits. For that purpose, we can are employ a set of image-examples the notorious [MNIST dataset](https://en.wikipedia.org/wiki/MNIST_database) that contains 70.000 gray scale images of handwritten digits (with pixel size of $28 \times 28$) which are `named` (or `labelled`) after the digit that they represent. So there is a way to know what each image represents. That type of `naming` is called a `label` or an `annotation`. We can represent this label using an integer variable that takes the following values $t = \{0, 1, 2, ..., 9\}$.
+Now, lets say that we would like to study images with handwritten digits and the classification into the corresponding digits. For this purpose, we can are employ a set of image-examples the notorious [MNIST dataset](https://en.wikipedia.org/wiki/MNIST_database) that contains 70.000 gray scale images of handwritten digits (with pixel size of $28 \times 28$) which are `named` (or `labelled`) after the digit that they represent. So there is a way to know what each image represents. That type of `naming` is called a `label` or an `annotation`. We can represent this label using an integer variable that takes the following values $t = \{0, 1, 2, ..., 9\}$.
 
 Each input image can be represented as a vector after placing each row next to each other. Eventually, instead of $28$ rows with $28$ columns we can end up having $1$ row with $784$ columns. We can actually use as placeholder a vector $\mathbf{x} \in \mathbb{R}^{784}$. We can store all the vector-images in one big matrix:
 
@@ -598,49 +604,65 @@ Where each row is represented by a vector $\mathbf{x}_i$. Out task is to extract
 
 Now back to the MNIST dataset. We can actually place all the labels for each image in a single vector $\mathbf{t} \in {\(0, 1, 2, ..., 9\)}^{70000}$.
 
+
+### Task example: linear classifier
+
 A simple approach to create our first classifier (our machine learning model) is as follows: 
 
-- Introduce some parameters (we can call them also variables) $\mathbf{w}$. 
-- Then, we simply :) need to tune these parameters in such a way that each time that we will have an observation $\mathbf{x}^{\prime}$ if we multiply (by using the `inner product` discussed before) with parameters $\mathbf{w}$ the output should be a numerical value that will represent the digit that the input observation contains.
+- Introduce some parameters (we can call them also variables or `weights`) $\mathbf{w}$. 
+- Then, we simply :) need to tune these parameters in such a way that each time that we will have a new observation $\mathbf{x}^{\prime}$ that contains a handwritten digit (that we do not know beforehand its `label`) 
+- if we multiply this new instance (by using the `inner product` discussed before) with parameters $\mathbf{w}$ the output should be a numerical value that will represent the digit that the input observation contains.
 
 $$y = \mathbf{w} \cdot  \mathbf{x}^{\prime}$$
 
-of a bit more advanced way is to use some non-linear function $f$ or our choice:
+Now the whole point of tuning the parameters $\mathbf{w}$ is to that $y$ should be always as close as possible to the desired digit value. 
 
-$$y =  f(\mathbf{w} \cdot  \mathbf{x}^{\prime}) \in \mathbb{R}$$
-
-
-In the lecture on classification, SVM and Neural Networks we will learn more on this. Thus, if the input image looks as follows:
+For instance if we do have as our new observation the following digit $\mathbf{x}'$:
 
 <p align="center">
   <img src="images/nine.png" alt="Sublime's custom image"/>
 </p>
 
-which then, we place each row of pixels next to each other and we finally we can have a vector that looks as follows (note this is a part of the final vector and not full vector):
+the first thing to do is that we place each row of pixels next to each other and we finally we can have a vector that looks as follows (note this is a part of the final vector and not full vector):
 
 <p align="center">
   <img src="images/mnist2.png" alt="Sublime's custom image"/>
 </p>
 
-Then, the output of the ML model should be something like $y \approx 9$ or some other value that codifies this specific digit. Not that we can have instead of a scalar a vector as an output. This vector could be $\mathbf{y} \in \mathbb{R}^{9}$ where each dimensionality represents each of the desired digits. In this case, we should replace $\mathbf{w}$ with a matrix. But for now, we will stick to the simple case of the scalar output.
+Then, the output of the ML model should be something like $y = \mathbf{w} \cdot \mathbf{x}' \approx 9$ or some other value that codifies this specific digit. 
+
+Note that we can have instead of a scalar a vector as an output. This vector could be $\mathbf{y} \in \mathbb{R}^{9}$ where each dimensionality represents each of the desired digits. In this case, we should replace $\mathbf{w}$ with a matrix. But for now, we will stick to the simple case of the scalar output.
+
+### Tuning phase for the parameters (training phase)
 
 It is important of course to figure out a good way to tune the parameters $\mathbf{w}$ in such a way that the above classification task will be resolved. The process of tuning these parameters is called in machine learning `training` or `learning` process. 
 
-A gentle introduction on this process is as follows: Firstly, we want to perform a simple linear operation between the data in the dataset and the introduced parameters $\mathbf{w}$. For example we can consider the following:
+To introduce this process we will introduce a very simplistic example that works as a basis to understand the whole process. During the lecture we will analyze more detailed approaches that work in reality.
+For now, we will stick with a simplistic blueprint for performing linear classification.
+
+Firstly, we will make a simplistic hypothesis that our data are linearly separable which means that there is a line or a surface plane in multi-dimensional space that could separate each different class of the problem.
+
+This should be done by just performing a simple linear operation between the data in the dataset and the introduced parameters $\mathbf{w}$. For example we can consider the following:
 
 $$\mathbf{y} = \mathbf{X} \cdot \mathbf{w}$$ 
 
-or 
+Now a very good question is the following: `how can we engineer meaningful values to these parameters` $\mathbf{w}$?. 
 
-$$\mathbf{y} = f(\mathbf{X} \cdot \mathbf{w})$$
+- First thing first, is to access in a dataset of handwriting images (MNIST) that contains some annotation or label describing whats the digit representation of its image.
+- Each image $\mathbf{x}_i$ contains a label $t_i$.
+- We can split this dataset into two sets: training and test set. The training set we will make it use during the training phase that we will tune the parameters of the model
+- The test set we will use it at the end to evaluate the performance of our new model.
 
-Now a very good question is the following: `how can we set meaningful values to parameters` $\mathbf{w}$?. 
+Having prepared our data now we can proceed in the so-called training process, which looks usually as follows (note that this is a very simplistic example):
 
-- We can start by setting these parameters randomly. Then we can calculate the output vector $\mathbf{y}$. 
-- This vector represents now the predictions of the model during the `training process`. 
-- However, given that we initialize the parameters $\mathbf{w}$ randomly there is not any quarantee that the values $\mathbf{y}$ could represent the MNIST digits. At the same time, we already know what this vector should be and this is the annotations that are stored and place in vector $\mathbf{t}$.
+- We start by tuning these parameters $\mathbf{w}$ randomly. Having done that, now, we can calculate the output $\mathbf{y}$.  
+- However, given that we initialize the parameters $\mathbf{w}$ randomly there is not any quarantee that the values $\mathbf{y}$ could codify meaningful MNIST digits. 
+- Meanwhile, we already know how this output should be which is actually the annotations that are stored and place in the label $\mathbf{t}$.
 - We should thus find a way to measure the distance between the predictions $\mathbf{y}$ and the annotations $\mathbf{t}$ and then update the values of $\mathbf{w}$ in a way that this distance between the two vectors is minimized.
-- Why not using the distance metrics that we discuss before and measure the divergence between output and desired output?
+- And why not using the distance metrics that we discuss before and measure the divergence between output and desired output? 
+- In this way, we can measure the total error between the model output and the real labels. This is called alternative loss function or error function.
+- Then we can use this loss output as a compass to modify our parameters $\mathbf{w}$ and direct them towards minimizing this entity. After all, we want to minimize this distance between correct label and the predicted values.
+- Throughout this course, we will check several key ways of tuning our parameters given this error calculation.
 
 Hooray, we have just given a simple explanation of how classification and supervised learning works in Machine Learning. 
 
@@ -695,12 +717,9 @@ the distance to the surface. The main principle behind SVM is that we would like
 
 ## The ingredients of ML
 
-### Model
+To draw some simple lines with the lecture of this course, there we defined as key ingredients of ML the following concepts: data (instances, features), the task, and the model. In the previous example, we defined
+that a single image $\mathbf{x}$ acts as the instance or observation and its pixel-value as the feature. Then, the task is the `linear classification` that we would like to perform and the model is actually the
+parameters $\mathbf{w}$ that we introduced during the example and tuned during the training process.
 
-### Learning
-
-### Tasks
-
-### Features
 
 [back](./)
