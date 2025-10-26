@@ -67,7 +67,7 @@ Another example is to have as input a two-dimensional input and output a single-
   <img src="images/3dplot.png" alt="Sublime's custom image" style="width:60%"/>
 </p>
 
-But how can we visualize function that maps high-dimensional input to multi-dimensional output. Unfortunately, that is not possible and we can only visualize functions that have a single-dimensional or two-dimensional input. The most of the interesting problems in machine learning has higher dimensionality and we cannot visualize in the same way that we did with previous examples. There are though some tools that can perform dimensionality reduction (which are methods that remove unecessarry information) with which we can still plot things of high dimensionality.
+But how can we visualize function that maps high-dimensional input to multi-dimensional output. Unfortunately, that is not possible and we can only visualize functions that have a single-dimensional or two-dimensional input. At the same time, the most of the interesting problems in machine learning has higher dimensionality and we cannot visualize in the same way that we did with previous examples. There are though some tools that can perform dimensionality reduction (which are methods that remove unecessarry information) with which we can still plot things of high dimensionality.
 
 
 ## Functions in machine learning context
@@ -105,10 +105,21 @@ The loss function could look like as follows (this image is taken from Simon Pri
   <img src="images/loss.png" alt="Sublime's custom image" style="width:80%"/>
 </p>
 
-In this figure, we can see the loss function $L(\mathbf{w})$ with respect with parameters $w, b$ slope and intercept. We can see how well different parameters w,b can fit the data with respect to the loss function (`error function`). Our task when designing an algorithm in AI is figure out which parameters $w, b$ fit our data with the minimum loss. We cam see that the minimum can be found in the green spot (with roughly $w = 0.2$ and $b = 1$).
+In this figure, we can see the loss function $L(\mathbf{w})$ with respect with parameters $w, b$ slope and intercept. We can see how well different parameters w,b can fit the data with respect to the loss function (`error function`). Our task when designing an algorithm in AI is figure out which parameters $w, b$ fit our data with the minimum loss. We can see that the minimum can be found in the green spot (with roughly $w = 0.2$ and $b = 1$).
 
+However, in this example, it was kind of easy to spot that after plotting the Loss over the regression parameters $\mathbf{w}, b$. For more complicated functions, or mutli-variate case, that wont be possible to gauge a plot and decide where the global minima for a function lies. Thus, we need to find an automatic way to compute the parameters that minimize the loss function. The mathematical tool to do so is called `optimization` it is based on differentiation and in the upcoming paragraph we will gently introduce the concepts of optimization and differentiation and gradient.
 
-## Optimization and differentiate of univariate functions
+In principle, to locate the minimum of a function we calculate the slope of a function and in the position that the gradient is zero is where we do have an extreme of a function either a minima or a maxima. In the upcoming section we will see how we can compute the derivative of a function and how to use it in practice to optimize our problem.
+
+## Slope of a function and differentiation of univariate functions
+
+The very first thing that we will analyze is the slope of a function and in particular we will start with the slope of a linear function. What we define as slope in this situation is the rate of change of the linear function that is the same everywhere (no matter what will be the two points that we decided to choose):
+
+<p align="center">
+  <img src="images/slope.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+However, the rate of change is not the same when we chose a non-linear functions. In this case, the slope does not remain the same and we cannot compute it in the same way as before. 
 
 <p align="center">
   <img src="images/gradient.png" alt="Sublime's custom image" style="width:50%"/>
@@ -125,13 +136,13 @@ More formally, we can denote as derivative the following limit:
 
 $$\frac{df}{dx} = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$$
 
-As a simple example to understand what is going one is the following: We do have the function $y = x^2$ and we would like to calculate its derivative throughout the space. In the following image you can see how the function looks like if we plot it in the Cartesian space, but also how does its derivation looks like throughout the Cartesian space:
+As a simple example to understand what is going on is the following: We do have the function $y = x^2$ and we would like to calculate its derivative throughout the space. In the following image you can see how the function looks like if we plot it in the Cartesian space, but also how does its derivation looks like throughout the Cartesian space:
 
 <p align="center">
   <img src="images/Figure_1.png" alt="Sublime's custom image" style="width:80%"/>
 </p>
 
-Note, that close to $y = -inf$ the slope of the function $y$ is big and point towards the negative direction since the value of $y$ tends to reduce and this is the same, then as the function tends to go towards $y = 0$, the slope still has negative values but its size tends to reduced until $y = 0$, where the slope is also $y' = 0$. Usually, with $'$ we symbolize the derivative of a function. Then, once $y$ goes towards the positive side for $x$ the slope becomes positive and the `magnitude` of the slope increases.
+Note, that close to $y = -\infty$ the slope of the function $y$ is big and point towards the negative direction since the value of $y$ tends to reduce and this is the same, then as the function tends to go towards $y = 0$, the slope still has negative values but its size tends to reduced until $y = 0$, where the slope is also $y' = 0$. Usually, with $'$ we symbolize the derivative of a function. Then, once $y$ goes towards the positive side for $x$ the slope becomes positive and the `magnitude` of the slope increases.
 
 Thus, by calculating the derivative we calculate the slope of the function that shows in which direction our function is heading to and also the magnitude of the change. When we calculate the derivative of a function, except of finding the slope, we can local or global extremes of the function which are located in the positions where $f^{'}(x) = 0$. In our example, $f^{'}(x) = 0$ is taking place when $x = 0$, thus, we have a global minimum at this position.
 
@@ -159,3 +170,5 @@ $$
 and
 
 $$b = \bar{y} - w \bar{x}$$
+
+## Conclusion and learning objectives of this tutorial

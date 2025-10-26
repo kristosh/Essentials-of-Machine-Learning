@@ -17,13 +17,13 @@ Machine learning (ML) is data-driven and the `data` is at core of machine learni
 
 In this case, we create a ML algorithm that could automatically recognize that this is a review has a `negative` sentiment. We call this type of ML application: `sentiment analysis` or `sentiment recognition`.
 
-Other examples of tasks that concern ML are `object recognition`, `recommendation systems`, `text generation`, `voice detection`, `image generation`, `stock market prediction` etc. Some of the ML techniques require some expertise when collecting the data and some annotation of the data. For example when we collect object as images we can annotate the content of the images with what it can be found within these images, or we can have information about the houses and annotate them with the prices of the houses. There are some cases, that is not possible to do that, or it is not necessary to annotate these data like when we mine text from the web. 
+Other examples of tasks that concern ML are `object recognition`, `recommendation systems`, `text generation`, `voice detection`, `image generation`, `stock market prediction` etc. Some of the ML techniques require some expertise when collecting the data and some annotation of the data. For example when we collect object as images we can annotate the content of the images with what it can be found within these images (we can collect images that contain flowers and annotate them with the name of each flower). There are some cases, that is not possible to do that, or it is not necessary to annotate these data like when we mine text from the web. 
 
-The ML systems are based on three key concepts which are the following: `data`, `the task` and finally the `the model`. 
+The ML systems are based on three key ingredients which are the following: `data`, `the task` and finally the `the model`. 
 
-> We could say that in ML we use of a `model` to extract interesting patterns from our `data` to perform a specific `task`.
+> We could say that in ML we use a `model` to extract interesting patterns from our `data` to perform a specific `task`.
 
-In the following section, we will talk about the first concept of ML that is the `data`.
+In the following section, we will mainly analyze the first concept of ML that is the `data`.
 
 ## From data to datasets, vectors and matrices
 
@@ -35,19 +35,21 @@ So far, we talked about `data` that are crucial concept on ML but we haven't gav
 
 > Data are representations of variables measured from the real world, which can be used to model and infer patterns or causality.
 
-So central to the concept of data is the representation of information about the real world through numerical or other representations about an `under study` domain that can be found or produced extracted or post processed. That involves information that we exchange as human beings or measurements that derives from scientific experiments and eventually are structured and presented in a formatted and formal way. These observations about an under study phenomenon are called `observations` or `instances`. For instance if we would like to study the market value of houses in Amsterdam, we could gather information about a huge number of houses (which are our `observations` or `instances`) and composed from several bits of info like: 
+Central to the concept of `data` is the numerical representation of information about the real world about an `under study` domain. That involves information that we exchange as human beings or measurements that derives from scientific experiments. In both cases, the data are structured and presented in a formatted and formal way. These observations about the study phenomenon are called `observations` or `instances`. For example, if we would like to study the market value of houses in Amsterdam, we could gather information about a number of different houses (which are our `observations` or `instances`) and composed from several bits of information like: 
 
-- `neighborhood`, 
-- `size`, 
-- `number of rooms`, 
-- `year of construction`,
-- `has a balcony`, 
-- `distance from the nearest tram stop`, 
-- `condition of the interior`, `furniture` etc. 
+- `Neighborhood`, 
+- `Size`, 
+- `Number of rooms`, 
+- `Condition`
+- `Year of construction`,
+- `Has a balcony`, 
+- `Distance from the nearest tram stop`, 
+- `Has a jacuzzi`
+- `Condition of the interior`, `furniture` etc. 
 
 These bits of information in the nomenclature of ML is called `features`.
 
-When we talk about a `dataset` usually we refer to structure data that are referring to a specific under-study problem by computer. So having collected several `observations` about these data we can place them in a data structure. These datasets contains multiple observations about our problems and they can be annotated (or not) and curated by experts in the field of study.
+Finally, when we talk about a `dataset` usually we refer to structure data that are refer to a collection of`observations`. Usually, these datasets contains multiple observations which sometimes are accompanied with annotations that are curated by experts in the domain of study (think of image-scans of a patient). We can collect first scans of several patients and then an expert can annotate whether the scans contain a specific disease or not.
 
 
 ## Types of Data 
@@ -63,10 +65,10 @@ Data exists in different flavours. First and foremost could be numerical data: i
 
 ### Example of data
 
-Here we will represent a simple example of gathering data about several people: `name`, `gender`, `degree`, `postcode`, `age`, `salary` with the observation to be each different person, and we would like to create an ML algorithm that given the info for these people to estimate a prediction for their salary. We can say that our observation is the different people in the Table 1.1 while the each characteristic can be called a `feature`.
+Here we will represent a simple example of gathering data about several people: `name`, `gender`, `degree`, `postcode`, `age`, `salary` with the observation to be each different person, and we would like to create an ML algorithm that given the info for these people to estimate a prediction for their salary. We can say that our observation is the different people in the Table 1.1 while the each characteristic can be called a `feature`. Note this table extracted by a popular dataset that studies `gender biases`.
 
 $$\begin{aligned}
-& \text {Table 1.1. A collected dataset of people and their salaries. }\\
+& \text {Table 1.1. A collected dataset of people and their salaries.}\\
 &\begin{array}{cccc}
 \hline \hline \text { Name } & \text { Gender} & \text { Degree} & \text { postcode } & \text { age } & \text { salary } \\
 \hline David & M & PhD & 1011MK & 41 & 9900$ \\
@@ -109,7 +111,7 @@ $$\begin{aligned}
 We just saw that not all data are inherently numerical, and from the computer perspective, it is always necessary to transform these data into a numerical representation. Thus, when we talk about digital images we talk about pixel numerical representation. Regarding textual data, each character letter, digit, symbol is assigned a number via an encoding standard, such as `ASCII` or `Unicode` (pls check this site for further information). Another example concerns auditory data which when we digitalize it, we actually captured the the amplitude of sound waves over time.
 
 
-For comprehensive purposes of the humans and computers, when we collect, store and share these data we need to make use of placeholders, entities that can store information and can be easy to represent and manipulate them from computer and mathematical perspective. Hence, we can introduce in our terminology the concept of a `vector` as the main placeholder of `data`.  `Vectors` are used to store information about observations in our data. In the previous example, each row of the table (each different person) is considered an `observation` and is represented by `vectors`.
+For comprehensive purposes of the humans and computers, when we collect, store and share these data we need to make use of placeholders, entities that can store information and can be easy to represent and manipulate them from mathematical perspective. Hence, we can introduce in our terminology the concept of a `vector` as the main placeholder of `data`.  `Vectors` are used to store information about observations in our data. In the previous example, each row of the table (each different person) is considered an `observation` and is represented by `vectors`.
 
 Dataset as we mentioned before are usually composed with a set of multiple observations, for instance when we do have a set of images we can say that each image each a different `observation` or a different `instance`. Each `instance` could be eventually be represented by a corresponding `vector`. As we said the dataset is a collection of observations and thus a collection of `vectors`. We can introduce also the concept of a `matrix` as a set of multiple `vectors` grouped together.
 
@@ -134,7 +136,7 @@ $$
 
 ## Intro to Linear Algebra
 
-Vectors could be regarded as we saw so far, as placeholders from the `computer science` perspective, but at the same time, they can be perceived as objects in the cartesian space and could be manipulated by Linear Algebra tools as we have already encounter from high-school mathematics courses. They have length adn direction adn they live in a multi-dimensional space. They are called also `geometric vectors`.
+Vectors could be regarded as placeholders from the `computer science` perspective, but at the same time, they can be perceived as objects in the geometric space (or Cartesian space). Therefore, they could be manipulated by Linear Algebra or geometric tools (that you might have already encounter from high-school mathematics courses). Vectors have length, direction and they live in a multi-dimensional space. We can also call them `geometric vectors`.
  
 ### Geometric Vectors
 
@@ -146,7 +148,7 @@ and
  
 $$\mathbf{v}_2 = [1, 2]$$
  
-These are examples of two dimensional vectors that lie on the cartesian space with coordinates $\{x, y\}$. Each dimension (or `coordinate`) of this vector it is called a `feature` and can represent a characteristic value for the observation. For example, these two value of the vector $\mathbf{v}_1$ could be the values of an image that contains just two pixels.
+These are examples of two dimensional vectors that lie on the cartesian space with coordinates $\{x, y\}$. Each dimension (or `coordinate`) of this vector it is called a `feature` and can represent a characteristic value for our observation. For example, these two value of the vector $\mathbf{v}_1$ could be the values of an image that contains just two pixels or the score of students in two different classes. Ιn general they represent observations with two-features.
 
 You may recall from high-school that these vectors can be visualized in the cartesian 2-dimensional space as:
 
@@ -203,7 +205,9 @@ The norm of a vector
 
 $$\lVert \mathbf{v}_1 \lVert = \sqrt{1^2 + 1^2 } = \sqrt{2} \text{, }\lVert \mathbf{v}_2 \lVert = \sqrt{1^2 + 2^2 } = \sqrt{5} $$  
 
-represents the length of the vector. We can also re-write as:
+represents the length of the vector. Here you should think of the Pythagorean theorem and how to compute the hypotenuse of a triangle side.
+
+ We can also re-write as:
 
 $$\lVert \mathbf{v}_1^{2} \lVert = 1^2 + 1^2 $$
 
@@ -213,6 +217,8 @@ $$cos(\theta) = \frac{\mathbf{v}_1 \cdot \mathbf{v}_2}{\lVert \mathbf{v}_1 \lVer
 
 
 ### Vector projections
+
+TBA.
 
 ### Matrices
 
@@ -403,23 +409,38 @@ $$(\mathbf{A+B})^{T} = \mathbf{A}^{T} + \mathbf{B}^{T}$$
 
 A simply way to understand the usefulness of `matrices` and `vectors` stems from the linear system world. As you might recall from the high-school. We can define as` linear system` a collection of linear equations that involve the same set of variables. 
 
-Let us for a second try to solve the following problem: Factory $A$ uses one machine of type $w_1$, 4 machines of type $w_2$, and 6 machines of type $w_3$ to produce a battery, while factory $B$ uses 2, 4, 7 to produce two batteries and factory $C$ employs 1, 5, 7 correspondingly to produce 3 batteries. If we assume that all three machines are working in exactly the same way, we can express the previous problem as follows:
+Let us for a second try to solve the following problem `movie-recommendation`. We do have the following scenario:
 
-$$1w_1 + 4 w_2 + 6 w_3 = 1$$
+A movie platform wants to understand a user’s taste based on three factors:
 
-$$2w_1 + 4 w_2 + 7 w_3 = 2$$
+- $w_1$ $\rightarrow$ represents the action-style-level of a movie.
+- $w_2$ $\rightarrow$ represents the romantic-style-level of a movie.
+- $w_3$ $\rightarrow$ represents the horror-style-level of a movie.
 
-$$1w_1 + 5 w_2 + 7 w_3 = 3$$
+The system observes how the user rated three different movies (on a 1–10 scale). Each movie has known feature intensities (e.g., how much action, romance, and horror it has). The rating for the first movie is 7, for the second 9 and the third 5. The platform tried to understand the interest of the user. That problem can be represented by the following `linear system ` of equations:
+
+
+$$2w_1 + 3 w_2 + 1 w_3 = 7$$
+
+$$3w_1 + 2 w_2 + 2 w_3 = 9$$
+
+$$1w_1 + 4 w_2 + 3 w_3 = 5$$
 
 Now, if we define as:
 
 $$\mathbf{X} = \begin{bmatrix}
-1 & 2 & 1 \newline
-4 & 4 & 5 \newline
-6 & 7 & 7 
+2 & 3 & 1 \newline
+3 & 2 & 2 \newline
+1 & 4 & 3 
 \end{bmatrix} \in \mathbb{R}^{3 \times 3}$$
 
-And then we can define $\mathbf{w} = [w_1, w_2, w_3] \in \mathbb{R}^{3 \times 1}$ and $\mathbf{y} = [y_1, y_2, y_3] = [1, 2, 3] \in \mathbb{R}^{3 \times 1}$
+And then we can define 
+
+$$\mathbf{w} = [w_1, w_2, w_3] \in \mathbb{R}^{3 \times 1}$$ 
+
+and 
+
+$$\mathbf{y} = [y_1, y_2, y_3] = [7, 9, 5] \in \mathbb{R}^{3 \times 1}$$
 
 then we can simply write $\mathbf{X} \cdot \mathbf{w} = \mathbf{y}$ or simply $\mathbf{y} = \mathbf{X} \cdot \mathbf{w}$ which stems from the properties of matrix multiplication. So in essence we can see the matrix multiplication as a simple way to represent linear equations of multiple variables $\mathbf{w} = [w_1, w_2, w_3]$. 
 
@@ -427,9 +448,9 @@ We can use also the following representation:
 
 $$
 \begin{pmatrix}
-1 & 2 & 1 \newline
-4 & 4 & 5 \newline
-6 & 7 & 7 
+2 & 3 & 1 \newline
+3 & 2 & 2 \newline
+1 & 4 & 3 
 \end{pmatrix}
 \begin{pmatrix}
 w_1 \newline
@@ -438,22 +459,32 @@ w_3
 \end{pmatrix}
 =
 \begin{pmatrix}
-1 \newline
-2 \newline
-3
+7 \newline
+9 \newline
+5
 \end{pmatrix}
 $$
 
-Since we do know that both three factories using their machine with the same optimal way, we can compute how much each machine contributes to the construction of a battery. To do that we will need to solve the linear system of equations with respect to $w_1, w_1, w_3$. That seems feasible since we do have a linear system of three equations with three unknown variables.
+
+Now, we want to solve this system to figure out how much this user likes action, romantic and horror movies in general.
 
 
 It can be proven that by using also the matrix properties for inverse matrices we can solve this linear equation problem and calculate the variables $\mathbf{w}$ as follows: 
 
 $$\mathbf{w} = \mathbf{X}^{-1} \cdot \mathbf{y}$$
 
+The final results can be found to be the following:
+
+$$ \mathbf{w} = [w_1, w_2, w_3] = 
+\begin{bmatrix}
+1.8 \\[4pt]
+-4.87 \\[4pt]
+2
+\end{bmatrix}.
+$$
+
 Thus, we have transformed the linear equation problem to matrix inverse and matrix computation in order to find a solution. That is something that we need to keep in mind that is omnipotent in machine learning. We are usually trying to solve a similar equation given a matrix $\mathbf{X}$ that represents our `data`.
 
-For advanced topics in Linear Algebra you can have a look in this page [Advanced topics in Linear Algebra](./mlintro.html).
 
 ## Matrix transformations
 
@@ -743,19 +774,22 @@ since $\mathbf{w}^{T}\mathbf{x} + w_0 = 0$, we can write:
 
 $$d = \frac{-w_0}{||\mathbf{w}||}$$
 
-Finally, we can conclude that the general distance a vector in space (not necessarily a vector that lives in the boundary) can be computed as:
+Finally, we can conclude that the general distance a vector in space fom the decision boundary can be computed as:
 
 
 $$d = \frac{y(\mathbf{x})}{||\mathbf{w}||}$$ 
 
-the distance to the surface. The proof for that should be considered as a given, by you can always ask us if you want further explanation on this. 
+The proof for that should be considered as a given and it is trivial to be made. If you feel curious on it please ask us during the lecture or tutorials of the course.
 The main principle behind Support Vector Machines (SVM) is that we would like to find parameters $\mathbf{w}, w_0$ in such a way that the distance of the closest vectors to the decision boundary will be maximized.
 
 ## The ingredients of ML
 
-To draw some simple lines with the lecture of this course, there we defined as key ingredients of ML the following concepts: data (instances, features), the task, and the model. In the previous example, we defined
-that a single image $\mathbf{x}$ acts as the instance or observation and its pixel-value as the feature. Then, the task is the `linear classification` that we would like to perform and the model is actually the
-parameters $\mathbf{w}$ that we introduced during the example and tuned during the training process.
+To conclude and come back to our `EoML course`, during the lectures, we defined as key ingredients of ML the following concepts: `data (instances, features)`, `the task`, and `the model. 
+In the previous example, we defined that a single image $\mathbf{x}$ acts as the instance or observation and its pixel-value as the feature. Our dataset is a set of images that could include annotation in the case of supervised learning and linear classification like the case of the MNIST datasets. However, we might still have a set of images without annotation and can still employ algorithms that find interesting patterns in data (`clustering`, `image compression` or `image generation` using `GANs` or `stable diffusion` models).
+
+ In this tutorial, we mainly focused on the `linear classification` task. The model is actually the parameters $\mathbf{w}$ that we introduced during the example and tuned during the training process. Thus, for each different task we have different type of a model and different type of introduced parameters $\mathbf{w}$ that needs to be learned. Think of different the different recipes for supervised or unsupervised learning and the introduced parameters.
+
+ ## Conclusion and learning objectives of this page
 
 
 [back](./)

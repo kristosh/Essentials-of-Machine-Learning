@@ -2,18 +2,17 @@
 layout: default
 ---
 
-This course is part of Minor of Data Science and Artificial Intelligence program and it is offered for first time in the academic year 2025-2026. THe whole idea is to go through the basics of ML 
+This course is part of Minor of Data Science and Artificial Intelligence program and it is offered for first time in the academic year 2025-2026. The idea of this page is that we will explain and add the assignments of this course, but also it will contain some additional material that could help you with the mathematics for ML. Note that these materials could be a bit on the challenging side, so revise them with some caution. If you find any part challenging to digest, let us know!
 
 The course aims to provide the necessary introductory knowledge for Machine Learning (ML) concepts and demonstrates how to solve real-world problems with ML techniques. It covers the following topics:
 
 * Basic concepts of ML
-* Supervised Learning
-* Unsupervised Learning
-* Transfer and Ensemble Learning
-* Evaluation methods for ML
-* Machine learning for science
-* From Machine learning to modern AI
-* Ethics of ML & AI (explainability and AI alignment)
+* Supervised Learning I (binary classification and evaluation metrics)
+* Supervised learning II (multi-class classification and regression)
+* Unsupervised Learning (clustering, descriptive clustering and dimensionality reduction)
+* Neural networks 
+* Decision Trees, Ensemble methods and transfer learning
+* Trustworthy AI
 
 # Course Objectives
 
@@ -35,10 +34,6 @@ The course aims to provide the necessary introductory knowledge for Machine Lear
 [Here you can find the assignments of the course](./assignments.html).
 
 [Introduction to Machine Learning and Mathematics for ML](./mathintro.html).
-
-[Introduction to Machine Learning and coding.](./codeintro.html).
-
-[Introduction to Machine Learning.](./codeintro.html).
 
 [Introduction to Calculus.](./optimization.html).
 
