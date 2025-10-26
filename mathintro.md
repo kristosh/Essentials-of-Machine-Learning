@@ -216,10 +216,6 @@ and the angle between the two vectors as:
 $$cos(\theta) = \frac{\mathbf{v}_1 \cdot \mathbf{v}_2}{\lVert \mathbf{v}_1 \lVert  \lVert \mathbf{v}_2 \lVert }$$
 
 
-### Vector projections
-
-TBA.
-
 ### Matrices
 
 Now if we would like to create a placeholder in order to store multiple vectors together (so multiple instances), we can construct a `matrix`. A matrix could encapsulate the given set of observation into a rectangular entity that looks like an extended version of a vector. For instance given the observation $\mathbf{v}_1, \mathbf{v}_2$ we can group them together into a `dataset` or a `matrix` as follows:
@@ -407,15 +403,15 @@ $$(\mathbf{A+B})^{T} = \mathbf{A}^{T} + \mathbf{B}^{T}$$
 
 #### Linear systems
 
-A simply way to understand the usefulness of `matrices` and `vectors` stems from the linear system world. As you might recall from the high-school. We can define as` linear system` a collection of linear equations that involve the same set of variables. 
+A simply way to understand the usefulness of `matrices` and `vectors` stems from the linear system world (as you might recall from the high-school). We can define as a` linear system` a collection of linear equations that involve the same set of variables. 
 
-Let us for a second try to solve the following problem `movie-recommendation`. We do have the following scenario:
+To better grasp this let us for a second try to solve the following problem `movie-recommendation`. We do have the following scenario:
 
 A movie platform wants to understand a user’s taste based on three factors:
 
-- $w_1$ $\rightarrow$ represents the action-style-level of a movie.
-- $w_2$ $\rightarrow$ represents the romantic-style-level of a movie.
-- $w_3$ $\rightarrow$ represents the horror-style-level of a movie.
+- $w_1$ $\rightarrow$ the intensity of action characteristics.
+- $w_2$ $\rightarrow$ the intensity of romantic-comedy characteristics.
+- $w_3$ $\rightarrow$ the intensity of horror-style characteristics.
 
 The system observes how the user rated three different movies (on a 1–10 scale). Each movie has known feature intensities (e.g., how much action, romance, and horror it has). The rating for the first movie is 7, for the second 9 and the third 5. The platform tried to understand the interest of the user. That problem can be represented by the following `linear system ` of equations:
 
@@ -488,7 +484,9 @@ Thus, we have transformed the linear equation problem to matrix inverse and matr
 
 ## Matrix transformations
 
-Another way to think about matrix-vector multiplication as functions. The idea here is that when we perform $\mathbf{X} \cdot \mathbf{w} = \mathbf{y}$ then we can see 
+Another way to regard matrices in general are as `linear functions`. That means if we have an input vector $\mathbf{w}$ and we multiply it with a matrix $\mathbf{X}$ we end up transforming the initial vector to a new one. Thus, matrix here plays the role of linear function or more usually called `linear transformation`.
+
+The idea here is that when we perform $\mathbf{X} \cdot \mathbf{w} = \mathbf{y}$ then we can see 
 $\mathbf{w}$ as our input and $\mathbf{y}$ out output. Matrix $\mathbf{X} $ can be considered as a function transformation f that maps input vector to the output vector. We can say that $\mathbf{X} \in \mathbb{R}^{n \times n}$ what it does is to receive an matrix $\mathbf{w} \in \mathbb{R}^{n}$ and it spits out a vector $\mathbf{y} \in \mathbb{R}^{n}$. Depending of the dimensionality of the matrix $\mathbf{X}$ this transformation could keep the same dimensionality or change the dimensionality of the output vector.
 
 A nice outcome of the above is that we can even visualize the affect of matrix transformation. Therefore, in this part of the tutorial we will put forwards some classic examples of matrix transformation that can help grasp some intuitions on what it means to multiple a vector with the matrix. Let us say that we do have a vector: 
@@ -539,24 +537,33 @@ To better understand what happened, we can visualize vector $\mathbf{v}_2$ and t
   <img src="images/trans.png" alt="Sublime's custom image" style="width:60%"/>
 </p>
 
+So there is always some geometric interpretation of the result of the matrix-vector multiplication. This can be extended for the matrix-to-matrix multiplication.
+
 ## Distance between vectors
 
-So far we have seen that we can express instance that represent observations from real-world (or experiments) as vectors. Each different value of the vector that is called a `feature` represents a different measurement for the instance (or otherwise called `dimension`). It is really useful also to introduce a notion of distance with which we can measure the closeness of vectors. In this way, we can compare different instances and judge which one are close or far to each other. If our vectors represents queries in browser and web sites, we will need a distance measurement which web-site vectors are close with our query-vector. Having a way to measure this, we can easily create a simple web browser or even a recommendation system.
+Nice! As a quick recap, so far we have seen that we can express `instances` that represent observations from real-world (or experiments) as vectors. Each different value of the vector that is called a `feature` represents a different measurement for the instance (or otherwise called `dimension`). We actually discuss also some basic tool in Linear algebra that helps us manipulate these vectors.
+
+It is really useful also to introduce a notion of distance with which we can measure the closeness of vectors. In this way, we can compare different instances and judge which one are close or far to each other. We saw that these vectors can represent images or text. If for example they represent images, and we want to build an web-image-recommendation system like `Google Lens` we will need a distance measurement to figure out which images are closer to the query image at time.
+
+Having represent the query image as a vector and all the images as vectors we can easily also use this distance metric to compute the closeness of the query image with all the images in our dataset.
 
 If we have two vectors $\mathbf{x} = (x_1, x_2, \cdots, x_n )$ and  $\mathbf{y} = (y_1, y_2, \cdots, y_n)$ a very popular distance is the Euclidean distance which can be defined as:
 
 $$
 \text{Dis}_2(\mathbf{x}, \mathbf{y}) 
-= \sqrt{\sum_{j=1}^{d} (x_j - y_j)^2} 
-= \sqrt{(\mathbf{x} - \mathbf{y})^\top (\mathbf{x} - \mathbf{y})}
-$$
+= \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2 + \cdots + (x_n - y_n)^2}$$
+
+$$= \sqrt{\sum_{j=1}^{d} (x_j - y_j)^2} $$
+
+$$= \sqrt{(\mathbf{x} - \mathbf{y})^\top (\mathbf{x} - \mathbf{y})}$$
+
 
 
 Another way is to use 1-norm distance which is the following:
 
 $$
 \text{Dis}_1(\mathbf{x}, \mathbf{y}) 
-= {\sum_{j=1}^{d} |(x_j - y_j)|} 
+= {\sum_{j=1}^{d} ||(x_j - y_j)||} 
 
 $$
 
@@ -570,7 +577,8 @@ $$
 The main take-home message in this sub-section is that we can make use one of the previous tools as a means to gauge the closeness of two vectors. By employing such a tool we can create powerful Machine Learning tools.
 
 ### Vector projection (and rejection)
-In Linear Algebra we call orthogonal projection of vector $\vec{a}$ to $\vec{b}$ (from the below figure) and the legs (or catheti) to hypotenuse that is $\vec{a}$ are $\vec{r1}$ and $\vec{r2}$. The leg that is parallel with the 
+
+In Linear Algebra we call orthogonal projection of vector $\vec{a}$ to $\vec{b}$ (from the below figure) and the legs (or catheti) to hypotenuse that is $\vec{a}$ are $\vec{a_1}$ and $\vec{a_2}$. The leg that is parallel with the 
 vector $\vec{b}$ is the actually projection that we are looking for $\vec{r1}$.
 <p align="center">
   <img src="images/vector_projection.png" alt="Sublime's custom image" style="width:45%"/>
@@ -601,7 +609,7 @@ Given that we know that these observations belongs to two distinct classes (lets
 </p>
 
 
-Now, two popular techniques in Machine learning is to assign are clustering and classification. In the first category, we are trying to assign for each instance a belonging class. In this case, we only have information about the instances. In the latter, while we would like to do the same thing, however, in this case, we do already have information about the class belonging of each sample. We thus want to use also this information to learn a way to separate between the known classes given the annotated information.
+Now, two popular techniques in Machine learning are clustering and classification. In the first category, we are trying to assign for each instance a belonging class. In this case, we only have information about the instances. In the latter, while we would like to do the same thing, however, in this case, we do already have information about the class belonging of each sample. We thus want to use also this information to learn a way to separate between the known classes given the annotated information.
 
 Thus, knowing the class belonging, we are looking for a line that separates the two classes. That can be seen in the following image;
 
@@ -619,25 +627,29 @@ Of course the most of the problems lies in a higher dimensionality that the prev
   <img src="images/3dc.png" alt="Sublime's custom image" style="width:50%"/>
 </p>
 
-But we can also speak for higher than three dimensions. This is the case of the most interesting problems, however, it is impossible to visualize the values of these problems in a similar way. In this course, to help you with the understanding of key concepts we will make use of 2 or 3 dimensions to explain nuances and then, we will assume that the same concepts can be generalized in higher dimensions.
+But we can also speak for higher than three dimensions. This is the case of the most interesting problems, however, it is impossible to visualize the values of these problems in a similar way. In this course, to help you with the understanding of key concepts we will make use of example datasets with two or three dimensions to explain nuances and then, we will assume that the same concepts can be generalized in higher dimensions.
 
 ## Linear models in Machine learning
 
-But ok seriously, why do we even mentioned all these calculations for vectors and matrices. We are just interested in data and making machines learning patterns out of these data.
+But ok seriously, why do we even mentioned all these above calculations and linear algebra tools for vectors and matrices. We are just interested in data and making machines `more clever`.
 
-The reason why we mess with these placeholders and their mathematical properties is multi-facet. Firstly, is somehow intuitive to place numerical entities in boxes that look like `vector, matrices`.
-Moreover, it ends up being a convenient abstract representation of how the placeholders in computer looks like. 
-We can use a lot of calculation tools that are provided by linear algebra and calculus and optimization to work with our data. 
-Having placed all our data observations in placeholders (`vectors`) we can now make use of computation tools to measure similarities and be able to group together things. 
-`Python` has a lot of nice packages that we can use to process our data. You will familiarize with them in the three assignments of this course. More info regarding the assignment you will be able to find here.
+The reason why we mess with these placeholders and their mathematical properties is multi-facet. 
+
+- Firstly, is somehow intuitive to place numerical entities in boxes that look like `vector, matrices`.
+- Moreover, it ends up being a convenient abstract representation of how the placeholders in computer looks like. 
+- We can use a lot of calculation tools that are provided by linear algebra and calculus and optimization to work with our data. 
+- Having placed all our data observations in placeholders (`vectors`) we can now make use of computation tools to measure similarities and be able to group together things. 
+- `Python` has a lot of nice packages that we can use to process our data. You will familiarize with them in the three assignments of this course. More info regarding the assignment you will be able to find here.
 
 In the following paragraphs, we will introduce an example of  a `dataset` and a `model` that performs the task of `linear classification`.
 
 #### Example MNIST
 
-Now, lets say that we would like to study images with handwritten digits and the classification into the corresponding digits. For this purpose, we can are employ a set of image-examples the notorious [MNIST dataset](https://en.wikipedia.org/wiki/MNIST_database) that contains 70.000 gray scale images of handwritten digits (with pixel size of $28 \times 28$) which are `named` (or `labelled`) after the digit that they represent. So there is a way to know what each image represents. That type of `naming` is called a `label` or an `annotation`. We can represent this label using an integer variable that takes the following values $t = \{0, 1, 2, ..., 9\}$.
+Now, lets say that we would like to study images with handwritten digits and the classification of them into the correct digit. Each time that you write in a paper a numerical digit, scan the document, you would like your machine learning algorithm to recognize the digit.
 
-Each input image can be represented as a vector after placing each row next to each other. Eventually, instead of $28$ rows with $28$ columns we can end up having $1$ row with $784$ columns. We can actually use as placeholder a vector $\mathbf{x} \in \mathbb{R}^{784}$. We can store all the vector-images in one big matrix:
+For this purpose, we can employ a set of image-examples from the popular [MNIST dataset](https://en.wikipedia.org/wiki/MNIST_database) (developed some decades ago) that contains 70.000 gray scale images of handwritten digits (with pixel size of $28 \times 28$) which are `named` (or `labelled` or `annotated`) after the digit that they represent. So there is a way to know what each image represents. That type of `naming` is called a `label` or an `annotation`. We can represent this label using an integer variable that takes the following values $t = \{0, 1, 2, ..., 9\}$.
+
+Each input image can be represented as a vector after placing each row next to each other. Eventually, instead of $28$ rows with $28$ columns we can end up having $1$ row with $784$ columns matrix. We can actually use as placeholder a vector $\mathbf{x} \in \mathbb{R}^{784}$. Finally, we can store all the vector-images in one big matrix:
 
 $$ \mathbf{X} = \begin{bmatrix}
 \text{---} & \mathbf{x}_1  & \text{---} \newline
@@ -661,7 +673,7 @@ A simple approach to create our first classifier (our machine learning model) is
 
 $$y = \mathbf{w} \cdot  \mathbf{x}^{\prime}$$
 
-Now the whole point of tuning the parameters $\mathbf{w}$ is to that $y$ should be always as close as possible to the desired digit value. 
+Now the whole point of tuning the parameters $\mathbf{w}$ is that we need to end up with $\mathbf{y}$ that should be always as close as possible to the desired digit value $\mathbf{t}$. 
 
 For instance if we do have as our new observation the following digit $\mathbf{x}'$:
 
@@ -675,17 +687,17 @@ the first thing to do is that we place each row of pixels next to each other and
   <img src="images/mnist2.png" alt="Sublime's custom image"/>
 </p>
 
-Then, the output of the ML model should be something like $y = \mathbf{w} \cdot \mathbf{x}' \approx 9$ or some other value that codifies this specific digit. 
+Then, the output of the ML model should be something like $y = \mathbf{w} \cdot \mathbf{x}' \approx 9$ (or some other value that codifies this specific digit- that is not important for now, if you are curious make questions on it). 
 
 Note that we can have instead of a scalar a vector as an output. This vector could be $\mathbf{y} \in \mathbb{R}^{9}$ where each dimensionality represents each of the desired digits. In this case, we should replace $\mathbf{w}$ with a matrix. But for now, we will stick to the simple case of the scalar output.
 
 ### Tuning phase for the parameters (training phase)
 
-It is important of course to figure out a good way to tune the parameters $\mathbf{w}$ in such a way that the above classification task will be resolved. The process of tuning these parameters is called in machine learning `training` or `learning process`. 
+In `Machine Learning` we are trying to figure out a good way to tune these parameters $\mathbf{w}$ in such a way that the above classification task will be resolved. The process of tuning these parameters is called in machine learning `training` or `learning process`. 
 
-We will introduce this process with a very simplistic example that works as a basis to understand the whole concept. This should work as a mere blueprint in order to grasp the idea behind training a ML algorithm. During the lecture we will analyze more detailed approaches that work in practice for multiple tasks (classification, regression, clustering etcetera). 
+We will introduce this process with a very simplistic example that works as a basis to understand the whole concept. This should work as a mere blueprint in order to grasp the idea behind training a ML algorithm. During the lecture we will analyze several training methodologies and algorithms in more details that work in practice for multiple tasks (classification, regression, clustering etcetera). 
 
-Firstly, we will start by making a simplistic hypothesis that our data are linearly separable meaning that we could find a simple line or a surface plane in multi-dimensional space that could separate each different class for our problem.
+Firstly, we will start by making a simplistic hypothesis that our data are linearly separable meaning that we could find a simple `line` or a `surface plane` in multi-dimensional space that could separate each different class for our problem.
 
 This should be done by just performing a simple linear operation between the data in the dataset and the introduced parameters $\mathbf{w}$. This operation looks like:
 
@@ -696,16 +708,16 @@ of a ML algorithm:
 
 - First thing first, is to access a dataset of handwriting images (MNIST) that contains some annotation or label describing whats the digit representation of its image.
 - Each image $\mathbf{x}_i$ contains a label $t_i$.
-- We can split this dataset into two sets: training and test set. The training set we will make it use during the training phase that we will tune the parameters of the model.
+- We can split this dataset into two sets: training and test set. The training set we will use it during the training phase where we will tune the parameters of the model.
 - Them, the test set will be used for evaluating the quality of the tuned parameters of our new model.
 
 Having prepared our data now we can proceed in the so-called training process, which is usually as follows (another reminder that his is a very simplistic example):
 
-- We start by tuning these parameters $\mathbf{w}$ randomly. Having done that, now, we can calculate the output $\mathbf{y}$ using the previous linear equation $$\mathbf{y} = \mathbf{X} \cdot \mathbf{w}.  
+- We start by tuning these parameters $\mathbf{w}$ randomly. Having done that, now, we can calculate the output $\mathbf{y}$ using the previous linear equation $\mathbf{y} = \mathbf{X} \cdot \mathbf{w}$.  
 - However, given that we initialize the parameters $\mathbf{w}$ randomly there is not any quarantee that the values $\mathbf{y}$ could codify any meaningful information related to MNIST dataset. 
 - Meanwhile, we already know how this output should be (the stored label information $\mathbf{t}$).
 - It is natural to measure the distance between the predictions $\mathbf{y}$ and the annotations $\mathbf{t}$ and then update the values of $\mathbf{w}$ in a way that this distance (think about the distance metrics we talked before) between the two vectors is minimized. 
-- In this way, we can measure the total error between the model output and the real labels. This is called alternative loss function or error function.
+- In this way, we can measure the total error between the model output and the real labels. This is called alternatively `loss function` or `error function`.
 - Then we can use this loss output as a compass to modify our parameters $\mathbf{w}$ and direct them towards minimizing this entity. After all, we want to minimize this distance between correct label and the predicted values.
 - Throughout this course, we will analyze several key ways of tuning our parameters given this error calculation.
 
@@ -741,7 +753,7 @@ In principle, the idea behind linear classification is to find the ideal paramet
 
 ### Simple geometry exercise using linear algebra
 
-Imagine that we do have two vectors $\mathbf{x}_A, \mathbf{x}_B$ that live in the decision boundary line . For the points that live int he decision line we know that this is true $y = 0$. Thus, by definition, $y_A = y_B = 0$ or we can develop further, 
+Imagine that we do have two vectors $\mathbf{x}_A, \mathbf{x}_B$ that live in the decision boundary line . For the points that live in the decision line we know that this is true $y = 0$. Thus, by definition, $y_A = y_B = 0$ or we can develop further, 
 
 $$\mathbf{w}^T \mathbf{x}_A + b = \mathbf{w}^T \mathbf{x}_B + b = 0$$ 
 
@@ -750,7 +762,9 @@ and by performing simple vector calculations we have:
 $$\mathbf{w}^T ( \mathbf{x}_A - \mathbf{x}_B) = 0$$
 
 We already have mentioned that when the dot product of two vectors is zero then, the two vectors are orthogonal. Thus, $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other. Now, what we need to take into account also is that 
-vector $\mathbf{x}_A - \mathbf{x}_B$ is parallel to the decision boundary. Eventually, the vector $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other (or perpendicular). It is also well-known in linear 
+vector $\mathbf{x}_A - \mathbf{x}_B$ is always parallel to the decision boundary. 
+
+Eventually, the vector $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other (or perpendicular). It is also well-known in linear 
 algebra that the subtraction of two vector that lie in the same line, the result of subtraction will always point parallel to the line itself. Thus the final conclusion, that the vector of weights
 always point perpendicular to the decision boundary. This gives us the `slope` of the line.
 
@@ -784,12 +798,14 @@ The main principle behind Support Vector Machines (SVM) is that we would like to
 
 ## The ingredients of ML
 
-To conclude and come back to our `EoML course`, during the lectures, we defined as key ingredients of ML the following concepts: `data (instances, features)`, `the task`, and `the model. 
+To conclude and come back to our `EoML course`, during the lectures, we defined as key ingredients of ML the following concepts: `data (instances, features)`, `the task`, and `the model`.
+
 In the previous example, we defined that a single image $\mathbf{x}$ acts as the instance or observation and its pixel-value as the feature. Our dataset is a set of images that could include annotation in the case of supervised learning and linear classification like the case of the MNIST datasets. However, we might still have a set of images without annotation and can still employ algorithms that find interesting patterns in data (`clustering`, `image compression` or `image generation` using `GANs` or `stable diffusion` models).
 
- In this tutorial, we mainly focused on the `linear classification` task. The model is actually the parameters $\mathbf{w}$ that we introduced during the example and tuned during the training process. Thus, for each different task we have different type of a model and different type of introduced parameters $\mathbf{w}$ that needs to be learned. Think of different the different recipes for supervised or unsupervised learning and the introduced parameters.
+In this tutorial, we mainly focused on the `linear classification` task. The model is actually the parameters $\mathbf{w}$ that we introduced during the example and tuned during the training process. Thus, for each different task we have different type of a model and different type of introduced parameters $\mathbf{w}$ that needs to be learned. Think of different the different recipes for supervised or unsupervised learning and the introduced parameters.
 
- ## Conclusion and learning objectives of this page
+##
 
+Here our quick introductory story in ML ends. I am sure that this content can be a bit hard to parse for some, however, this page means to be a supplementary material for those are curious to learn more on linear algebra and mathematics for Machine Learning.
 
 [back](./)
