@@ -35,7 +35,7 @@ The course aims to provide the necessary introductory knowledge for Machine Lear
 
 [Introduction to Machine Learning and Mathematics for ML](./mathintro.html).
 
-[Introduction to Calculus.](./optimization.html).
+<!-- [Introduction to Calculus.](./optimization.html). -->
 
 <!-- There should be whitespace between paragraphs.
 
