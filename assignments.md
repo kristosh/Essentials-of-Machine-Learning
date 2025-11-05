@@ -28,6 +28,8 @@ The topic of the assignments are the following:
    2. Code on Bias and textual data
    3. Maybe some info on AI and alignment
 
-The data that we will use in these assignments are a various of standard datasets like: MNIST, Iris Dataset, Boston Housing Dataset etc.
+The data that we will use in these assignments are a various of standard datasets like: MNIST, Iris Dataset, Heart Disease and CIFAR10.
+
+The first assignment can be found in [here](https://colab.research.google.com/drive/1h4A6vN5B3DDkY-CjLMwJr81apqIE_-UE#scrollTo=gSJcd6TRAmUA)
 
 [back](./)
