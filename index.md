@@ -31,11 +31,11 @@ The course aims to provide the necessary introductory knowledge for Machine Lear
 * Only the final grade will be rounded (.49 rounded down and .5 rounded up)
 * Students who are entitled to more exam/retake time must report to info@sbb.leidenuniv.nl 10 days before the exam/retake takes place.
 
-[Here you can find the assignments of the course](./assignments.html).
+[Here you can find the assignments of the course.](./assignments.html)
 
-[Introduction to Machine Learning and Mathematics for ML](./mathintro.html).
+[Introduction to Machine Learning and Mathematics for ML](./mathintro.html)
 
-<!-- [Introduction to Calculus.](./optimization.html). -->
+[Introduction to Calculus.](./optimization.html)
 
 <!-- There should be whitespace between paragraphs.
 
