@@ -32,4 +32,6 @@ The data that we will use in these assignments are a various of standard dataset
 
 The first assignment can be found in [here](https://colab.research.google.com/drive/1h4A6vN5B3DDkY-CjLMwJr81apqIE_-UE#scrollTo=gSJcd6TRAmUA)
 
+The second assignment can be found in [here](https://colab.research.google.com/drive/1GnFw0M2Syx5G1Tt3kNtPzZ-pX-9n7sgD?usp=sharing)
+
 [back](./)
