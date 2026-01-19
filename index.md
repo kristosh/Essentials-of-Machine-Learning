@@ -37,6 +37,10 @@ The course aims to provide the necessary introductory knowledge for Machine Lear
 
 [Introduction to Calculus.](./optimization.html)
 
+[Introduction to vector spaces.](./mlintro.html)
+
+[Linear Independence.](./linearIndependence.html)
+
 <!-- There should be whitespace between paragraphs.
 
 There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
