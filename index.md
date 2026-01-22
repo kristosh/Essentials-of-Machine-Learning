@@ -41,7 +41,7 @@ The course aims to provide the necessary introductory knowledge for Machine Lear
 
 [Linear Independence.](./linearIndependence.html)
 
-[Linear Independence.](./decompositions.html)
+[Matrix Decompositions.](./decompositions.html)
 
 <!-- There should be whitespace between paragraphs.
 

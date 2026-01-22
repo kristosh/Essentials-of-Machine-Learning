@@ -82,14 +82,14 @@ in the generating set. Now, we will be more specific and characterize the smalle
 
 ### Basis
 
-\textbf{Definition 2.14} (Basis). Consider a vector space $V = (\mathcal{V}, +, \cdot)$ and $\mathcal{A} \subseteq \mathcal{V}$. 
-A generating set $\mathcal{A}$ of $V$ is called \textit{minimal} if there exists no smaller set $\mathcal{A}' \subsetneq \mathcal{A} \subseteq \mathcal{V}$ 
+Basis: Consider a vector space $V = (\mathcal{V}, +, \cdot)$ and $\mathcal{A} \subseteq \mathcal{V}$. 
+A generating set $\mathcal{A}$ of $V$ is called `minimal` if there exists no smaller set $\mathcal{A}' \subsetneq \mathcal{A} \subseteq \mathcal{V}$ 
 that spans $V$. Every linearly independent generating set of $V$ is minimal and is called a \textit{basis} of $V$.
 
 If $\mathcal{B}$ is a basis of vector space $\mathbb{V}$ then $\mathcal{B}$ is the maximal linear independent set of vectors in $\mathbb{V}$, adding any additional 
 vector will make this set linear dependent. 
 
-An alternative definition: A \textbf{basis} for vector space $\mathbb{V}$ is a sequence of vectors having two properties:
+An alternative definition: A `basis` for vector space $\mathbb{V}$ is a sequence of vectors having two properties:
 
 - The vectors are linearly independent.
 - They span vector space $\mathbb{V}$.
@@ -122,6 +122,57 @@ $$
 $$
 
 is linearly independent, but not a generating set (and no basis) of $\mathbb{R}^4$: For instance, the vector $[1, 0, 0, 0]^\top$ cannot be obtained by a linear combination of elements in $\mathcal{A}$.
+
+
+A basis effectively defines a coordinate system. We are familiar with the Cartesian coordinate system in two dimensions, which is spanned by the
+canonical basis vectors $\mathbf{e}_1 = \begin{bmatrix} 1 \\ 0 \end{bmatrix}^T$ and $\mathbf{e}_2 = \begin{bmatrix} 0 \\ 1 \end{bmatrix} ^T$. In this coordinate system, a specific 
+vector $\mathbf{x} \in \mathbb{R}^2$ just tell us how we can linearly combine the two basis vectors to obtain $\mathbf{x}$. However, any basis in $\mathbb{R}^2$ defines a valid coordinate system. Thus, the vector $\mathbf{x}$ will be represented with different coordinates in another basis ($\mathbf{b}_1, \mathbf{b}_2$). An example of this can be seen in the following figure:
+
+<p align="center">
+  <img src="images/basis.png" alt="Sublime's custom image" style="width:80%"/>
+</p>
+
+Here we can see vector $\mathbf{x}$ in two different bases $\mathbf{e}_1 = \begin{bmatrix} 1 \\ 0 \end{bmatrix}^T$ and $\mathbf{e}_2 = \begin{bmatrix} 0 \\ 1 \end{bmatrix} ^T$ where $\mathbf{x} =  \begin{bmatrix} 2 \\ 2 \end{bmatrix}^T$ while it is $\mathbf{x} =  \begin{bmatrix} 1.09 \\ 0.72 \end{bmatrix}^T$ in the basis $(\mathbf{b}_1, \mathbf{x}_2)$.
+
+We can think of a basis as a language we use to explicitly write vectors and operators as matrices. However, the way an arbitrary operator $\boldsymbol{A}$ transforms a vector $\boldsymbol{x}$  shouldn’t depend on the basis we use. Therefore, we must adjust the entries of the matrix depending on which basis we use, because as described before, rows of the matrix correspond to the vectors to which the basis vectors transform to. So let’s try to motivate intuitively how we can transform a matrix $\boldsymbol{A}$ that is written in the canonical basis.
+
+If we think of the following example:
+
+
+<p align="center">
+  <img src="images/change.png" alt="Sublime's custom image" style="width:40%"/>
+</p>
+
+We have the canonical basis $\mathbf{e}_1 = \begin{bmatrix} 1 \\ 0 \end{bmatrix}^T$ and $\mathbf{e}_2 = \begin{bmatrix} 0 \\ 1 \end{bmatrix} ^T$  and the new basis $\mathbf{d}_1 = \begin{bmatrix} 3/5 \\ 1/3 \end{bmatrix}^T$ and $\mathbf{d}_2 = \begin{bmatrix} 1/3 \\ 1 \end{bmatrix} ^T$. If $\boldsymbol{A}$ is the transformation matrix in the canonical basis to find the equivalent transformation for the new basis then we can compute as follows:
+
+
+$$
+\boldsymbol{A}' = \boldsymbol{S}^{1}\boldsymbol{A}\boldsymbol{S}
+$$
+
+Where of course $\boldsymbol{A}$ is the transformation matrix that maps the initial basis to the new one, thus:
+
+$$
+S = \begin{bmatrix}
+\frac{3}{5} & \frac{1}{3} \\
+\frac{1}{3} & 1
+\end{bmatrix}
+$$
+
+and we compute then:
+
+
+$$
+S^{-1} = \begin{bmatrix}
+\frac{45}{22} & -\frac{15}{22} \\
+-\frac{15}{22} & \frac{27}{22}
+\end{bmatrix}
+$$
+
+### Matrix transformation 
+
+### Basis change
+
 
 
 ### Rank
@@ -180,6 +231,10 @@ each vector $(x, y)$ in the plane to the nearest point $(x, 0)$ on the horizonta
   <img src="images/transformations.png" alt="Sublime's custom image"/>
 </p>
 
+
+### Linear transformations
+
+### Change of basis
 
 
 [back](./)

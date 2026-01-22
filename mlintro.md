@@ -152,11 +152,3 @@ $$ \mathbf{c} = r_i \cdot \mathbf{r} + g_i \cdot \mathbf{g} + b_i \cdot \mathbf{
 where 
 
 $$\mathbf{r} = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}, \quad \mathbf{g} = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}, \quad \mathbf{b} = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}.$$
-
-## Linear mappings
-
-## Basis change
-
-## Affine spaces
-
-## Affine mappings
