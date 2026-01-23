@@ -26,7 +26,40 @@ Firstly, we will start with trace of a matrix which is one aspect of describing 
 
 ## Determinant of a matrix
 
-Determinants as measures of volumes.
+Let's assume a matrix $\boldsymbol{A} \in \mathbb{R}^{n \times n}$, we can write the determinant of this matrix as follows:
+
+$$
+\det(A) = \begin{vmatrix}
+a_{11} & a_{12} & \ldots & a_{1n} \\
+a_{21} & a_{22} & \ldots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{n1} & a_{n2} & \ldots & a_{nn}
+\end{vmatrix}
+$$
+
+Determinant is a function that maps matrix into a scalar value $\mathbb{R}$. The determinant is the entity that we use to check whether a matrix is invertible. It holds
+that if a matrix $\boldsymbol{A}$ is invertilbe then $det(A) \neq 0$.
+
+The notion of a determinant is natural when we consider it as a mapping from a set of $n$ vectors spanning an object in $\mathbb{R}^n$. 
+It turns out that the determinant $\det(A)$ is the signed volume of an $n$-dimensional parallelepiped formed by columns of the matrix $A$.
+
+For $n = 2$, the columns of the matrix form a parallelogram; see Figure 4.2. As the angle between vectors gets smaller, the area of a parallelogram shrinks, too. 
+Consider two vectors $\mathbf{b}, \mathbf{g}$ that form the columns of a matrix $A = [\mathbf{b}, \mathbf{g}]$. Then, the absolute value of the determinant of $A$ 
+is the area of the parallelogram with vertices $\mathbf{0}, \mathbf{b}, \mathbf{g}, \mathbf{b} + \mathbf{g}$. In particular, if $\mathbf{b}, \mathbf{g}$ are 
+linearly dependent so that $\mathbf{b} = \lambda \mathbf{g}$ for some $\lambda \in \mathbb{R}$, they no longer form a two-dimensional parallelogram. 
+Therefore, the corresponding area is 0. On the contrary, if $\mathbf{b}, \mathbf{g}$ are linearly independent and are multiples of the canonical 
+basis vectors $\mathbf{e}_1, \mathbf{e}_2$ then they can be written as $\mathbf{b} = \begin{bmatrix} b \\ 0 \end{bmatrix}$ and $\mathbf{g} = \begin{bmatrix} 0 \\ g \end{bmatrix}$, 
+and the determinant is $\begin{vmatrix} b & 0 \\ 0 & g \end{vmatrix} = bg - 0 = bg$.
+
+The sign of the determinant indicates the orientation of the spanning vectors $\mathbf{b}, \mathbf{g}$ 
+with respect to the standard basis $(\mathbf{e}_1, \mathbf{e}_2)$. In our figure, flipping the order to $\mathbf{g}, \mathbf{b}$ 
+swaps the columns of $A$ and reverses the orientation of the shaded area. This becomes the familiar formula: area = height $\times$ length. 
+This intuition extends to higher dimensions. In $\mathbb{R}^3$, we consider three vectors $\mathbf{r}, \mathbf{b}, \mathbf{g} \in \mathbb{R}^3$ 
+spanning the edges of a parallelepiped, i.e., a solid with faces that are parallel parallelograms (see Figure 4.3). The absolute value of the 
+determinant of the $3 \times 3$ matrix $[\mathbf{r}, \mathbf{b}, \mathbf{g}]$ is the volume of the solid. Thus, the determinant acts as a 
+function that measures the signed volume formed by column vectors composed in a matrix.
+
+
 
 ## Trace of a matrix 
 
@@ -63,38 +96,210 @@ $$
 
 ## Eigenvalues and Eigenvectors
 
-Let $\boldsymbol{A} \in \mathbb{R}^{n \times n}$ be a square matrix. Then, the entity $\lambda \in \mathbb{R}$ is called an `eigenvalue` and the entity $\mathbf{x} in \mathbb{R}^n$ eigenvalue of matrix $\boldsymbol{A}$ if the following is true:
+In linear algebra, `eigensystems` denote a set of problems that include
+finding eigenvectors and eigenvalues. The word eigen comes from
+German and means `own`, which will make sense when we formulate the problem
+more concretely. Informally, the main idea behind eigensystems is finding
+vectors that transform in a special way when we apply a certain transformation
+$\mathbf{A}$ on them. Specifically, we wish to find which vectors are affected
+the least by the transformation $\mathbf{A}$, and by least we mean that they
+are not rotated, but are only scaled by a factor $\lambda$. Formally, given a
+vector $\mathbf{v}$ and a transformation $\mathbf{A}$, this requirement can be
+written as:
 
 $$
-\boldsymbol{A} \mathbf{x} = \lambda \mathbf{x}
+\mathbf{A}\mathbf{v} = \lambda \mathbf{v}
+
 $$
 
-We can call this an `eigenvalue equation`.
+Since on the right-hand side we multiply a vector by a scalar, we can
+equivalently add the identity matrix as $\lambda \rightarrow \lambda \mathbf{I}$.
+Rearranging terms gives us the following equation:
+
+$$
+(\mathbf{A} - \lambda \mathbf{I})\mathbf{v} = \mathbf{0}
+
+$$
+
+Assuming that $\mathbf{A} \in \mathbb{R}^{n \times n}$ and $\mathbf{v} \in \mathbb{R}^n$,
+we can rewrite the former equation in an expanded form:
+
+$$
+\begin{pmatrix}
+A_{11} - \lambda & A_{12} & \cdots & A_{1n} \\
+A_{21} & A_{22} - \lambda & \cdots & A_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+A_{n1} & A_{n2} & \cdots & A_{nn} - \lambda
+\end{pmatrix}
+\begin{pmatrix}
+v_1 \\
+\vdots \\
+v_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 \\
+\vdots \\
+0
+\end{pmatrix}
+$$
+
+The equation above represents a system of linear equations, and the goal is to
+find vectors $\mathbf{v} = (v_1 \ \cdots \ v_n)^\top$ and $\lambda$ that satisfy
+it. For example, the $m$-th equation is given by:
+
+$$
+A_{m1} v_1 + \cdots + (A_{mm} - \lambda) v_m + \cdots + A_{mn} v_n = 0.
+
+$$
+
+What we can see is that in every equation, we have all the unknowns (elements of
+the vector). Therefore, if the equations are not linearly independent, the only
+solution is the trivial one, i.e.\ $v_1 = v_2 = \cdots = v_n = 0$. This is a detrimental solution, and we are interested in the case that this vector is non-zero. 
+In this case, it should hold that:
+
+$$
+|\boldsymbol{A} - \lambda \boldsymbol{I}| = 0
+$$
+
+### Geometrical interpretation and an example
+
+So what exactly is an eigenvector from the geometry perspective. We saw that the eigenvalue portrays the variance of the initial data to the new coordinate axis that is 
+represented by each eigenvector. However, what exactly the direction of this eigenvector could tell us?
+
+The geometric interpretation for eigenvector is that once we compute the eigenvectors $\boldsymbol{b}_1, \boldsymbol{b}_2, \cdots, \boldsymbol{b}_m$ of matrix $\boldsymbol{A}$, then these vectors are not affected by the transformation with the 
+matrix $\boldsymbol{A}$ except by a stretching factor $\lambda_{1}, \lambda_{2}, \cdots, \lambda_{m}$ in each case.
+
+Why is this important?
+
+## Matrix diagonalization
+
+Suppose that we do have a matrix $\boldsymbol{A} \in \mathbb{R}^{n \times n}$ and it has $n$ linearly independent eigenvectors. Then, we can place these eigenvectors in matrix $\boldsymbol{S}$. Then, the product $\boldsymbol{S}^{-1}\boldsymbol{A}\boldsymbol{S} = \boldsymbol{\Lambda}$ is a diagonal matrix with the diagonal elements to be the eigenvalues of matrix $\boldsymbol{A}$.  
+
+$$\boldsymbol{S}^{-1}\boldsymbol{A}\boldsymbol{S} = \boldsymbol{\Lambda} = \begin{bmatrix}
+\lambda_1 & & & \\
+& \lambda_2 & & \\
+& & \ddots & \\
+& & & \lambda_n
+\end{bmatrix}$$
+
+The proof is simple, if we stick to the product $\boldsymbol{A}\boldsymbol{S} $ we got:
+
+$$
+\boldsymbol{A}\boldsymbol{S} = A \begin{bmatrix}
+| & | & & | \\
+x_1 & x_2 & \cdots & x_n \\
+| & | & & |
+\end{bmatrix} = \begin{bmatrix}
+| & | & & | \\
+\lambda_1 x_1 & \lambda_2 x_2 & \cdots & \lambda_n x_n \\
+| & | & & |
+\end{bmatrix}
+$$
+
+Then the trick is to split this last matrix into a quite different product 
+
+$$
+\begin{bmatrix}
+| & | & & | \\
+\lambda_1 x_1 & \lambda_2 x_2 & \cdots & \lambda_n x_n \\
+| & | & & |
+\end{bmatrix} = \begin{bmatrix}
+| & | & & | \\
+x_1 & x_2 & \cdots & x_n \\
+| & | & & |
+\end{bmatrix} \begin{bmatrix}
+\lambda_1 & & & \\
+& \lambda_2 & & \\
+& & \ddots & \\
+& & & \lambda_n
+\end{bmatrix}
+$$
+
+thus we can get:
+
+$$
+\boldsymbol{A}\boldsymbol{S} = \boldsymbol{S}\boldsymbol{\Lambda} 
+$$
+
+and finally its really easy to get:
+
+$$
+
+\boldsymbol{A} = \boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1}
+$$
+
+To grasp the importance of diagonalization we can have a view to the following example:
+
+If we want to compute $\boldsymbol{A}^{n}$ we can simplify the computations as follows:
+
+$$
+\mathbf{A}^n = \underbrace{\mathbf{A} \cdots \mathbf{A}}_{n \text{ times}}
+$$
+
+and by replacing $\boldsymbol{A} $ with $\boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1}$ we do have:
+
+$$
+\mathbf{A}^n = \underbrace{(\boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1}) \cdots (\boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1})}_{n \text{ times}}
+$$
+
+$$
+= \boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1}\boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1} \cdots \boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1}\boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1}
+$$
+
+$$
+= \boldsymbol{S}\boldsymbol{\Lambda}^{n}\boldsymbol{S}^{-1}
+$$
+
+since all the intermediate steps $\boldsymbol{S}^{-1}\boldsymbol{S} = \boldsymbol{I}$. Now computing the $n$-th of the matrix can be computing by decompose the matrix into eigenvectors and eigenvalues
+and computing the $n$-th power of the diagonal matrix which computational wise is an extreme simplification.
 
 
 ### Singular value decomposition
 
-## Matrix decomposition for Machine Learning
+However, most of matrices are not square matrices and computing the diagonal is not as straight forward. One solution to this issue, is to perform Singular value decomposition (SVD). 
+More to be added on SVD.
 
 ### Dimensionality Reduction with Principal Component Analysis
 
-Working directly with high-dimensional data, such as images, comes with some difficulties: It is hard to analyze, interpretation is difficult, visualization
-is nearly impossible, and (from a practical point of view) storage of
-the data vectors can be expensive. However, high-dimensional data often
-has properties that we can exploit. For example, high-dimensional data is
-often overcomplete, i.e., many dimensions are redundant and can be explained
-by a combination of other dimensions. Furthermore, dimensions
-in high-dimensional data are often correlated so that the data possesses an
-intrinsic lower-dimensional structure. Dimensionality reduction exploits
-structure and correlation and allows us to work with a more compact representation
-of the data, ideally without losing information. We can think
-of dimensionality reduction as a compression technique, similar to jpeg or
-mp3, which are compression algorithms for images and music.
+Ok so far we saw multiple ways to describe a matrix with data $\boldsymbol{A}$. We learn about how to compute determinants and the trace of a matrix. We saw also 
+how to perform an eigen-analysis of the matrix and what is the geometric interpretation of it. We saw how to diagonalize a matrix and how to do it using Singular value 
+decomposition. In this part of the tutorial, we will see its real merit and the reasons why we would like to perform matrix decomposition in Machine Learning. Plot-twist
+the main reason is because matrix decomposition paves the way for dimensionality reduction and the discovery of embeddings that can be meaningfully characterize the 
+initial feature space of our data in hand.
+
+In ML the most interesting and challenging problems are coupled with data that live in high-dimensionalities such as images. This high-dimensionality comes 
+with multiple problems such as it makes the ML algorithm hard to parse data to interpret them while it is merely impossible to visualize them and really expensive to 
+store the data in servers. At the same time, there are properties of these high-dimensional data that we can take advantage of. For instance, many dimensions are redundant and they 
+could simply represented a linear combination of other dimensions. Dimensionality reduction exploits structure and correlation and allows us to work with a more compact representation
+of the data, ideally without losing information. We can think of dimensionality reduction as a compression technique, similar to jpeg or mp3, which are compression algorithms 
+for images and music.
 
 
 ### Principle component analysis
 
-In Principle component analysis (PCA) we are interested in finding projections of the initial data $\mathbf{x}_n \in \mathbb{R}^{D}$ denoted as $\mathbf{\tilde{x}}_n \in \mathbb{R}^{D'}$ which are as close as
+We will start with a simple intuition that I like to use when explaining PCA. Conceptually the way that PCA works reminiscence the way that the photography works in the physical space of three
+dimensions. Imagine the following setup, we do have living persons in the physical world of three dimensions $(x, y, z)$, width, length and height. We would like to collect images in such as way
+that we will represent perfectly all the living persons in the scene. One option since our problem lives in 3d would be to collect data from three different axis. However, in practice
+that is not necessary and a photographer does is to find the perfect angle in each he can perfectly capture the ideal information for all the subjects in the scene. In the same spirit,
+we can perceive PCA as finding a new angle to capture our data which better characterize the initial information from our data. 
+
+<p align="center">
+  <img src="images/pic.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+
+<p align="center">
+  <img src="images/pic1.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+
+<p align="center">
+  <img src="images/pic2.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+
+But the intuition sounds sweet, however, how this is done in practice? In Principle component analysis (PCA) we are interested in finding projections of the initial data $\mathbf{x}_n \in \mathbb{R}^{D}$ denoted as $\mathbf{\tilde{x}}_n \in \mathbb{R}^{D'}$ which are as close as
 possible to the original point but at the same time lives in a dimensionality and is lower than the initial one $D' << D$.
 
 Usually, the setup is the following: we do have access to a dataset $\mathcal{D} = \\{ \mathbf{x}_1, \mathbf{x}_2, ..., \mathbf{x}_n \\} \in \mathbb{R}^{N \times D}$ with $N$ to be the number of 
