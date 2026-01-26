@@ -41,23 +41,62 @@ Determinant is a function that maps matrix into a scalar value $\mathbb{R}$. The
 that if a matrix $\boldsymbol{A}$ is invertilbe then $det(A) \neq 0$.
 
 The notion of a determinant is natural when we consider it as a mapping from a set of $n$ vectors spanning an object in $\mathbb{R}^n$. 
-It turns out that the determinant $\det(A)$ is the signed volume of an $n$-dimensional parallelepiped formed by columns of the matrix $A$.
+It turns out that the determinant $\det(A)$ is the signed volume of an $n$-dimensional parallelepiped formed by columns of the matrix $A$. That can be seen with the following examples:
 
-For $n = 2$, the columns of the matrix form a parallelogram; see Figure 4.2. As the angle between vectors gets smaller, the area of a parallelogram shrinks, too. 
-Consider two vectors $\mathbf{b}, \mathbf{g}$ that form the columns of a matrix $A = [\mathbf{b}, \mathbf{g}]$. Then, the absolute value of the determinant of $A$ 
-is the area of the parallelogram with vertices $\mathbf{0}, \mathbf{b}, \mathbf{g}, \mathbf{b} + \mathbf{g}$. In particular, if $\mathbf{b}, \mathbf{g}$ are 
-linearly dependent so that $\mathbf{b} = \lambda \mathbf{g}$ for some $\lambda \in \mathbb{R}$, they no longer form a two-dimensional parallelogram. 
-Therefore, the corresponding area is 0. On the contrary, if $\mathbf{b}, \mathbf{g}$ are linearly independent and are multiples of the canonical 
-basis vectors $\mathbf{e}_1, \mathbf{e}_2$ then they can be written as $\mathbf{b} = \begin{bmatrix} b \\ 0 \end{bmatrix}$ and $\mathbf{g} = \begin{bmatrix} 0 \\ g \end{bmatrix}$, 
-and the determinant is $\begin{vmatrix} b & 0 \\ 0 & g \end{vmatrix} = bg - 0 = bg$.
+<p align="center">
+  <img src="images/det1.png" alt="Sublime's custom image" style="width:20%"/>
+</p>
 
-The sign of the determinant indicates the orientation of the spanning vectors $\mathbf{b}, \mathbf{g}$ 
+<p align="center">
+  <img src="images/det2.png" alt="Sublime's custom image" style="width:20%"/>
+</p>
+
+In the first image we do have two vectors $\mathbf{g} = [g, 0]^T$ and $\mathbf{b} = [0, b]^T$ and we can place them in the following matrix:
+
+$$
+\det(A) = \begin{vmatrix}
+g & 0 \\
+0 & b
+\end{vmatrix}
+$$
+
+In this case, we define as determinant to be:
+
+$$det(A) = g\cdot b + 0 =  g\cdot b $$
+
+ which is the are of the parallelogram defined by the two vectors. The same happens in the second image, we can compute the area in the $\mathbb{R}^{3}$ space using the 
+ determinant of the matrix that contains the vectors
+
+ $$
+\boldsymbol{A} = \begin{vmatrix}
+\mathbf{g} & \mathbf{b} & \mathbf{r}
+\end{vmatrix}
+ $$
+
+If for example we do have: 
+
+$$r = \begin{bmatrix} 2 \\ 0 \\ -8 \end{bmatrix}, \quad g = \begin{bmatrix} 6 \\ 1 \\ 0 \end{bmatrix}, \quad b = \begin{bmatrix} 1 \\ 4 \\ -1 \end{bmatrix}$$
+
+Then, the volume of these three vectors can be found in we compute $det(A)$:
+
+$$
+\det(A) = \begin{vmatrix}
+2 & 6 &1\\
+0 & 1 & 4\\
+-8 & 0 -1&
+\end{vmatrix} = 186
+$$
+
+One prerequisite is that the vectors are linearly independent otherwise we cannot compute the volume. Lets us image that the vectors $\mathbf{b}$ and $\mathbf{g}$ are dependant that means 
+that they are parallel and thus, the area that they define is equal to zero.
+
+<!-- The sign of the determinant indicates the orientation of the spanning vectors $\mathbf{b}, \mathbf{g}$ 
 with respect to the standard basis $(\mathbf{e}_1, \mathbf{e}_2)$. In our figure, flipping the order to $\mathbf{g}, \mathbf{b}$ 
 swaps the columns of $A$ and reverses the orientation of the shaded area. This becomes the familiar formula: area = height $\times$ length. 
 This intuition extends to higher dimensions. In $\mathbb{R}^3$, we consider three vectors $\mathbf{r}, \mathbf{b}, \mathbf{g} \in \mathbb{R}^3$ 
 spanning the edges of a parallelepiped, i.e., a solid with faces that are parallel parallelograms (see Figure 4.3). The absolute value of the 
 determinant of the $3 \times 3$ matrix $[\mathbf{r}, \mathbf{b}, \mathbf{g}]$ is the volume of the solid. Thus, the determinant acts as a 
-function that measures the signed volume formed by column vectors composed in a matrix.
+function that measures the signed volume formed by column vectors composed in a matrix. -->
 
 
 
@@ -167,7 +206,7 @@ $$
 So what exactly is an eigenvector from the geometry perspective. We saw that the eigenvalue portrays the variance of the initial data to the new coordinate axis that is 
 represented by each eigenvector. However, what exactly the direction of this eigenvector could tell us?
 
-The geometric interpretation for eigenvector is that once we compute the eigenvectors $\boldsymbol{b}_1, \boldsymbol{b}_2, \cdots, \boldsymbol{b}_m$ of matrix $\boldsymbol{A}$, then these vectors are not affected by the transformation with the 
+The geometric interpretation for eigenvector is that once we compute the eigenvectors $\mathbf{b_1}, \mathbf{b_2}, \cdots, \mathbf{b_m}$ of matrix $\mathbf{A}$, then these vectors are not affected by the transformation with the 
 matrix $\boldsymbol{A}$ except by a stretching factor $\lambda_{1}, \lambda_{2}, \cdots, \lambda_{m}$ in each case.
 
 Why is this important?
@@ -258,7 +297,56 @@ and computing the $n$-th power of the diagonal matrix which computational wise i
 ### Singular value decomposition
 
 However, most of matrices are not square matrices and computing the diagonal is not as straight forward. One solution to this issue, is to perform Singular value decomposition (SVD). 
-More to be added on SVD.
+
+This technique is a generalization of matrix decomposition for non-square matrices and in ennesessence it tries to decompose the initial matrix $\boldsymbol{A} \in \mathbb{R}^{n \times m}$ In
+both domain and subdomain. 
+
+Then, the singular value decomposition is a factorization of the form:
+
+$$
+\boldsymbol{A} = \boldsymbol{U} \boldsymbol{\Sigma} \boldsymbol{V}^{T}
+$$
+
+The visualization of these matrices is shown below (adapted from Wikipedia). We can see that the matrix $\boldsymbol{\Sigma}$
+ has a diagonal part (which can have zero and non-zero elements), whereas the rest of the matrix is equal to zero.
+
+ <p align="center">
+  <img src="images/svd_1.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+The diagonal elements $\sigma_i = \Sigma_{ii}$ of the matrix $\Sigma$ are called
+`singular values` of $\mathbf{A}$. We can show that the number of nonzero
+singular values is equal to the rank of $\mathbf{A}$. From decompositions
+explained in the Rank of a Matrix theory page, we can see that the SVD
+expression is equivalent to the following:
+
+$$
+\mathbf{A} = \mathbf{U} \Sigma \mathbf{V}^{\top}
+= \sum_{i=1}^{\min(m,n)} \sigma_i \, \mathbf{u}_i \mathbf{v}_i^{\top}
+$$
+
+From this, we see that the SVD of matrix $\mathbf{A}$ expresses it as a
+(nonnegative) linear combination of rank-1 matrices, and we know that the
+number of nonzero terms in such a linear combination is equal to the rank of
+the matrix.
+
+Geometrically, SVD actually performs very simple and intuitive operations.
+Firstly, the matrix $\mathbf{V}$ performs a rotation in $\mathbb{R}^n$.
+Next, the matrix $\Sigma$ simply rescales the rotated vectors by a singular
+value and appends/deletes dimensions to match the dimension $n$ to $m$.
+Finally, the matrix $\mathbf{U}$ performs a rotation in $\mathbb{R}^m$.
+
+In the case of a real matrix, SVD can be visualized as shown below
+(adapted from Wikipedia). On the top route, we can see the direct application
+of a matrix $\mathbf{A}$ on two unit vectors. On the bottom route, we can see
+the action of each matrix in the SVD. We have used a case of a square matrix,
+as it is easier to visualize (in general, the matrix $\Sigma$ would add or
+remove dimensions, depending on the form of the matrix $\mathbf{A}$).
+
+ <p align="center">
+  <img src="images/svd_2.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
 
 ### Dimensionality Reduction with Principal Component Analysis
 
