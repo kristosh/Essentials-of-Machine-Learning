@@ -392,6 +392,30 @@ remove dimensions, depending on the form of the matrix $\mathbf{A}$).
   <img src="images/svd_2.png" alt="Sublime's custom image" style="width:50%"/>
 </p>
 
+### Proof of SVD decomposition
+
+To prove `SVD` decompoition, let's think of the matrix $\boldsymbol{A}^{T}\boldsymbol{A} \in \mathbb{R}^{m \times m}$. Since it is symmetric and square we
+can perform eigendecomposition and decompose it in matrix $\boldsymbol{V}$ that contains the eigenvectors and $\boldsymbol{\Sigma}^{T}\boldsymbol{\Sigma}$ that contains the eigevalues which are $\sigma_{i}^{2}$.
+
+Then it each column vector $\mathbf{v}_j$ of matrix $\boldsymbol{V}$ is an eigenvector and thus:
+
+$$
+\boldsymbol{A}^{T}\boldsymbol{A} \cdot \mathbf{v}_j = \sigma_{j}^{2} \mathbf{v}_j 
+$$
+
+Then, if we apply matrix $\boldsymbol{A}$ in both sides of the equation we can end-up having something as:
+
+
+$$
+\boldsymbol{A} \boldsymbol{A}^{T} \boldsymbol{A} \cdot \mathbf{v}_j = \sigma_{j}^{2} \boldsymbol{A} \mathbf{v}_j 
+$$
+
+That shows that $\mathbf{u}_j = \boldsymbol{A} \mathbf{v}_j $ is an eigenvector of matrix $\boldsymbol{A} \boldsymbol{A}^{T}$ or we normalize by dividing with $\frac{1}{\sigma_j}$ we end up having
+the following equation:
+
+$$
+\boldsymbol{A} \cdot \mathbf{v}_j = \sigma_{j} \mathbf{u}_j
+$$
 
 ### Dimensionality Reduction with Principal Component Analysis
 
