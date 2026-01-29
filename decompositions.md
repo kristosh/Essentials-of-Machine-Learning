@@ -8,25 +8,24 @@ description: Matrix decompositions and from eigen-analysis to Principal componen
 
 What is it? Why we need it?
 
-In general we have seen in previous tutorials how mappings and transformations of vectors can be conveniently described as operations performed by
+In general we have seen in previous tutorials how mappings and transformations of vectors can be conveniently seen as linear transformation and described as
 matrices. We saw how data can be represented by matrices where the rows of the matrix represent different people and the columns
-describe different features of the people, such as weight, height, and socioeconomic status. In this chapter, we present three aspects of matrices: how
-to summarize matrices, how matrices can be decomposed, and how these decompositions can be used for matrix approximations.
+describe different features of the people, such as weight, height, and socioeconomic status. That row and column order does not play a really important role and we can have each 
+instance to be a column vector so a column of the matrix. That is simply a transpose of the initial matrix.
 
-We first consider methods that allow us to describe matrices with just a few numbers that characterize the overall properties of matrices. We
-will do this in the sections on determinants (Section 4.1) and eigenvalues (Section 4.2) for the important special case of square matrices.
+In this chapter, we present three aspects of matrices: how to summarize matrices, how matrices can be decomposed, and how these decompositions can be used for matrix approximations. 
+We will analyze multiple ways to perform matrix decomposition and eventually we will show why this is really important in Machine Learning. We start by considering methods that allow us to describe matrices with just a few numbers that characterize the overall properties of matrices. These methods are the `determinants`, `traces` and `eigenvalues`.
 
-Matrix decompositions are important decompositions in linear algebra as they allow for simpler computations with matrices, 
-as we shall see in the following subsections. On the other hand, they are also widely used in machine learning, 
-for the purposes of data compression, denoising, and latent semantic analysis to name a few. Matrix decompositions usually decompose an original matrix 
+Matrix decompositions usually decompose an original matrix 
 into a product of simpler matrices, which have some specific features. In this theory page, we cover two important decompositions: 
-Eigenvalue decomposition (Diagonalization) and Singular value Decomposition (SVD).
+`Eigenvalue decomposition (Diagonalization)` and `Singular value Decomposition (SVD)`. Finally we show that one of the most important algorithms in Machine Learning
+called `Principal Component Analysis (PCA)` is based on matrix decomposition and SVD.
 
-Firstly, we will start with trace of a matrix which is one aspect of describing a matrix.
+Firstly, we will start with the concept of determinant of a matrix.
 
 ## Determinant of a matrix
 
-Let's assume a matrix $\boldsymbol{A} \in \mathbb{R}^{n \times n}$, we can write the determinant of this matrix as follows:
+Let's assume a square matrix $\boldsymbol{A} \in \mathbb{R}^{n \times n}$, we can write the determinant of this matrix as follows:
 
 $$
 \det(A) = \begin{vmatrix}
@@ -37,21 +36,17 @@ a_{n1} & a_{n2} & \ldots & a_{nn}
 \end{vmatrix}
 $$
 
-Determinant is a function that maps matrix into a scalar value $\mathbb{R}$. The determinant is the entity that we use to check whether a matrix is invertible. It holds
-that if a matrix $\boldsymbol{A}$ is invertilbe then $det(A) \neq 0$.
+Determinant is a function that maps matrix into a scalar value $\det(A) \in \mathbb{R}$. The determinant is the entity that we use to check whether a matrix is invertible. It holds
+that if a matrix $\boldsymbol{A}$ is `invertible` then $\det(A) \neq 0$. That means that we cannot compute $\boldsymbol{A}^{-1}$ In case, that $\det(A) = 0$ then the matrix is not invertible and it is called a `singular matrix`.
 
 The notion of a determinant is natural when we consider it as a mapping from a set of $n$ vectors spanning an object in $\mathbb{R}^n$. 
-It turns out that the determinant $\det(A)$ is the signed volume of an $n$-dimensional parallelepiped formed by columns of the matrix $A$. That can be seen with the following examples:
+It turns out that the determinant $\det(A)$ is the signed volume of an $n$-dimensional parallelepiped formed by columns of the matrix $\boldsymbol{A}$. To better grasp this, we can start with the following example: Let's say that we got two vector $\mathbf{g} = [g, 0]^T$ and $\mathbf{b} = [0, b]^T$ in standard basis $\{\mathbf{e}_1 = [1, 0]^T  \mathbf{e}_2 = [0, 1]^T \}$:
 
 <p align="center">
   <img src="images/det1.png" alt="Sublime's custom image" style="width:20%"/>
 </p>
 
-<p align="center">
-  <img src="images/det2.png" alt="Sublime's custom image" style="width:20%"/>
-</p>
-
-In the first image we do have two vectors $\mathbf{g} = [g, 0]^T$ and $\mathbf{b} = [0, b]^T$ and we can place them in the following matrix:
+ and we can place them in the following matrix:
 
 $$
 \det(A) = \begin{vmatrix}
@@ -65,7 +60,13 @@ In this case, we define as determinant to be:
 $$det(A) = g\cdot b + 0 =  g\cdot b $$
 
  which is the are of the parallelogram defined by the two vectors. The same happens in the second image, we can compute the area in the $\mathbb{R}^{3}$ space using the 
- determinant of the matrix that contains the vectors
+ determinant of the matrix that contains the vectors:
+
+
+<p align="center">
+  <img src="images/det2.png" alt="Sublime's custom image" style="width:20%"/>
+</p>
+
 
  $$
 \boldsymbol{A} = \begin{vmatrix}
@@ -81,14 +82,15 @@ Then, the volume of these three vectors can be found in we compute $det(A)$:
 
 $$
 \det(A) = \begin{vmatrix}
-2 & 6 &1\\
-0 & 1 & 4\\
--8 & 0 -1&
+2 & 6 & 1 \\
+0 & 1 & 4 \\
+-8 & 0 & -1
 \end{vmatrix} = 186
 $$
 
-One prerequisite is that the vectors are linearly independent otherwise we cannot compute the volume. Lets us image that the vectors $\mathbf{b}$ and $\mathbf{g}$ are dependant that means 
-that they are parallel and thus, the area that they define is equal to zero.
+One prerequisite is that the vectors are linearly independent otherwise we cannot compute the volume. Lets us image that the vectors $\mathbf{b}$ and $\mathbf{g}$ are dependant that means  that they are parallel and thus, the area that they define is equal to zero. That observation is really important, if the matrix contains columns that are linearly dependant then, the determinant is equal to zero and thus we can say that this matrix is a `singular matrix`. 
+
+The important message in this section is that if the determinant of a matrix is not zero, then, it represents the volume that the column vector define is $\mathbb{R}^{n}$ space. A second useful observation, is that we can compute the determinant only for square matrices.
 
 <!-- The sign of the determinant indicates the orientation of the spanning vectors $\mathbf{b}, \mathbf{g}$ 
 with respect to the standard basis $(\mathbf{e}_1, \mathbf{e}_2)$. In our figure, flipping the order to $\mathbf{g}, \mathbf{b}$ 
@@ -98,11 +100,10 @@ spanning the edges of a parallelepiped, i.e., a solid with faces that are parall
 determinant of the $3 \times 3$ matrix $[\mathbf{r}, \mathbf{b}, \mathbf{g}]$ is the volume of the solid. Thus, the determinant acts as a 
 function that measures the signed volume formed by column vectors composed in a matrix. -->
 
-
-
 ## Trace of a matrix 
 
-The trace of a matrix $\boldsymbol{A} \in \mathbb{R}^{n \times n}$ is defined as:
+The second important way to summarize matrix is by using a function called trace. This function takes as input $\boldsymbol{A} \in \mathbb{R}^{n \times n}$ and maps it in real-world
+values $\mathbb{R}$ in the following way:
 
 $$
 tr(\boldsymbol{A}) = \sum_{i=1}^n a_{ii}
@@ -113,8 +114,8 @@ where $a_{ii}$ are the diagonal elements of the squared matrix.
 The trace satisfies the following properties:
 
 - $tr(\boldsymbol{A} + \boldsymbol{B}) = tr(\boldsymbol{A}) + tr(\boldsymbol{B})$ for $\boldsymbol{A}, \boldsymbol{B} \in \mathbb{R}^{n \times n}$
--$tr(\alpha \boldsymbol{A}) = \alpha tr(\boldsymbol{A})$, $\alpha \in \mathbb{R}$ for $\boldsymbol{A} \in \mathbb{R}^{n \times n}$
--$tr(\boldsymbol{I}_n) = n$
+- $tr(\alpha \cdot \boldsymbol{A}) = \alpha \cdot tr(\boldsymbol{A})$, $\alpha \in \mathbb{R}$ for $\boldsymbol{A} \in \mathbb{R}^{n \times n}$
+- $tr(\boldsymbol{I}_n) = n$
 - $tr(\boldsymbol{AB}) = tr(\boldsymbol{BA})$ for $\boldsymbol{A} \in \mathbb{R}^{n \times k}$, $\boldsymbol{B} \in \mathbb{R}^{k \times n}$
 
 
@@ -132,35 +133,33 @@ $$
 tr(\boldsymbol{xy}^\top) = tr(\boldsymbol{y}^\top \boldsymbol{x}) = \boldsymbol{y}^\top \boldsymbol{x} = \boldsymbol{x}^\top \boldsymbol{y} \in \mathbb{R}
 $$
 
+This trace of a matrix places an important role in eigen-decomposition and SVD and it is important to understand the basics so we can apply them later during 
+the eigen-decomposition. Ok so far we found two ways to describe a square matrix using two functions the determinant and the trace. There are plenty of useful properties
+for these functions. For instance, the trace of the matrix is equal with the summation of the `eigenvalues` (we will see soon what are these values). These two functions will be utilized extensively in the following sections.
 
 ## Eigenvalues and Eigenvectors
 
-In linear algebra, `eigensystems` denote a set of problems that include
-finding eigenvectors and eigenvalues. The word eigen comes from
-German and means `own`, which will make sense when we formulate the problem
-more concretely. Informally, the main idea behind eigensystems is finding
-vectors that transform in a special way when we apply a certain transformation
-$\mathbf{A}$ on them. Specifically, we wish to find which vectors are affected
-the least by the transformation $\mathbf{A}$, and by least we mean that they
-are not rotated, but are only scaled by a factor $\lambda$. Formally, given a
-vector $\mathbf{v}$ and a transformation $\mathbf{A}$, this requirement can be
-written as:
+Now let us start describing some of the most important parts of Linear Algebra which is the decomposition of matrices.
+
+In linear algebra, `eigensystems` denote a set of problems that include finding `eigenvectors` and `eigenvalues`. The word `eigen` comes from
+German and means `own`, which will make sense when we formulate the problem more concretely. We will start with a square matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$. We have seen before that a matrix performs a linear transformation that maps vectors from $\mathbf{R}^{n} \to \mathbf{R}^{n}$ in a specific way. The core idea of eigen-decomposition is to find 
+vectors $\mathbf{x}$ that when we apply the transformation matrix $\mathbf{A}$ they are affected
+`the least` by the transformation, and by least we mean that they are not rotated, but are `only scaled` by a scalar factor $\lambda$. Formally, given a
+vector $\mathbf{x}$ and a transformation $\mathbf{A}$, this requirement can be written as:
 
 $$
-\mathbf{A}\mathbf{v} = \lambda \mathbf{v}
+\mathbf{A}\mathbf{x} = \lambda \mathbf{x}
 
 $$
 
-Since on the right-hand side we multiply a vector by a scalar, we can
-equivalently add the identity matrix as $\lambda \rightarrow \lambda \mathbf{I}$.
-Rearranging terms gives us the following equation:
+Since on the right-hand side we multiply a vector by a scalar, we can equivalently add the identity matrix as $\lambda \rightarrow \lambda \mathbf{I}$. Rearranging terms gives us the following equation:
 
 $$
-(\mathbf{A} - \lambda \mathbf{I})\mathbf{v} = \mathbf{0}
+(\mathbf{A} - \lambda \mathbf{I})\mathbf{x} = \mathbf{0}
 
 $$
 
-Assuming that $\mathbf{A} \in \mathbb{R}^{n \times n}$ and $\mathbf{v} \in \mathbb{R}^n$,
+Assuming that $\mathbf{A} \in \mathbb{R}^{n \times n}$ and $\mathbf{x} \in \mathbb{R}^n$,
 we can rewrite the former equation in an expanded form:
 
 $$
@@ -171,9 +170,9 @@ A_{21} & A_{22} - \lambda & \cdots & A_{2n} \\
 A_{n1} & A_{n2} & \cdots & A_{nn} - \lambda
 \end{pmatrix}
 \begin{pmatrix}
-v_1 \\
+x_1 \\
 \vdots \\
-v_n
+x_n
 \end{pmatrix}
 =
 \begin{pmatrix}
@@ -184,33 +183,42 @@ v_n
 $$
 
 The equation above represents a system of linear equations, and the goal is to
-find vectors $\mathbf{v} = (v_1 \ \cdots \ v_n)^\top$ and $\lambda$ that satisfy
+find vectors $\mathbf{x} = (x_1 \ \cdots \ x_n)^\top$ and $\lambda$ that satisfy
 it. For example, the $m$-th equation is given by:
 
 $$
-A_{m1} v_1 + \cdots + (A_{mm} - \lambda) v_m + \cdots + A_{mn} v_n = 0.
+A_{m1} x_1 + \cdots + (A_{mm} - \lambda) x_m + \cdots + A_{mn} x_n = 0.
 
 $$
 
 What we can see is that in every equation, we have all the unknowns (elements of
 the vector). Therefore, if the equations are not linearly independent, the only
-solution is the trivial one, i.e.\ $v_1 = v_2 = \cdots = v_n = 0$. This is a detrimental solution, and we are interested in the case that this vector is non-zero. 
+solution is the trivial one, i.e.\ $x_1 = x_2 = \cdots = x_n = 0$. This is a detrimental solution, and we are interested in the case that this vector is non-zero. 
 In this case, it should hold that:
 
 $$
 |\boldsymbol{A} - \lambda \boldsymbol{I}| = 0
 $$
 
+We can say that matrix $\boldsymbol{A} - \lambda \boldsymbol{I}$ is `singular` in this case. If that was not the case, then, we can multiply with the inverse of this matrix
+
+$$
+(\mathbf{A} - \lambda \mathbf{I})^{-1} (\mathbf{A} - \lambda \mathbf{I})\mathbf{x} = (\mathbf{A} - \lambda \mathbf{I})^{-1} \mathbf{0}
+$$
+
+which would lead to detrimental solutions that $\mathbf{x} = \mathbf{0}$ and we actually are interested in non-detrimental solutions. Finally, by using the properties of the determinant we can eventually compute
+the `eigenvectors` and `eigenvalues`.
+
 ### Geometrical interpretation and an example
 
-So what exactly is an eigenvector from the geometry perspective. We saw that the eigenvalue portrays the variance of the initial data to the new coordinate axis that is 
+So what exactly is an eigenvector from the geometry perspective. Eigenvalue portrays the variance of the initial data to the new coordinate axis that is 
 represented by each eigenvector. However, what exactly the direction of this eigenvector could tell us?
 
-The geometric interpretation for eigenvector is that once we compute the eigenvectors $\mathbf{b_1}, \mathbf{b_2}, \cdots, \mathbf{b_m}$ of matrix $\mathbf{A}$, then these vectors are not affected by the transformation with the 
+The geometric interpretation for eigenvector is that once we compute the eigenvectors $\mathbf{x}_1, \mathbf{x}_2, \cdots, \mathbf{x}_m$ of matrix $\mathbf{A}$, then these vectors are not affected by the transformation with the 
 matrix $\boldsymbol{A}$ except by a stretching factor $\lambda_{1}, \lambda_{2}, \cdots, \lambda_{m}$ in each case.
 
-Why is this important?
-
+Why is this important? Maybe add a little bit more on this!
+ 
 ## Matrix diagonalization
 
 Suppose that we do have a matrix $\boldsymbol{A} \in \mathbb{R}^{n \times n}$ and it has $n$ linearly independent eigenvectors. Then, we can place these eigenvectors in matrix $\boldsymbol{S}$. Then, the product $\boldsymbol{S}^{-1}\boldsymbol{A}\boldsymbol{S} = \boldsymbol{\Lambda}$ is a diagonal matrix with the diagonal elements to be the eigenvalues of matrix $\boldsymbol{A}$.  
@@ -261,10 +269,15 @@ $$
 \boldsymbol{A}\boldsymbol{S} = \boldsymbol{S}\boldsymbol{\Lambda} 
 $$
 
-and finally its really easy to get:
+and finally its really easy to get if we apply in both sides of the equation with $\boldsymbol{S}^{-1}$:
 
 $$
+\boldsymbol{A}\boldsymbol{S}\boldsymbol{S}^{-1} = \boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1}
+$$
 
+we do have that $\boldsymbol{S}\boldsymbol{S}^{-1} = \boldsymbol{I}$ (remeber the this matrix contains an orthogocal basis) and for that:
+
+$$
 \boldsymbol{A} = \boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1}
 $$
 
@@ -293,29 +306,61 @@ $$
 since all the intermediate steps $\boldsymbol{S}^{-1}\boldsymbol{S} = \boldsymbol{I}$. Now computing the $n$-th of the matrix can be computing by decompose the matrix into eigenvectors and eigenvalues
 and computing the $n$-th power of the diagonal matrix which computational wise is an extreme simplification.
 
+We should finally state here a fact in Linear Algebra that a `symmetric positive definite` matrix has eigevectors that are orthogonal. In this case we can use the fact from the previous analysis and the diagonalization:
+
+$$
+\mathbf{A} = \boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1} = \boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{T}
+$$
+
 
 ### Singular value decomposition
 
 However, most of matrices are not square matrices and computing the diagonal is not as straight forward. One solution to this issue, is to perform Singular value decomposition (SVD). 
+SVD is a generalization of matrix decomposition and the diagonalization for non-square matrices (or non `symmetric positive definite`) and in essence it tries to decompose the initial matrix $\boldsymbol{A} \in \mathbb{R}^{n \times m}$. 
 
-This technique is a generalization of matrix decomposition for non-square matrices and in ennesessence it tries to decompose the initial matrix $\boldsymbol{A} \in \mathbb{R}^{n \times m}$ In
-both domain and subdomain. 
-
-Then, the singular value decomposition is a factorization of the form:
+There is ususally at this point of analysis in Linear Algebra a mantra that says that `any rectangular matrix can be always decomposed into a set of three special matrices`:
 
 $$
 \boldsymbol{A} = \boldsymbol{U} \boldsymbol{\Sigma} \boldsymbol{V}^{T}
 $$
 
+where $ \boldsymbol{U} \in \mathbb{R}^{n \times n}$ and $\boldsymbol{V} \in \mathbb{R}^{m \times m}$ are orthogonal matrices while $\boldsymbol{\Sigma} \in \mathbb{R}^{n \times m}$ is a diagoral matrix. It is good to remember here that an orthogonal matrix performs
+a rotation while a diagonal matrix streches the intital matrix along its direction. 
+
+So we can say that the transformation from the matrix $\textit{transformation} = \textit{rotatation} \times \textit{scaling} \times \textit{rotatation}$.
+
+Intermezzo: rectangular matrices can transform a vector to a different vector space. For example, matrix transformation $\boldsymbol{A} \in \mathbb{R}^{n \times m}$ if it will be applied (multiplied) by a vector $\mathbf{x} \in \mathbb{R}^n$ then it transforms from $\mathbb{R}^n \to \mathbb{R}^m$.
+
+To understand better what is going on, let us focus on recatungular matrix $\boldsymbol{A} \in \mathbb{R}^{3 \times 2}$. This matrix can be perceived as a complex linear transformation from 
+$\mathbb{R}^3 \to \mathbb{R}^2$. If we apply this tranformation to a matrix $\mathbf{x} \in \mathbb{R}^3$ it will return a new vector that lives in $\mathbb{R}^2$ space. When we factorize
+this matrix using SVD, matrix $\boldsymbol{\Sigma} \in \mathbb{R}^{3 \times 2}$ lives in the same space with the initial matrix $ \boldsymbol{A}$, and it is a diagonal matrix that contains 
+the so-called singular values. Matrices $ \boldsymbol{U} \in \mathbb{R}^{3 \times 3}$ and $\boldsymbol{V} \in \mathbb{R}^{2 \times 2}$ are orthogonal basis in the two spaces that are related to the transformation matrix $\boldsymbol{A}$.
+
+To better grasp the idea behind these matrices, lets think for a moment about the properties of a symmetric matrix which is square matrix with the property which the two sides of the diagonal matrix 
+contains identical entries. That is reflected from the following obvious property: $\boldsymbol{B} = \boldsymbol{B}^{T}$.
+The second property is the fact that the eigenvectors of the symmetric matrix is perpendicular to each other. If we store these eigenvectors into a matrix that implies some rotation matrix.
+
+These two properties are important for SVD. Note that our matrix $\boldsymbol{A} \in \mathbb{R}^{3 \times 2}$ is rectangular. However, matrices $\boldsymbol{A}\boldsymbol{A}^{T} \in \mathbb{R}^{2 \times 2}$ (can be denoted as $S_L$)
+and $\boldsymbol{A}^{T}\boldsymbol{A} \in \mathbb{R}^{3 \times 3}$ ($S_R$) are always symmetric.  Here you can see the whole process of SVD:
+
+<p align="center">
+  <img src="images/svd_3.png" alt="Sublime's custom image" style="width:9s0%"/>
+</p>
+
+To reason why this decomposition holds can be proven if we perform diagonization of the matrix $\boldsymbol{A}^{T}\boldsymbol{A}$. This will easily lead to the defition of SVD decomposition.
+
+
 The visualization of these matrices is shown below (adapted from Wikipedia). We can see that the matrix $\boldsymbol{\Sigma}$
- has a diagonal part (which can have zero and non-zero elements), whereas the rest of the matrix is equal to zero.
+has a diagonal part (which can have zero and non-zero elements), whereas the rest of the matrix is equal to zero.
 
  <p align="center">
   <img src="images/svd_1.png" alt="Sublime's custom image" style="width:50%"/>
 </p>
 
 The diagonal elements $\sigma_i = \Sigma_{ii}$ of the matrix $\Sigma$ are called
-`singular values` of $\mathbf{A}$. We can show that the number of nonzero
+`singular values` of $\mathbf{A}$. 
+
+<!-- We can show that the number of nonzero
 singular values is equal to the rank of $\mathbf{A}$. From decompositions
 explained in the Rank of a Matrix theory page, we can see that the SVD
 expression is equivalent to the following:
@@ -328,7 +373,7 @@ $$
 From this, we see that the SVD of matrix $\mathbf{A}$ expresses it as a
 (nonnegative) linear combination of rank-1 matrices, and we know that the
 number of nonzero terms in such a linear combination is equal to the rank of
-the matrix.
+the matrix. -->
 
 Geometrically, SVD actually performs very simple and intuitive operations.
 Firstly, the matrix $\mathbf{V}$ performs a rotation in $\mathbb{R}^n$.
@@ -351,26 +396,26 @@ remove dimensions, depending on the form of the matrix $\mathbf{A}$).
 ### Dimensionality Reduction with Principal Component Analysis
 
 Ok so far we saw multiple ways to describe a matrix with data $\boldsymbol{A}$. We learn about how to compute determinants and the trace of a matrix. We saw also 
-how to perform an eigen-analysis of the matrix and what is the geometric interpretation of it. We saw how to diagonalize a matrix and how to do it using Singular value 
-decomposition. In this part of the tutorial, we will see its real merit and the reasons why we would like to perform matrix decomposition in Machine Learning. Plot-twist
-the main reason is because matrix decomposition paves the way for dimensionality reduction and the discovery of embeddings that can be meaningfully characterize the 
+how to perform an eigen-analysis of the matrix and what is the geometric interpretation of it. We examine how to diagonalize a matrix and how to perform decomposition for rectangular matrices using `Singular value 
+decomposition` (SVD). 
+
+In this part of the tutorial, we will see its real merit and the reasons why we would like to perform matrix decomposition in Machine Learning. Plot-twist
+the main reason is because matrix decomposition paves the way for `dimensionality reduction` and the `discovery of embeddings` that can be meaningfully characterize the 
 initial feature space of our data in hand.
 
-In ML the most interesting and challenging problems are coupled with data that live in high-dimensionalities such as images. This high-dimensionality comes 
+In ML the most interesting and challenging problems are coupled with data that live in `high-dimensionalities` such as images. This high-dimensionality comes 
 with multiple problems such as it makes the ML algorithm hard to parse data to interpret them while it is merely impossible to visualize them and really expensive to 
-store the data in servers. At the same time, there are properties of these high-dimensional data that we can take advantage of. For instance, many dimensions are redundant and they 
-could simply represented a linear combination of other dimensions. Dimensionality reduction exploits structure and correlation and allows us to work with a more compact representation
-of the data, ideally without losing information. We can think of dimensionality reduction as a compression technique, similar to jpeg or mp3, which are compression algorithms 
-for images and music.
+store the data in servers. At the same time, there are properties of these high-dimensional data that we can take advantage of. For instance, many dimensions are redundant since they 
+could simply represented `a linear combination` of other dimensions. `Dimensionality reduction` exploits structure and correlation and allows us to work with a more compact representation of the data, ideally without losing information. We can think of dimensionality reduction as a compression technique, similar to `jpeg` or `mp3`, which are compression algorithms  for images and music.
 
 
 ### Principle component analysis
 
-We will start with a simple intuition that I like to use when explaining PCA. Conceptually the way that PCA works reminiscence the way that the photography works in the physical space of three
-dimensions. Imagine the following setup, we do have living persons in the physical world of three dimensions $(x, y, z)$, width, length and height. We would like to collect images in such as way
-that we will represent perfectly all the living persons in the scene. One option since our problem lives in 3d would be to collect data from three different axis. However, in practice
-that is not necessary and a photographer does is to find the perfect angle in each he can perfectly capture the ideal information for all the subjects in the scene. In the same spirit,
-we can perceive PCA as finding a new angle to capture our data which better characterize the initial information from our data. 
+We will start the explanation of PCA with a simple intuitive example that I like to use when explaining this method. 
+
+Conceptually the way that PCA works reminiscence the way that the photography works in the physical space of three dimensions. Imagine the following setup: we do have living persons in the physical world of three dimensions $(x, y, z)$, that represents the coordinates or `width, length and height`. 
+
+We want to collect images in such as way that we will represent perfectly all the living persons in the scene. One option since our problem lives in 3d would be to collect data from three different axis. However, in practice that is not necessary and what a photographer does is to find the `perfect angle` in 3D space where he can perfectly capture the ideal information for all the subjects in the scene. In the same spirit, we can perceive PCA as finding a new angle to capture our data which better characterize the initial information from our data. 
 
 <p align="center">
   <img src="images/pic.png" alt="Sublime's custom image" style="width:50%"/>
@@ -387,7 +432,9 @@ we can perceive PCA as finding a new angle to capture our data which better char
 </p>
 
 
-But the intuition sounds sweet, however, how this is done in practice? In Principle component analysis (PCA) we are interested in finding projections of the initial data $\mathbf{x}_n \in \mathbb{R}^{D}$ denoted as $\mathbf{\tilde{x}}_n \in \mathbb{R}^{D'}$ which are as close as
+Now the intuition sounds sweet, however, how this is done in practice? 
+
+In Principle component analysis (PCA) we are interested in finding projections of the initial data $\mathbf{x}_n \in \mathbb{R}^{D}$ denoted as $\mathbf{\tilde{x}}_n \in \mathbb{R}^{D'}$ which are as close as
 possible to the original point but at the same time lives in a dimensionality and is lower than the initial one $D' << D$.
 
 Usually, the setup is the following: we do have access to a dataset $\mathcal{D} = \\{ \mathbf{x}_1, \mathbf{x}_2, ..., \mathbf{x}_n \\} \in \mathbb{R}^{N \times D}$ with $N$ to be the number of 
@@ -405,9 +452,7 @@ $$
 \mathbf{z}_n = \boldsymbol{B}^{T} \mathbf{x}_n
 $$
 
-Our target is to find the projection matrix $\boldsymbol{\mathcal{B}}$ that maps the original data with minimal compression loss while keeps the data information intact. In the below sections we will 
-analyze two approaches to find this projection matrix. The first approach, aims at finding the direction that maximizes the variance, while in the second perspective, we are trying to minimize the reconstruction
-loss.
+Our target is to find the projection matrix $\boldsymbol{\mathcal{B}}$ that maps the original data with minimal compression loss while keeps the data information intact. In the below sections we will analyze two approaches to find this projection matrix. The first approach, aims at finding the direction that maximizes the variance, while in the second perspective, we are trying to minimize the reconstruction loss.
 
 
 #### First perspective maximizing the variance
