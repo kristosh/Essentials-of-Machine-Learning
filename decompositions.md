@@ -417,6 +417,12 @@ $$
 \boldsymbol{A} \cdot \mathbf{v}_j = \sigma_{j} \mathbf{u}_j
 $$
 
+Thus, it holds that $\boldsymbol{A} \boldsymbol{V} = \boldsymbol{U} \boldsymbol{\Sigma}$. The final step is to multiply with $\boldsymbol{V}^{-1}$ in both sides and we are finally get
+
+$$
+\boldsymbol{A}  = \boldsymbol{U} \boldsymbol{\Sigma} \boldsymbol{V}^{-1} = \boldsymbol{U} \boldsymbol{\Sigma} \boldsymbol{V}^{T}
+$$
+
 ### Dimensionality Reduction with Principal Component Analysis
 
 Ok so far we saw multiple ways to describe a matrix with data $\boldsymbol{A}$. We learn about how to compute determinants and the trace of a matrix. We saw also 
