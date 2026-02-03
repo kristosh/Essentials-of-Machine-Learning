@@ -214,7 +214,11 @@ the `eigenvectors` and `eigenvalues`.
 So what exactly is an eigenvector from the geometry perspective. Eigenvalue portrays the variance of the initial data to the new coordinate axis that is 
 represented by each eigenvector. However, what exactly the direction of this eigenvector could tell us?
 
-The geometric interpretation for eigenvector is that once we compute the eigenvectors $\mathbf{x}_1, \mathbf{x}_2, \cdots, \mathbf{x}_m$ of matrix $\mathbf{A}$, then these vectors are not affected by the transformation with the 
+The geometric interpretation for eigenvector is that once we compute the eigenvectors 
+
+$$\mathbf{x}_{1}, \mathbf{x}_{2}, \cdots, \mathbf{x}_{m}$$
+
+ of matrix $\mathbf{A}$, then these vectors are not affected by the transformation with the 
 matrix $\boldsymbol{A}$ except by a stretching factor $\lambda_{1}, \lambda_{2}, \cdots, \lambda_{m}$ in each case.
 
 Why is this important? Maybe add a little bit more on this!
@@ -429,8 +433,7 @@ Ok so far we saw multiple ways to describe a matrix with data $\boldsymbol{A}$. 
 how to perform an eigen-analysis of the matrix and what is the geometric interpretation of it. We examine how to diagonalize a matrix and how to perform decomposition for rectangular matrices using `Singular value 
 decomposition` (SVD). 
 
-In this part of the tutorial, we will see its real merit and the reasons why we would like to perform matrix decomposition in Machine Learning. Plot-twist
-the main reason is because matrix decomposition paves the way for `dimensionality reduction` and the `discovery of embeddings` that can be meaningfully characterize the 
+In this part of the tutorial, we will see its real merit and the reasons why we would like to perform matrix decomposition in Machine Learning. A simple and direct answer on that is that matrix decomposition paves the way for `dimensionality reduction` and the `discovery of embeddings` that can be meaningfully characterize the 
 initial feature space of our data in hand.
 
 In ML the most interesting and challenging problems are coupled with data that live in `high-dimensionalities` such as images. This high-dimensionality comes 
@@ -461,39 +464,50 @@ We want to collect images in such as way that we will represent perfectly all th
   <img src="images/pic2.png" alt="Sublime's custom image" style="width:50%"/>
 </p>
 
+This `proper angle` is an efficient `point of view` of observing the data. It can be perceived also as the proper basis that we project the data where we do not need all the dimensions to efficiently describe our data and datasets.
 
 Now the intuition sounds sweet, however, how this is done in practice? 
 
 In Principle component analysis (PCA) we are interested in finding projections of the initial data $\mathbf{x}_n \in \mathbb{R}^{D}$ denoted as $\mathbf{\tilde{x}}_n \in \mathbb{R}^{D'}$ which are as close as
-possible to the original point but at the same time lives in a dimensionality and is lower than the initial one $D' << D$.
+possible to the original point but at the same time lives in a dimensionality and is lower than the initial one $D' \ll D$.
 
-Usually, the setup is the following: we do have access to a dataset $\mathcal{D} = \\{ \mathbf{x}_1, \mathbf{x}_2, ..., \mathbf{x}_n \\} \in \mathbb{R}^{N \times D}$ with $N$ to be the number of 
-instances and $D$ the dimensionality of each feature with matrix $\boldsymbol{S}$ to be the data covariance matrix:
+Usually, the setup is the following: we do have access to a dataset $\mathcal{D} = \\{ \mathbf{x}_1, \mathbf{x}_2, ..., \mathbf{x}_n \\} \in \mathbb{R}^{N \times D}$ with $N$ to be the number of instances and $D$ the dimensionality of each feature and we can re-write:
+
+$$\boldsymbol{D} = \begin{bmatrix}
+| & | & & | \\
+x_1 & x_2 & \cdots & x_n \\
+| & | & & |
+\end{bmatrix} \in \mathbb{R}^{N \times D}$$
+
+
+with matrix $\boldsymbol{S}$ to be the data covariance matrix:
 
 $$
-\boldsymbol{S} = \frac{1}{N}\sum_{i=1} ^N \mathbf{x}_n \mathbf{x}_n^T
+\boldsymbol{S} = \frac{1}{N}\sum_{i=1} ^N \mathbf{x}_n \mathbf{x}_n^T \in \mathbb{R}^{D \times D}
 $$
 
-Then in PCA we assume that there is a low dimension representation that is characterized by projection matrix $\boldsymbol{\mathcal{B}} = \[ \mathbf{b}_1, \mathbf{b}_2, \mathbf{b}_M \] \in \mathbb{R}^{D \times M}$ where you 
+Then in PCA we assume that there is a low dimension representation that is characterized by projection matrix $\boldsymbol{\mathcal{B}} = \[ \mathbf{b}_1, \mathbf{b}_2, \cdots, \mathbf{b}_D' \] \in \mathbb{R}^{D \times D'}$ where you 
 can project each instance $\mathbf{x}_n$ as:
 
 
 $$
-\mathbf{z}_n = \boldsymbol{B}^{T} \mathbf{x}_n
+\mathbf{z}_n = \boldsymbol{B}^{T} \mathbf{x}_n \in \mathbb{R}^{D'}
 $$
+
+so we project the data in lower dimensionality $D' \ll D$
 
 Our target is to find the projection matrix $\boldsymbol{\mathcal{B}}$ that maps the original data with minimal compression loss while keeps the data information intact. In the below sections we will analyze two approaches to find this projection matrix. The first approach, aims at finding the direction that maximizes the variance, while in the second perspective, we are trying to minimize the reconstruction loss.
 
 
 #### First perspective maximizing the variance
 
-Each vector $\[ \mathbf{b}_1, \mathbf{b}_2, \cdots, \mathbf{b}_M \]$ projects the initial data into a new coordinate space. The total amount of dimensions is $M$ and this is a hyperparameter that we
+Each vector $\[ \mathbf{b}_1, \mathbf{b}_2, \cdots, \mathbf{b}_D' \] \in \mathbb{R}^{D \times D'}$ projects the initial data into a new coordinate space. The total amount of dimensions is $D'$ and this is a hyperparameter that we
 usually need to decide or to figure out which dimensionality is more suitable for the problem in hand. The ideas is also to sort these projections in such a way that that the first projection leads to the 
 direction with the maximum variance and so on for the rest of the projections. If the dimensionality of the initial data is $D$ then we can find initially $D$ new projections that the variance is 
 maximized and sorted in descending order. Thus, we will need to find these projection vectors that lead to directions where the variance of the data is sorted in this way. 
 
 
-Initially, we start by trying to find the projection vector $\mathbf{b}_1 \in \mathbb{R}^M$ that maximizes the variance of the projected data. Usually, in PCA, we make the assumption that the data are centered around mean since the variance is not 
+Initially, we start by trying to find the projection vector $\mathbf{b}_1 \in \mathbb{R}^{D}$ that maximizes the variance of the projected data. Usually, in PCA, we make the assumption that the data are centered around mean since the variance is not 
 affected by this mean. That means that even if the data are not centered around the mean, if we subtract the mean and center the data, the variance is the same. Thus, we can compute the variance of the first coordinate as:
 
 $$
@@ -513,10 +527,16 @@ $$
 = \boldsymbol{b}_1^\top S \boldsymbol{b}_1 .
 $$
 
-We have expanded the variance and reach to the final expression by using the property that dot product is symmetric. To make things easy, in our search for the direction that maximizes the variance, we can assume without
-that the magnitude of this vector is normalized to be equal to one, thus: $||\mathbf{b}_1|| = 1$ since what we care is the direction and not the length of the vector. 
+We have expanded the variance and reach to the final expression by using the property that dot product is symmetric. Moreover, we have already defined everything in the parenthesis to be the data covariance:
 
-This opens the gate for utilized and using constraint optimization techniques such as Lagrangian multipliers:
+$$
+\boldsymbol{S} = \frac{1}{N}\sum_{i=1} ^N \mathbf{x}_n \mathbf{x}_n^T \in \mathbb{R}^{D \times D}
+$$
+
+To make things easy, in our search for the direction that maximizes the variance, we can assume without that the magnitude of this vector is normalized to be equal to one, thus: 
+$||\mathbf{b}_1|| = 1$ since what we care is the direction and not the length of the vector. 
+
+Since we want to find the optimal vector $\mathbf{b}_1 \in \mathbb{R}^{D}$ that maximizes the variance after the projection of the data in hand in this direction that opens the gate for constraint optimization techniques like Lagrangian multipliers:
 
 $$
 \max_{\boldsymbol{b}_1} \; \boldsymbol{b}_1^{\top} S \boldsymbol{b}_1
@@ -533,13 +553,13 @@ $$
 \mathcal{L} = \boldsymbol{b}_1^\top S \boldsymbol{b}_1 + \lambda_1 (1 - b_1^\top \boldsymbol{b}_1)
 $$
 
-The recipe for Lagrangian constraint optimization is to find the partial derivatives with respect to $\mathbf{b}_1$ and $\lambda_{1}$ which leads to the following outcome:
+The recipe for Lagrangian constraint optimization is to find the partial derivatives with respect to $b_{1} $ and $\lambda_{1}$ which leads to the following outcome:
 
 $$
 \boldsymbol{S}\boldsymbol{b}_1 = \lambda_{1} \boldsymbol{b}_1
 $$
 
-It is obvious that by computing the partial derivatives we ended up in an equation system that is equal to eigen-decomposition and vector $\mathbf{b}_1$ is an eigenvector while 
+It is obvious that by computing the partial derivatives we ended up in an equation system that is equal to eigen-decomposition and vector $b_{1}$ is an eigenvector while 
 parameter $\lambda_{1}$ is an eigenvalue. Now, if we dig further we do have the following expression:
 
 $$
@@ -563,12 +583,25 @@ variance in the projected coordinate. Finally, we can keep all the coordinates t
 
 #### Projection perspective
 
-In the following, we will derive PCA as an algorithm that directly minimizes the average reconstruction error which is a second perspective in PCA.
+In the following, we will derive PCA as an algorithm that directly minimizes the average reconstruction error which is a second perspective in PCA. The aim in this perspective is to find a projection $\mathbf{\tilde{x}}_n$ for an instance input $\mathbf{x}_n$ that minimizes the following:
 
+$$
+\frac{1}{N} \sum_{n=1}^{N}||\mathbf{x}_n - \mathbf{\tilde{x}}_n||
+$$
+
+For a dataset $\mathcal{D}$:
+
+$$
+\boldsymbol{D} = \begin{bmatrix}
+| & | & & | \\
+x_1 & x_2 & \cdots & x_n \\
+| & | & & |
+\end{bmatrix} \in \mathbb{R}^{N \times D}
+$$
 
 #### Example MNIST embeddings
 
 
-#### How to compute eigenvectors and eigenvalues using Singular-value decomposition (SVD)
+#### How to use SVD for computing PCA in practise
 
 [back](./)
