@@ -43,6 +43,8 @@ The course aims to provide the necessary introductory knowledge for Machine Lear
 
 [Matrix Decompositions.](./decompositions.html)
 
+[Support vector machines.](./svm.html)
+
 <!-- There should be whitespace between paragraphs.
 
 There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
