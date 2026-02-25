@@ -1,27 +1,29 @@
 ---
 layout: default
 title: Matrix decompositions and eigen-analysis
-description: Matrix decompositions and from eigen-analysis to Principal component analysis
+description: Matrix decompositions and from eigen-analysis to Principal component analysis. So what is matrix decomposition? And why we need it?
+
 ---
 
 # Matrix decompositions
 
-What is it? Why we need it?
+So what is matrix decomposition? And why we need it? This is what we will try to answer in this tutorial.
 
-In general we have seen in previous tutorials how mappings and transformations of vectors can be conveniently seen as linear transformation and described as
-matrices. We saw how data can be represented by matrices where the rows of the matrix represent different people and the columns
-describe different features of the people, such as weight, height, and socioeconomic status. That row and column order does not play a really important role and we can have each 
+In general we have seen in previous tutorials how `mappings` and `transformations` of vectors can be conveniently seen as `linear transformation` and described as`matrices`. We saw how `data` can be represented by `matrices` where the rows of the matrix for example represent different people or as they called `instances` and the columns
+describe different `features` of the people, such as: `weight`, `height`, and other information about the individuals. That row and column order does not play a really important role and we can have each 
 instance to be a column vector so a column of the matrix. That is simply a transpose of the initial matrix.
 
-In this chapter, we present three aspects of matrices: how to summarize matrices, how matrices can be decomposed, and how these decompositions can be used for matrix approximations. 
-We will analyze multiple ways to perform matrix decomposition and eventually we will show why this is really important in Machine Learning. We start by considering methods that allow us to describe matrices with just a few numbers that characterize the overall properties of matrices. These methods are the `determinants`, `traces` and `eigenvalues`.
+In this page, we will present three different aspects of these matrices: how to `summarize matrices`, how matrices can be `decomposed`, and how these decompositions can be used for matrix approximations. 
+We will analyze multiple ways to perform matrix decomposition and eventually we will show why this is really important in `Machine Learning`. 
+
+We will start our journey by considering methods that allow us to describe matrices with just a few numbers that characterize the overall properties of matrices. These methods are the `determinants`, `traces` and `eigenvalues`.
 
 Matrix decompositions usually decompose an original matrix 
 into a product of simpler matrices, which have some specific features. In this theory page, we cover two important decompositions: 
 `Eigenvalue decomposition (Diagonalization)` and `Singular value Decomposition (SVD)`. Finally we show that one of the most important algorithms in Machine Learning
 called `Principal Component Analysis (PCA)` is based on matrix decomposition and SVD.
 
-Firstly, we will start with the concept of determinant of a matrix.
+Ok but first things first, lets start with simple ways to describe matrices. The first methodology or function of the matrix it is called the `determinant`.
 
 ## Determinant of a matrix
 
@@ -36,7 +38,7 @@ a_{n1} & a_{n2} & \ldots & a_{nn}
 \end{vmatrix}
 $$
 
-Determinant is a function that maps matrix into a scalar value $\det(A) \in \mathbb{R}$. The determinant is the entity that we use to check whether a matrix is invertible. It holds
+Determinant is a function that maps a matrix into a scalar value $\det(A) \in \mathbb{R}$. The determinant is the entity that we use to check whether a matrix is invertible. It holds
 that if a matrix $\boldsymbol{A}$ is `invertible` then $\det(A) \neq 0$. That means that we cannot compute $\boldsymbol{A}^{-1}$ In case, that $\det(A) = 0$ then the matrix is not invertible and it is called a `singular matrix`.
 
 The notion of a determinant is natural when we consider it as a mapping from a set of $n$ vectors spanning an object in $\mathbb{R}^n$. 
@@ -59,7 +61,7 @@ In this case, we define as determinant to be:
 
 $$det(A) = g\cdot b + 0 =  g\cdot b $$
 
- which is the are of the parallelogram defined by the two vectors. The same happens in the second image, we can compute the area in the $\mathbb{R}^{3}$ space using the 
+ which is the area of the parallelogram defined by the two vectors. The same happens in the below image, where we can compute the area in the $\mathbb{R}^{3}$ space using the 
  determinant of the matrix that contains the vectors:
 
 
@@ -88,9 +90,9 @@ $$
 \end{vmatrix} = 186
 $$
 
-One prerequisite is that the vectors are linearly independent otherwise we cannot compute the volume. Lets us image that the vectors $\mathbf{b}$ and $\mathbf{g}$ are dependant that means  that they are parallel and thus, the area that they define is equal to zero. That observation is really important, if the matrix contains columns that are linearly dependant then, the determinant is equal to zero and thus we can say that this matrix is a `singular matrix`. 
+One prerequisite is that the vectors are `linearly independent` otherwise we cannot compute the volume. Lets us imagine that the vectors $\mathbf{b}$ and $\mathbf{g}$ are dependant, that means that they are parallel and thus, the area that they define is equal to zero. `That observation is really important!` If a matrix contains columns that are linearly dependant then, `the determinant is equal to zero` and thus we can say that this matrix is a `singular matrix`. 
 
-The important message in this section is that if the determinant of a matrix is not zero, then, it represents the volume that the column vector define is $\mathbb{R}^{n}$ space. A second useful observation, is that we can compute the determinant only for square matrices.
+The important message in this section is that if the determinant of a matrix is not zero, then, it represents the volume that the column vector define is $\mathbb{R}^{n}$ space. A second useful observation, is that we can compute the determinant only for square matrices. If the matrix contains columns that are linearly dependant then we have a `singular matrix`.
 
 <!-- The sign of the determinant indicates the orientation of the spanning vectors $\mathbf{b}, \mathbf{g}$ 
 with respect to the standard basis $(\mathbf{e}_1, \mathbf{e}_2)$. In our figure, flipping the order to $\mathbf{g}, \mathbf{b}$ 
@@ -102,7 +104,7 @@ function that measures the signed volume formed by column vectors composed in a 
 
 ## Trace of a matrix 
 
-The second important way to summarize matrix is by using a function called trace. This function takes as input $\boldsymbol{A} \in \mathbb{R}^{n \times n}$ and maps it in real-world
+The second important way to summarize matrix is by using a function called `trace`. This function takes as input $\boldsymbol{A} \in \mathbb{R}^{n \times n}$ and maps it into real-world
 values $\mathbb{R}$ in the following way:
 
 $$
@@ -134,12 +136,15 @@ tr(\boldsymbol{xy}^\top) = tr(\boldsymbol{y}^\top \boldsymbol{x}) = \boldsymbol{
 $$
 
 This trace of a matrix places an important role in eigen-decomposition and SVD and it is important to understand the basics so we can apply them later during 
-the eigen-decomposition. Ok so far we found two ways to describe a square matrix using two functions the determinant and the trace. There are plenty of useful properties
-for these functions. For instance, the trace of the matrix is equal with the summation of the `eigenvalues` (we will see soon what are these values). These two functions will be utilized extensively in the following sections.
+the eigen-decomposition. 
+
+
+# Matrix decomposition
+
+Ok so far we found two ways to describe a square matrix using two functions the determinant and the trace. There are plenty of useful properties
+for these functions. For instance, the trace of the matrix is equal with the summation of the `eigenvalues` (we will see soon what are these values). Now equipped with these two basic functions we can proceed with the concept of `matrix decomposition`. We will start by explaining with the really important concepts of `eigenvalues` and `eigenvectors`.
 
 ## Eigenvalues and Eigenvectors
-
-Now let us start describing some of the most important parts of Linear Algebra which is the decomposition of matrices.
 
 In linear algebra, `eigensystems` denote a set of problems that include finding `eigenvectors` and `eigenvalues`. The word `eigen` comes from
 German and means `own`, which will make sense when we formulate the problem more concretely. We will start with a square matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$. We have seen before that a matrix performs a linear transformation that maps vectors from $\mathbf{R}^{n} \to \mathbf{R}^{n}$ in a specific way. The core idea of eigen-decomposition is to find 
