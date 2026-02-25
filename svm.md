@@ -303,33 +303,130 @@ instances in the training set. However, we know that $a_n \geq 0$, so here we do
 
 ### Intermezzo kernels and kernel trick
 
-Here we will try to explain with simple terms what a kernel is and how to use it. In a lot of instances we can see that in linear models we end up having a lot of dot-products as:
+So far we have seen only parametric learning methods like `linear regression` or `Perceptron`. These methods form of the mapping $y(\mathbf{x}, \mathbf{w})$ from input $\mathbf{x}$ to output $y$ is governed by a vector $\mathbf{w}$ of adaptive parameters. During training phase the task is to learn the parameters $\mathbf{w}$ and then, during inference we employ these parameters to perform `predictions`.
+
+There is another strategy that we can use where we can also use `training data` during the `inference time` to make predictions. Think for instance the example of K-Nearest Neighbors.These are examples of memory-based methods that involve storing the entire training set in order to make predictions for future data
+points. They typically require a `similarity measurement` to be defined that measures the similarity of any two vectors in input space, and are generally fast to `train` but slow at making
+predictions for test data points. Even the traditional methods can be cast into non-parametric using during inference this `similarity measurement` that usually is called `kernel function`.
+
+This function is simply the inner product between two instances in the vector space:
 
 $$
-\phi(\mathbf{x})^T \phi(\mathbf{x}')^T
+\boldsymbol{\phi}(\mathbf{x})^T \boldsymbol{\phi}(\mathbf{x}')
 $$
 
-so the initial instance is transformed by the basis function for instance $\mathbf{x}$ and then we compute the inner product with some other sample $\phi(\mathbf{x}')$
+so the initial instance is transformed by the basis function for instance $\mathbf{x}$ and then we compute the inner product with some other sample $\boldsymbol{\phi}(\mathbf{x}')$
 which reveals the similarity of these two vectors. We can define this similarity to be our `kernel function` as follows:
 
 
 $$
-k(\mathbf{x}, \mathbf{x}') = \phi(\mathbf{x})^T \phi(\mathbf{x}')^T
+k(\mathbf{x}, \mathbf{x}') = \boldsymbol{\phi}(\mathbf{x})^T \boldsymbol{\phi}(\mathbf{x}')^T
 $$
 
-which is translates as a similarity measurement in the feature space. In a similar fashion with SVM, when we introduce kernels we are trying to compute the predictions of the model not by
-using the linear modelling parameters $\mathbf{w}$ but the kernel functions evaluated on all the training samples. That changes the perspective and the dimensionality of the problem at hand.
+which is translates as a `similarity measurement` in the feature space inner product between two instances $\mathbf{x}, \mathbf{x}'$. 
 
-Usually, in the linear modelling optimization we come across the following matrix multiplication $\mathbf{X}^{T}\mathbf{X}$ or: 
+In a similar fashion with SVM, when we introduce kernels we are trying to compute the predictions of the model not by using the linear modelling parameters $\mathbf{w}$ 
+but the kernel functions evaluated on all the training samples. That changes the perspective and the dimensionality of the problem at hand. 
 
-$$\Phi(\mathbf{X})^{T} \Phi(\mathbf{X}) \in \mathbb{R}^{M \times M}$$
+Usually, in the linear modelling optimization we come across the following matrix multiplication 
 
-for instance that appears in the primal
-optimization of a linear model but that can be replaced from a dual representation by the outer product 
+$$\mathbf{X}^{T}\mathbf{X} \in \mathbb{R}^{D \times D}$$
 
-$$K = \Phi(\mathbf{X}) \Phi(\mathbf{X})^T \in \mathbf{R}^{N \times N}$$
+or: 
 
-The idea is that in the the dual representation do not depend in the feature basis function but solely on the distance between instances using the kernel function.
+$$\boldsymbol{\Phi}(\mathbf{X})^{T} \boldsymbol{\Phi}(\mathbf{X}) \in \mathbb{R}^{M \times M}$$
+
+for instance that appears in the primal optimization of a linear model but that can be replaced from a dual representation (as we have seen in `SVM`) by the following: 
+
+$$ \boldsymbol{K} = \boldsymbol{\Phi}(\mathbf{X}) \boldsymbol{\Phi}(\mathbf{X})^T \in \mathbf{R}^{N \times N}$$
+
+Just to disentangle a bit the discussion here, we will use the following terminology, for matrix $\boldsymbol{\Phi}(\mathbf{X})$ or simply $\boldsymbol{\Phi}$ this is called the `design matrix`. Given a dataset
+
+$$
+\boldsymbol{X} = 
+\begin{bmatrix} 
+- & \mathbf{x}_1^T & - \\ 
+- & \mathbf{x}_2^T & - \\ 
+& \vdots & \\ 
+- & \mathbf{x}_N^T & - 
+\end{bmatrix} 
+
+= 
+
+\begin{pmatrix}
+{x}_{11} & {x}_{12} & \cdots & {x}_{1d} \\
+{x}_{21} & {x}_{22} & \cdots & {x}_{2d} \\
+\vdots & \vdots & \ddots & \vdots \\
+{x}_{N1} & {x}_{N2} & \cdots & {x}_{Nd}
+\end{pmatrix} \in \mathbb{R}^{N \times D}
+$$
+
+
+$$
+\boldsymbol{\Phi} = 
+\begin{bmatrix} 
+- & \phi_1^T & - \\ 
+- & \phi_2^T & - \\ 
+& \vdots & \\ 
+- & \phi_N^T & - 
+\end{bmatrix} 
+
+= 
+\begin{pmatrix}
+\phi_0(\mathbf{x}_1) & \phi_1(\mathbf{x}_1) & \cdots & \phi_{M-1}(\mathbf{x}_1) \\
+\phi_0(\mathbf{x}_2) & \phi_1(\mathbf{x}_2) & \cdots & \phi_{M-1}(\mathbf{x}_2) \\
+\vdots & \vdots & \ddots & \vdots \\
+\phi_0(\mathbf{x}_N) & \phi_1(\mathbf{x}_N) & \cdots & \phi_{M-1}(\mathbf{x}_N)
+\end{pmatrix} \in \mathbb{R}^{N \times M}
+$$
+
+Then, when we compute $\boldsymbol{\Phi}^T\boldsymbol{\Phi}$ we can analyze it further to understand what is happening:
+
+$$
+\boldsymbol{\Phi}^T\boldsymbol{\Phi} = 
+
+\begin{bmatrix} 
+| & | & & | \\ 
+\phi^{(1)} & \phi^{(2)} & \cdots & \phi^{(M)} \\ 
+| & | & & | 
+\end{bmatrix} 
+
+\begin{bmatrix} 
+- & \phi_1^T & - \\ 
+- & \phi_2^T & - \\ 
+& \vdots & \\ 
+- & \phi_N^T & - 
+\end{bmatrix} 
+
+\in \mathbf{R}^{M \times M}
+$$
+
+In our notation this matrix, is the outer product $\boldsymbol{\phi}\boldsymbol{\phi}^T$ of the elements of the `design matrix`. While the matrix formed with the following way:
+
+$$
+\boldsymbol{\Phi}\boldsymbol{\Phi}^T = 
+
+\begin{bmatrix} 
+- & \phi_1^T & - \\ 
+- & \phi_2^T & - \\ 
+& \vdots & \\ 
+- & \phi_N^T & - 
+\end{bmatrix} 
+
+\begin{bmatrix} 
+| & | & & | \\ 
+\phi^{(1)} & \phi^{(2)} & \cdots & \phi^{(M)} \\ 
+| & | & & | 
+\end{bmatrix} 
+
+\in \mathbf{R}^{N \times N}
+$$
+
+The idea is that in the the dual representation do not depend in the feature basis function that is usually represented by $\boldsymbol{\Phi}^T\boldsymbol{\Phi}$ but solely on the distance between instances $\boldsymbol{\Phi}\boldsymbol{\Phi}^T$  using the kernel function. One of the reason that we want to take advantage of the kernel trick, which states that the computation of the can de computed in the original dimensionality of the raw data before we apply the basis functions $\phi$.
+ 
+That ofc sounds really ambiguous and to better grasp this, we have put forward the following example.
+
+### Kernel trick example
 
 To understand how a kernel function works we need to introduce some examples. Let's say that we do have two vectors $\mathbf{x} = [x_1, x_2]^T \in \mathbb{R}^2$ and $\mathbf{x} = [x_1, x_2]^T \in \mathbb{R}^2$
 and then we define a polynomial kernel of order $M= 2$ as:
@@ -346,5 +443,95 @@ k = \underbrace{(1, \sqrt{2}x_1, \sqrt{2}x_2, x_1^2, x_2^2, \sqrt{2}x_1x_2)^T}_{
 $$
 
 with $\phi(\mathbf{x}) \in \mathbf{R}^6$
+
+### Sparse kernel machines
+
+### Soft margin and slack variables
+
+The analysis that we have done so far it is based on the assumption that our binary (noted as that due to the annotation) dataset is linearly separable in the input space or in the feature space after the applied `basis function` or the `kernel trick` is applied and thus, we can find a line that perfectly separates the two classes. However, this is not always the case. Even when we are applying some non-linearities with the kernel trick its is not always feasible to create linear separable feature space. 
+
+The assumption in SVM is that our datasets are linearly separable and we create a margin based on this assumption (`hard margin`). To tackle this constraint we can relax this assumption
+and allow some misclassification mistakes when defining the margin. This way we are trying to achieve what is called `soft margin` since we are allowing are classifier to perform some misclassifications during the training process.
+
+<p align="center">
+  <img src="images/soft_margin.png" alt="Sublime's custom image" style="width:70%"/>
+</p>
+
+As we can see from the previous example there might be a chance the binary class dataset can have `overlap` between the two classes and therefore we cannot perfectly separate the two classes by following the previous steps. We therefore need a way to modify the support vector machine so as to allow some of the training points to be misclassified.
+
+So far, we implicitly used an loss function that gave infinite error if a data point was misclassified and zero error if it was classified correctly, and
+then optimized the model parameters to maximize the margin. We now modify this approach so that data points are allowed to be on the `wrong side` of the margin boundary, but with a penalty that increases with the distance from that boundary.
+
+To do this, we can introduce `slack variables` $\xi_n \geq 0$ where $n = 1, 2, \cdots, N$ we introduce one `slack variable` per training data instance. The idea is that when $\xi_n = 0$ the corresponding training instances are in the correct margin boundary while for the rest we do have $\xi_n = \| y_n  - y(\mathbf{x}_n)\|$. Instances $\mathbf{x}_n$ for which $\xi_n = 1$ are exactly on the decision boundary while when $\xi > 1$ then these points are misclassified.
+
+<p align="center">
+  <img src="images/slack.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+That can be seen in the above image. ALl these constraints can be grouped from the following equation:
+
+$$
+y_n y(\mathbf{x}_n) \geq 1 - \xi_n, \text{ with } n = 1, 2, \cdots, N
+$$
+
+where the `slack variables` are constrained to be $\xi_n \geq 0$. Our goal is now to maximize the margin while softly penalizing points that lie
+on the wrong side of the margin boundary:
+
+$$
+C \sum_{n=1}^{N} \xi_n + \frac{1}{2}\|| w \||^2
+$$
+
+with variable $C$ to be a `hyperparameter` that controls that controls the sensitivity of the method to the newly introduced `slack variables`. Thus,
+its a tradeoff between the misclassification penalty and the margin itself. When the value of $C >> 0$ and tends to infinity, that results to the initial 
+support vectors, so in essence it results in omitting completely these `slack variables` while when we do have a value of $C$ close to zero but not zero then 
+we indeed allow a lot of misclassification to take place.
+
+So now that we have introduce the `slack variables` we can re-write our optimization problem as follows:
+
+$$
+\mathcal{L}(\mathbf{w}, b, \mathbf{a}) = \frac{1}{2}||w||^2 + C \sum_{n=1}^N \xi_n - \sum_{n=1}^{N} a_n \{y_n(\mathbf{w}^T \phi(\mathbf{x}_n) + b) - 1 \} - \sum_{n=1}^N \mu_n \xi_n
+$$
+
+where $\{a_n \geq 0\}$ and $\{\mu_n \geq 0\}$ our Lagrangian multipliers for our two constraints. The recipe for solving this constraint optimization is to write down the lagrangian function as we just did analyze the `Karush Kunh Tucker` or `KKT` conditions that are the following:
+
+$$
+\begin{aligned}
+a_n &\geq 0 \\
+y_n y(\mathbf{x}_n) - 1 + \xi_n &\geq 0 \\
+a_n \left( y_n y(\mathbf{x}_n) - 1 + \xi_n \right) &= 0 \\
+\mu_n &\geq 0 \\
+\xi_n &\geq 0 \\
+\mu_n \xi_n &= 0
+\end{aligned}
+$$
+
+Then next step in our recipe is to compute the partial derivatives $\frac{\partial \mathcal{L}}{\partial \mathbf{w}} =0 $, $\frac{\partial \mathcal{L}}{\partial b} =0$ and $\frac{\partial \mathcal{L}}{\partial \xi_n} = 0$
+
+and based on the outcome to eliminate the primal variables $\mathbf{w}, b, \xi_n$. Thus, at the end we do have the following expression:
+
+$$
+\widetilde{L}(\mathbf{a}) = \sum_{n=1}^{N} a_n - \frac{1}{2} \sum_{n=1}^{N} \sum_{m=1}^{N} a_n a_m y_n y_m k(\mathbf{x}_n, \mathbf{x}_m)
+$$
+
+that is eventually the same optimization as we had in the `hard margin` case. However, there are different constraints this time. We need to minimize the above equation with the 
+following constraints in mind:
+
+$$
+0 \leq a_n \leq 0
+$$
+
+and:
+
+$$
+\sum_{n=1}^N a_n y_n = 0
+$$
+
+This is proven to be also a `quadratic problem` as before with the prediction equation to be similar with the `hard margin` problem but this time the interpretation is different. The
+same way as before, when $a_n = 0$ we do have again correctly classified instances. The remaining data points constitute the support vectors. These instances have $a_n >0$ and they must satisfy:
+
+$$
+y_n y(\mathbf{x}_n) = 1 - \xi_n
+$$
+
 
 ### Lagrangian multipliers and how they work
