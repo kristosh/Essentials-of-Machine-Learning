@@ -216,8 +216,8 @@ the `eigenvectors` and `eigenvalues`.
 
 ### Geometrical interpretation and an example
 
-So what exactly is an eigenvector from the geometry perspective. Eigenvalue portrays the variance of the initial data to the new coordinate axis that is 
-represented by each eigenvector. However, what exactly the direction of this eigenvector could tell us?
+So what exactly is an eigenvector from the geometrical perspective. Eigenvalue portrays the variance of the initial data to the new coordinate axis that is 
+represented by each eigenvector. However, what exactly this direction of each eigenvector could tell us?
 
 The geometric interpretation for eigenvector is that once we compute the eigenvectors 
 
@@ -324,7 +324,8 @@ $$
 
 ### Singular value decomposition
 
-However, most of matrices are not square matrices and computing the diagonal is not as straight forward. One solution to this issue, is to perform Singular value decomposition (SVD). 
+However, most of matrices are not square matrices and computing the diagonal is not as straight forward. One solution to this issue, is to perform `Singular value decomposition (SVD)`. 
+
 SVD is a generalization of matrix decomposition and the diagonalization for non-square matrices (or non `symmetric positive definite`) and in essence it tries to decompose the initial matrix $\boldsymbol{A} \in \mathbb{R}^{n \times m}$. 
 
 There is ususally at this point of analysis in Linear Algebra a mantra that says that `any rectangular matrix can be always decomposed into a set of three special matrices`:
@@ -336,7 +337,9 @@ $$
 where $ \boldsymbol{U} \in \mathbb{R}^{n \times n}$ and $\boldsymbol{V} \in \mathbb{R}^{m \times m}$ are orthogonal matrices while $\boldsymbol{\Sigma} \in \mathbb{R}^{n \times m}$ is a diagoral matrix. It is good to remember here that an orthogonal matrix performs
 a rotation while a diagonal matrix streches the intital matrix along its direction. 
 
-So we can say that the transformation from the matrix $\textit{transformation} = \textit{rotatation} \times \textit{scaling} \times \textit{rotatation}$.
+So we can say that the transformation from the matrix:
+
+$$\textit{transformation} = \textit{rotation} \times \textit{scaling} \times \textit{rotation}$$
 
 Intermezzo: rectangular matrices can transform a vector to a different vector space. For example, matrix transformation $\boldsymbol{A} \in \mathbb{R}^{n \times m}$ if it will be applied (multiplied) by a vector $\mathbf{x} \in \mathbb{R}^n$ then it transforms from $\mathbb{R}^n \to \mathbb{R}^m$.
 
@@ -356,8 +359,9 @@ and $\boldsymbol{A}^{T}\boldsymbol{A} \in \mathbb{R}^{3 \times 3}$ ($S_R$) are a
   <img src="images/svd_3.png" alt="Sublime's custom image" style="width:9s0%"/>
 </p>
 
-To reason why this decomposition holds can be proven if we perform diagonization of the matrix $\boldsymbol{A}^{T}\boldsymbol{A}$. This will easily lead to the defition of SVD decomposition.
+To reason why this decomposition holds can be proven if we perform diagonization of the matrix $\boldsymbol{A}^{T}\boldsymbol{A}$. This will easily lead to the defition of SVD decomposition. At then end of the section with SVD we added an alaysis with the proof why this decomposition actually holds.
 
+### Visualization of SVD
 
 The visualization of these matrices is shown below (adapted from Wikipedia). We can see that the matrix $\boldsymbol{\Sigma}$
 has a diagonal part (which can have zero and non-zero elements), whereas the rest of the matrix is equal to zero.
@@ -403,8 +407,8 @@ remove dimensions, depending on the form of the matrix $\mathbf{A}$).
 
 ### Proof of SVD decomposition
 
-To prove `SVD` decompoition, let's think of the matrix $\boldsymbol{A}^{T}\boldsymbol{A} \in \mathbb{R}^{m \times m}$. Since it is symmetric and square we
-can perform eigendecomposition and decompose it in matrix $\boldsymbol{V}$ that contains the eigenvectors and $\boldsymbol{\Sigma}^{T}\boldsymbol{\Sigma}$ that contains the eigevalues which are $\sigma_{i}^{2}$.
+To prove `SVD` decompoition, let's think of the matrix $\boldsymbol{A}^{T}\boldsymbol{A} \in \mathbb{R}^{m \times m}$. Since it is a symmetric and square we
+can perform eigendecomposition and decompose it in matrix $\boldsymbol{V}$ that contains the eigenvectors and $\boldsymbol{\Sigma}^{T}\boldsymbol{\Sigma}$ that contains the eigevalues which are denoted as $\sigma_{i}^{2}$.
 
 Then it each column vector $\mathbf{v}_j$ of matrix $\boldsymbol{V}$ is an eigenvector and thus:
 
@@ -412,7 +416,7 @@ $$
 \boldsymbol{A}^{T}\boldsymbol{A} \cdot \mathbf{v}_j = \sigma_{j}^{2} \mathbf{v}_j 
 $$
 
-Then, if we apply matrix $\boldsymbol{A}$ in both sides of the equation we can end-up having something as:
+Then, if we apply matrix $\boldsymbol{A}$ in both sides of the equation we can end-up having something like as follows:
 
 
 $$
