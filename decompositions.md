@@ -407,10 +407,15 @@ remove dimensions, depending on the form of the matrix $\mathbf{A}$).
 
 ### Proof of SVD decomposition
 
-To prove `SVD` decompoition, let's think of the matrix $\boldsymbol{A}^{T}\boldsymbol{A} \in \mathbb{R}^{m \times m}$. Since it is a symmetric and square we
-can perform eigendecomposition and decompose it in matrix $\boldsymbol{V}$ that contains the eigenvectors and $\boldsymbol{\Sigma}^{T}\boldsymbol{\Sigma}$ that contains the eigevalues which are denoted as $\sigma_{i}^{2}$.
+When we do have a SPD (semi-positive definite) matrix it is really trivial to prove why SVD holds by applying the standard eigendecomposition and diagonalization of an SPD matrix.
 
-Then it each column vector $\mathbf{v}_j$ of matrix $\boldsymbol{V}$ is an eigenvector and thus:
+To prove `SVD` decompoition, in the general case, where a matrix is not SPD or even square, let's think of the matrix $\boldsymbol{A}^{T}\boldsymbol{A} \in \mathbb{R}^{m \times m}$ with $\boldsymbol{A} \in \mathbb{R}^{n \times m}$. Let's start by assuming that matrices $\boldsymbol{A}^T$ and $\boldsymbol{A}$ can be decomposed using SVD. Then, since $\boldsymbol{A}^T\boldsymbol{A}$ is a symmetric and square we can perform eigendecomposition and decompose it in matrix $\boldsymbol{V}$ that contains the eigenvectors and $\boldsymbol{\Sigma}^{T}\boldsymbol{\Sigma}$ that contains the eigevalues which are denoted as $\sigma_{i}^{2}$. That can be seen from the following:
+
+$$
+\boldsymbol{A}^{\top}\boldsymbol{A} = (\boldsymbol{U}\boldsymbol{\Sigma}\boldsymbol{V}^{\top})^{\top}(\boldsymbol{U}\boldsymbol{\Sigma}\boldsymbol{V}^{\top}) = \boldsymbol{V}\boldsymbol{\Sigma}^{\top}\boldsymbol{U}^{\top}\boldsymbol{U}\boldsymbol{\Sigma}\boldsymbol{V}^{\top} = \boldsymbol{V}\boldsymbol{\Sigma}^T\boldsymbol{\Sigma}\boldsymbol{V}^{\top}
+$$
+
+Then each column vector $\mathbf{v}_j$ of matrix $\boldsymbol{V}$ is an eigenvector and thus it holds:
 
 $$
 \boldsymbol{A}^{T}\boldsymbol{A} \cdot \mathbf{v}_j = \sigma_{j}^{2} \mathbf{v}_j 
@@ -438,26 +443,24 @@ $$
 
 ### Dimensionality Reduction with Principal Component Analysis
 
-Ok so far we saw multiple ways to describe a matrix with data $\boldsymbol{A}$. We learn about how to compute determinants and the trace of a matrix. We saw also 
-how to perform an eigen-analysis of the matrix and what is the geometric interpretation of it. We examine how to diagonalize a matrix and how to perform decomposition for rectangular matrices using `Singular value 
-decomposition` (SVD). 
+So far we saw multiple ways to describe data that are stored in a matrix $\boldsymbol{A} \in \mathbf{m \times n}$. We learn about how to compute `determinants` and the `trace` of a matrix. We saw also how to perform an `eigen-analysis` of the matrix and what is the geometric interpretation of it. We examine how to diagonalize a matrix and how to perform decomposition for rectangular matrices using `Singular value decomposition (SVD)`. 
 
-In this part of the tutorial, we will see its real merit and the reasons why we would like to perform matrix decomposition in Machine Learning. A simple and direct answer on that is that matrix decomposition paves the way for `dimensionality reduction` and the `discovery of embeddings` that can be meaningfully characterize the 
+In this part of the tutorial, we will see its real merit and the reasons why we would like to perform matrix decomposition in Machine Learning. A direct answer on that is that matrix decomposition paves the way for `dimensionality reduction` and the `discovery of embeddings` that can be meaningfully characterize the 
 initial feature space of our data in hand.
 
-In ML the most interesting and challenging problems are coupled with data that live in `high-dimensionalities` such as images. This high-dimensionality comes 
+In ML the most interesting and challenging problems are coupled with data that live in `high-dimensionalities` such as `images`, `videos`, `brain scans` etcetera. This high-dimensionality comes 
 with multiple problems such as it makes the ML algorithm hard to parse data to interpret them while it is merely impossible to visualize them and really expensive to 
 store the data in servers. At the same time, there are properties of these high-dimensional data that we can take advantage of. For instance, many dimensions are redundant since they 
-could simply represented `a linear combination` of other dimensions. `Dimensionality reduction` exploits structure and correlation and allows us to work with a more compact representation of the data, ideally without losing information. We can think of dimensionality reduction as a compression technique, similar to `jpeg` or `mp3`, which are compression algorithms  for images and music.
+could simply represented `a linear combination` of other dimensions. `Dimensionality reduction` exploits structure and correlation and allows us to work with a more compact representation of the data, ideally without losing information. We can think of dimensionality reduction as a compression technique, similar to `jpeg` or `mp3`, which are compression algorithms for images and music.
 
 
 ### Principle component analysis
 
 We will start the explanation of PCA with a simple intuitive example that I like to use when explaining this method. 
 
-Conceptually the way that PCA works reminiscence the way that the photography works in the physical space of three dimensions. Imagine the following setup: we do have living persons in the physical world of three dimensions $(x, y, z)$, that represents the coordinates or `width, length and height`. 
+Conceptually the way that PCA works reminiscence the way that the photography works in the physical space of three dimensions. 
 
-We want to collect images in such as way that we will represent perfectly all the living persons in the scene. One option since our problem lives in 3d would be to collect data from three different axis. However, in practice that is not necessary and what a photographer does is to find the `perfect angle` in 3D space where he can perfectly capture the ideal information for all the subjects in the scene. In the same spirit, we can perceive PCA as finding a new angle to capture our data which better characterize the initial information from our data. 
+Imagine the following setup: there are a group of individuals in the physical world of three dimensions $(x, y, z)$, that represents the coordinates or `width, length and height`. We want to collect images in such as way that we will represent perfectly all these individuals in the scene (to be able to recognize them all). One option since our problem lives in `3D` would be to collect data from three different axis. However, in practice that is not necessary and what a photographer does is to find the `perfect angle` in 3D space where he can perfectly capture the ideal information for all the subjects in the scene. In the same spirit, we can perceive PCA as finding a new angle to capture our data which better characterize the initial information from our data. 
 
 <p align="center">
   <img src="images/pic.png" alt="Sublime's custom image" style="width:50%"/>
@@ -486,10 +489,10 @@ $$\boldsymbol{D} = \begin{bmatrix}
 | & | & & | \\
 x_1 & x_2 & \cdots & x_n \\
 | & | & & |
-\end{bmatrix} \in \mathbb{R}^{N \times D}$$
+\end{bmatrix} \in \mathbb{R}^{D \times N}$$
 
 
-with matrix $\boldsymbol{S}$ to be the data covariance matrix:
+Note that this is column matrix meaning that each vector is represented as a column, but sometimes we can have also row-matrix. The same process can be applied in both cases, it is just that perspective changes a bit. With matrix $\boldsymbol{S}$ to be the data covariance matrix:
 
 $$
 \boldsymbol{S} = \frac{1}{N}\sum_{i=1} ^N \mathbf{x}_n \mathbf{x}_n^T \in \mathbb{R}^{D \times D}
@@ -511,13 +514,13 @@ Our target is to find the projection matrix $\boldsymbol{\mathcal{B}}$ that maps
 #### First perspective maximizing the variance
 
 Each vector $\[ \mathbf{b}_1, \mathbf{b}_2, \cdots, \mathbf{b}_D' \] \in \mathbb{R}^{D \times D'}$ projects the initial data into a new coordinate space. The total amount of dimensions is $D'$ and this is a hyperparameter that we
-usually need to decide or to figure out which dimensionality is more suitable for the problem in hand. The ideas is also to sort these projections in such a way that that the first projection leads to the 
+usually need to decide or to figure out which dimensionality is more suitable for the problem in hand. What we can also do here is to sort these projections in such a way that that the first projection leads to the 
 direction with the maximum variance and so on for the rest of the projections. If the dimensionality of the initial data is $D$ then we can find initially $D$ new projections that the variance is 
 maximized and sorted in descending order. Thus, we will need to find these projection vectors that lead to directions where the variance of the data is sorted in this way. 
 
 
 Initially, we start by trying to find the projection vector $\mathbf{b}_1 \in \mathbb{R}^{D}$ that maximizes the variance of the projected data. Usually, in PCA, we make the assumption that the data are centered around mean since the variance is not 
-affected by this mean. That means that even if the data are not centered around the mean, if we subtract the mean and center the data, the variance is the same. Thus, we can compute the variance of the first coordinate as:
+affected by this mean. That signifies that even if the data are not centered around the mean, if we subtract the mean and center the data, the variance is the same. Thus, we can compute the variance of the first coordinate as:
 
 $$
 V_1 = \mathbb{V}[z_1] =  \frac{1}{N}\sum_{i=1}^{N}z_{1n}^{2}
@@ -590,23 +593,6 @@ The above shows a generalization of how we can subtract the first $m-1$ principa
 We can proceed that way that we can compute $M$ principal components. We can even compute $M = D$ components. Once we compute all of them, we can sort the PC based on their eigenvalue so the
 variance in the projected coordinate. Finally, we can keep all the coordinates that lead to minimum reduce of the variance in data with the respect to the variance of the initial data.
 
-#### Projection perspective
-
-In the following, we will derive PCA as an algorithm that directly minimizes the average reconstruction error which is a second perspective in PCA. The aim in this perspective is to find a projection $\mathbf{\tilde{x}}_n$ for an instance input $\mathbf{x}_n$ that minimizes the following:
-
-$$
-\frac{1}{N} \sum_{n=1}^{N}||\mathbf{x}_n - \mathbf{\tilde{x}}_n||
-$$
-
-For a dataset $\mathcal{D}$:
-
-$$
-\boldsymbol{D} = \begin{bmatrix}
-| & | & & | \\
-x_1 & x_2 & \cdots & x_n \\
-| & | & & |
-\end{bmatrix} \in \mathbb{R}^{N \times D}
-$$
 
 #### Example MNIST embeddings
 
