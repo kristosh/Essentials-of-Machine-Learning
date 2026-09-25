@@ -11,7 +11,7 @@ We will start this tutorial by introducing the concept of Machine Learning (ML).
 
 > Machine learning (ML) domain concerns the designing of algorithms that automatically extracts interesting information from knowledge sources that we call data. 
 
-Machine learning (ML) is data-driven and the `data` is at core of machine learning. The goals is to design `general purposes machine algorithms` with which we can extract automatically `interesting patterns` from the data that are not necessarily dependent in expertise domain. For instance having a huge corpus of textual data from Wikipedia we can automatically extract information about these Wikipedia sites such as the topic of each page but also event analysis or sentiment analysis in reviews from webpages such as the IMDB or Google reviews. For instance, let's say that we have the following review from the IMDB:
+Machine learning (ML) is data-driven and the `data` is at the core of machine learning. The goals is to design `general purposes machine algorithms` with which we can extract automatically `interesting patterns` from the data that are not necessarily dependent in expertise domain. For instance having a huge corpus of textual data from Wikipedia we can automatically extract information about these Wikipedia sites such as the topic of each page but also event analysis or sentiment analysis in reviews from webpages such as the IMDB or Google reviews. For instance, let's say that we have the following review from the IMDB:
 
 > Horrible script with mediocre acting. This was so bad I could not finish it. The actresses are so bad at acting it feels like a bad comedy from minute one. The high rated reviews is obviously from friend/family and is pure BS.
 
