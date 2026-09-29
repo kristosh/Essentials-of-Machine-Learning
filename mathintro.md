@@ -623,13 +623,7 @@ Say that we know that these observations belong to two distinct classes (lets sa
   <img src="images/2dc.png" alt="Sublime's custom image" style="width:50%"/>
 </p>
 
-Knowing the class annotations of a sample of observations, we are looking for a line that separates the two classes. That can be seen in the following image;
-
-<p align="center">
-  <img src="images/2dcc.png" alt="Sublime's custom image" style="width:50%"/>
-</p>
-
-This line is our `linear classification model`, which estimates the class of non-annotated observations based on `distance` to the line. Next section presents a more extensive example of a linear classification model. Of course most of the problems lie in a higher dimensionality than the previous problem. We can consider the case of three dimensions which can be visualized as:
+Of course most of the problems lie in a higher dimensionality than the previous problem. We can consider the case of three dimensions which can be visualized as:
 
 <p align="center">
   <img src="images/3d.png" alt="Sublime's custom image" style="width:50%"/>
@@ -640,6 +634,85 @@ This line is our `linear classification model`, which estimates the class of non
 </p>
 
 But we can also speak for higher than three dimensions. This is the case of the most interesting problems, however, it is impossible to visualize the values of these problems in a similar way. In this course, to help you with the understanding of key concepts, we will make use of example datasets with two or three dimensions to explain nuances. We will assume that the same concepts can be generalized in higher dimensions.
+
+Knowing the class annotations of a sample of observations, we are looking for a line that separates the two classes. That can be seen in the following image;
+
+<p align="center">
+  <img src="images/2dcc.png" alt="Sublime's custom image" style="width:50%"/>
+</p>
+
+This line is our `linear classification model`, which estimates the class of non-annotated observations based on `distance` to the line. The next chapter presents a more extensive example of a linear classification model. But first, in the coming section we will discuss the geometry behind linear classification and several strategies to optimize and find good parameters.
+
+### Geometry of linear classifiers
+
+Let us assume that we do have a linear separable binary dataset (class A and B) as depicted in the following figure:
+
+<p align="center">
+  <img src="images/linear_model_1.png" alt="Sublime's custom image" style="width:60%"/>
+</p>
+
+It is clear that we can find a line that separates the two classes. For instance, the following equation 
+
+$$y = -x1 -x2 + 9 = 0$$
+
+could separate the two classes. We can alternatively write :
+
+$$y = \mathbf{w}^{T}\mathbf{x} + w_0$$
+
+We thus introduce some parameters $\mathbf{w}, w_0$ (parameter $w_0$ is also called sometimes $b$) and the idea is to tune these parameters to find a decision line that separates the two classes. 
+
+Our data lives in two dimensions $\mathbf{x} \in \mathbb{R}^{2}$. Thus, the linear function maps input $y: \mathbb{R}^2 \to \mathbb{R}$ to a value.
+- When $y = 0$ we have the decision boundary for the two classes;
+- When $y>0$ we have a region for the class B;
+- when $y<0$ for class A. 
+Βy tuning these parameters $\mathbf{w}, w_0$, for instance $\mathbf{w}^{T} = [-1, -1]$ and $w_0 = 9$, we found a way to separate the two given classes. 
+
+In principle, the idea behind linear classification is to find the ideal parameters that can separate the two classes. 
+
+### Simple geometry exercise using linear algebra
+
+Imagine that we have two vectors $\mathbf{x}_A, \mathbf{x}_B$ that live in the decision boundary line. For the points that live in the decision line we know that $y = 0$. Thus, by definition, $y_A = y_B = 0$ or we can develop further, 
+
+$$\mathbf{w}^T \mathbf{x}_A + b = \mathbf{w}^T \mathbf{x}_B + b = 0$$ 
+
+and by performing simple vector calculations we have:
+
+$$\mathbf{w}^T ( \mathbf{x}_A - \mathbf{x}_B) = 0$$
+
+We already have mentioned that when the dot product of two vectors is zero then, the two vectors are orthogonal. Thus, $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other. Now, what we need to take into account also is that 
+vector $\mathbf{x}_A - \mathbf{x}_B$ is always parallel to the decision boundary. Thus the final conclusion: the vector of weights
+always points perpendicular to the decision boundary. This gives us the `slope` of the line.
+
+It is also easy to extract that the parameter $w_0$ or sometimes $b$ is the `offset` of the line and reveals how far the line is from the original $(0, 0)$. 
+
+<p align="center">
+  <img src="images/SVM_2.png" alt="Sublime's custom image" style="width:60%"/>
+</p>
+
+We know also that 
+
+$$y= \mathbf{w}^{T}\mathbf{x} =0$$ 
+
+is a vector that points to the decision line, but it also passes through the origin. 
+
+To compute the distance between the boundary and the origin, we will need to pick this vector that lies in boundary and calculate the projection of this vector to the intercept $\mathbf{w}$. That is actually the case due to the `Euclidean distance`. 
+
+We saw before that the projection of a vector over another is computed as:
+
+$$d = \frac{\mathbf{w}^{T}\mathbf{x}}{||\mathbf{w}||}$$
+
+since $\mathbf{w}^{T}\mathbf{x} + w_0 = 0$, we can write:
+
+$$d = \frac{-w_0}{||\mathbf{w}||}$$
+
+Finally, we conclude that the general distance of a vector in space from the decision boundary can be computed as:
+
+
+$$d = \frac{y(\mathbf{x})}{||\mathbf{w}||}$$ 
+
+The proof for that should be considered as a given and it is trivial to be made. If you feel curious on it please ask us during the lecture or tutorials of the course. 
+
+> Application: The main principle behind Support Vector Machines (SVM) is that we would like to find parameters $\mathbf{w}, w_0$ in such a way that the distance of the closest vectors to the decision boundary will be maximized.
 
 ## Linear models in Machine learning
 
@@ -724,76 +797,6 @@ Hooray, we have just given a very simple explanation of how classification and s
 
 Of course, the whole training problem is a lot more involved that our previous description. One of the initial hypothesis that we made is that our data are linearly separable and we can use a surface to separate its classes. However, this is
 not the case in the most of the data. This example meant to be a gentle introduction on how the linear classification looks like.
-
-Hence, the learning objective for this course is to make clear on how ML algorithms works and how the above-mentioned steps works in practice in more details. Furthermore, there is a huge range of problems beyond classification that ML deals with like: `regression`, `clustering`, `dimensionality reduction` and `generation` of data that we will revise in this course. Finally, you should also note that the example that we have place is an example of parameter-based classification, but classification can be done also without using explicitly new parameters $\mathbf{w}$ and by only creating rules based on data (for instance in the case of `decision trees`).
-
-The main key-home messages for this page is that information and human observations are represented by data can be stored in placeholders which can be manipulated by computers using Linear algebra principles. ML is using Linear Algebra `tool` to do its job and tune the parameters in the desired way. 
-
-## Geometry of linear classifiers
-
-Let us assume that we do have a linear separable binary dataset (class A and B) as depicted in the following figure:
-
-<p align="center">
-  <img src="images/linear_model_1.png" alt="Sublime's custom image" style="width:60%"/>
-</p>
-
-It is clear that we can find a line that separates the two classes. For instance, the following equation 
-
-$$y = -x1 -x2 + 9 = 0$$
-
-could separate the two classes. We can alternatively write :
-
-$$y = \mathbf{w}^{T}\mathbf{x} + w_0$$
-
-We thus introduce some parameters $\mathbf{w}, w_0$ (parameter $w_0$ is also called sometimes $b$) and the idea is to tune these parameters to find a decision line that separates the two classes. Our data lives in two dimensions $\mathbf{x} \in \mathbb{R}^{2}$. Thus, the linear function maps input $y: \mathbb{R}^2 \to \mathbb{R}$ to a 
-value and when $y = 0$ we have the decision boundary for the two classes and when $y>0$ we do have a region for the class B and when $y<0$ for class A. Βy tuning these parameters $\mathbf{w}, w_0$, for instance $\mathbf{w}^{T} = [-1, -1]$ and $w_0 = 9$, we found a way to separate the two given classes. 
-
-In principle, the idea behind linear classification is to find the ideal parameters that can separate the two classes. In this chapter, we will discuss the geometry behind linear classification and several strategies to optimize and find good parameters.
-
-### Simple geometry exercise using linear algebra
-
-Imagine that we do have two vectors $\mathbf{x}_A, \mathbf{x}_B$ that live in the decision boundary line . For the points that live in the decision line we know that this is true $y = 0$. Thus, by definition, $y_A = y_B = 0$ or we can develop further, 
-
-$$\mathbf{w}^T \mathbf{x}_A + b = \mathbf{w}^T \mathbf{x}_B + b = 0$$ 
-
-and by performing simple vector calculations we have:
-
-$$\mathbf{w}^T ( \mathbf{x}_A - \mathbf{x}_B) = 0$$
-
-We already have mentioned that when the dot product of two vectors is zero then, the two vectors are orthogonal. Thus, $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other. Now, what we need to take into account also is that 
-vector $\mathbf{x}_A - \mathbf{x}_B$ is always parallel to the decision boundary. 
-
-Eventually, the vector $\mathbf{w}$ and $\mathbf{x}_A - \mathbf{x}_B$ are orthogonal to each other (or perpendicular). It is also well-known in linear 
-algebra that the subtraction of two vector that lie in the same line, the result of subtraction will always point parallel to the line itself. Thus the final conclusion, that the vector of weights
-always point perpendicular to the decision boundary. This gives us the `slope` of the line.
-
-It is also easy to extract that the parameter $w_0$ or sometimes $b$ is the `offset` of the line and reveals how far the line is from the original $(0, 0)$. 
-
-<p align="center">
-  <img src="images/SVM_2.png" alt="Sublime's custom image" style="width:60%"/>
-</p>
-
-We know also that 
-
-$$y= \mathbf{w}^{T}\mathbf{x} =0$$ 
-
-is a vector that point to the decision line, but it also passes through the origin. 
-
-Officially, to compute the distance between the boundary and the origin we will need to pick this vector that lies in in boundary and calculate the projection of this vector to the intercept $\mathbf{w}$. That is actually the case due to the Euclidean distance. We saw before that the projection of a vector over another is computed as:
-
-$$d = \frac{\mathbf{w}^{T}\mathbf{x}}{||\mathbf{w}||}$$
-
-since $\mathbf{w}^{T}\mathbf{x} + w_0 = 0$, we can write:
-
-$$d = \frac{-w_0}{||\mathbf{w}||}$$
-
-Finally, we can conclude that the general distance a vector in space fom the decision boundary can be computed as:
-
-
-$$d = \frac{y(\mathbf{x})}{||\mathbf{w}||}$$ 
-
-The proof for that should be considered as a given and it is trivial to be made. If you feel curious on it please ask us during the lecture or tutorials of the course.
-The main principle behind Support Vector Machines (SVM) is that we would like to find parameters $\mathbf{w}, w_0$ in such a way that the distance of the closest vectors to the decision boundary will be maximized.
 
 ## The ingredients of ML
 
