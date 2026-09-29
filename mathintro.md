@@ -11,23 +11,29 @@ We will start this tutorial by introducing the concept of Machine Learning (ML).
 
 > Machine learning (ML) domain concerns the designing of algorithms that automatically extracts interesting information from knowledge sources that we call data. 
 
-Machine learning (ML) is data-driven and the `data` is at the core of machine learning. The goals is to design `general purposes machine algorithms` with which we can extract automatically `interesting patterns` from the data that are not necessarily dependent in expertise domain. For instance having a huge corpus of textual data from Wikipedia we can automatically extract information about these Wikipedia sites such as the topic of each page but also event analysis or sentiment analysis in reviews from webpages such as the IMDB or Google reviews. For instance, let's say that we have the following review from the IMDB:
+Machine learning (ML) is data-driven and the `data` is at the core of machine learning. The goal is to design `general purpose machine algorithms`, with which we can automatically extract `interesting patterns` from the data, that are not necessarily dependent in expertise domain. 
 
-> Horrible script with mediocre acting. This was so bad I could not finish it. The actresses are so bad at acting it feels like a bad comedy from minute one. The high rated reviews is obviously from friend/family and is pure BS.
+This way we can automate many tasks.
+1) Having a huge corpus of textual data from Wikipedia, we can automatically extract information about these Wikipedia sites, such as the topic of each page.
+2) We can also perform event analysis or sentiment analysis on reviews from webpages such as the IMDB or Google reviews. 
 
-In this case, we create a ML algorithm that could automatically recognize that this is a review has a `negative` sentiment. We call this type of ML application: `sentiment analysis` or `sentiment recognition`.
+Example: Let's say that we have the following review from the IMDB:
 
-Other examples of tasks that concern ML are `object recognition`, `recommendation systems`, `text generation`, `voice detection`, `image generation`, `stock market prediction` etc. Some of the ML techniques require some expertise when collecting the data and some annotation of the data. For example when we collect object as images we can annotate the content of the images with what it can be found within these images (we can collect images that contain flowers and annotate them with the name of each flower). There are some cases, that is not possible to do that, or it is not necessary to annotate these data like when we mine text from the web. 
+> "Horrible script with mediocre acting. This was so bad I could not finish it. The actresses are so bad at acting it feels like a bad comedy from minute one. The high rated reviews is obviously from friend/family and is pure BS."
+
+A useful application for a review database is to classify reviews as positive or negative. In this case, we can create a ML algorithm that automatically recognizes that this is a review has a `negative` sentiment. We call this type of ML application: `sentiment analysis` or `sentiment recognition`.
+
+Other examples of tasks that concern ML are `object recognition`, `recommendation systems`, `text generation`, `voice detection`, `image generation`, `stock market prediction` etc. Some of the ML techniques require some expertise when collecting the data, and some annotation of the data. For example when we collect objects as images we can annotate images with what can be found within these images (we can collect images that contain flowers and annotate them with the name of each flower). In some cases, it is not possible or not necessary to annotate these data, like when we mine text from the web. 
 
 The ML systems are based on three key ingredients which are the following: `data`, `the task` and finally the `the model`. 
 
 > We could say that in ML we use a `model` to extract interesting patterns from our `data` to perform a specific `task`.
 
-In the following section, we will mainly analyze the first concept of ML that is the `data`.
+In the following section, we will mainly analyze the first concept of ML, that is the `data`. After, we present mathematical concepts we can use to calculate interesting properties of the data, like similarity. Lastly, we show an application in a model for a classification task.
 
 ## From data to datasets, vectors and matrices
 
-So far, we talked about `data` that are crucial concept on ML but we haven't gave any definition on what we mean when we talk about `data` and as a consequence what is a `dataset`. There are actually multiple definitions for the word `data`. We will try to make sense for this word by providing several definitions for this word:
+So far, we talked about `data`, a crucial concept in ML, but we haven't given any definition of what we mean when we talk about `data`, and by extension `datasets`. There are actually multiple definitions for this word `data`. We will try to make sense of this word by providing several definitions:
 
 > Data refers to recorded observations or measurable pieces of information, often collected from experiments, transactions, sensors, texts, or user behavior, that are used to represent phenomena, derive insights, or inform decision-making through analysis.
 
@@ -35,7 +41,9 @@ So far, we talked about `data` that are crucial concept on ML but we haven't gav
 
 > Data are representations of variables measured from the real world, which can be used to model and infer patterns or causality.
 
-Central to the concept of `data` is the numerical representation of information about the real world about an `under study` domain. That involves information that we exchange as human beings or measurements that derives from scientific experiments. In both cases, the data are structured and presented in a formatted and formal way. These observations about the study phenomenon are called `observations` or `instances`. For example, if we would like to study the market value of houses in Amsterdam, we could gather information about a number of different houses (which are our `observations` or `instances`) and composed from several bits of information like: 
+Central to the concept of `data` is the numerical representation of information about real world phenomena, in a domain `under study`. That could be information that we exchange as human beings, or measurements from scientific experiments. In both cases, the data are structured and presented in a formatted and formal way. The sources of information about the studied phenomena are called `observations` or `instances`. 
+
+For example, the phenomenon we would like to study is the market value of houses in Amsterdam. We could gather information about a number of different houses, which are our `observations` or `instances`. The observations can be composed of several pieces of information like: 
 
 - `Neighborhood`, 
 - `Size`, 
@@ -47,14 +55,14 @@ Central to the concept of `data` is the numerical representation of information 
 - `Has a jacuzzi`
 - `Condition of the interior`, `furniture` etc. 
 
-These bits of information in the nomenclature of ML is called `features`.
+These pieces of information in the nomenclature of ML are called `features`.
 
-Finally, when we talk about a `dataset` usually we refer to structure data that are refer to a collection of`observations`. Usually, these datasets contains multiple observations which sometimes are accompanied with annotations that are curated by experts in the domain of study (think of image-scans of a patient). We can collect first scans of several patients and then an expert can annotate whether the scans contain a specific disease or not.
+Finally, when we talk about a `dataset`, usually we refer to structured data that is a collection of `observations`. Usually, these datasets contains multiple observations which sometimes are accompanied by annotations that are curated by experts in the domain of study. For example, we can collect first scans of several patients (collection of observations) and then an expert can annotate whether the scans contain a specific disease or not.
 
 
-## Types of Data 
+### Types of Data 
 
-Data exists in different flavours. First and foremost could be numerical data: imagine for example the measurements of scientific tools. Scientific instruments used to quantify physical properties. These tools range from simple rulers and graduated cylinders to more advanced devices like micrometers, pH meters, and data loggers. They could be also textual data that can be found for instance in social media in forums forums etc. Could be digitalized images and audio signals. It could be boolean values (`True` or `False`). We can actually group the data into the following categories:
+Data exists in different flavours. First and foremost could be `numerical data`: imagine for example the measurements of scientific instruments used to quantify physical properties. These tools range from simple rulers and graduated cylinders to more advanced devices like micrometers, pH meters, and data loggers. Other examples are `textual data` (for instance in social media forums), `digitalized images`, `audio signals`, and `boolean values` (`True` or `False`). We can actually group the data into the following categories:
 
 - Structure data (tabular data, spreadsheet).
 - Unstructured data (text, images).
@@ -63,9 +71,9 @@ Data exists in different flavours. First and foremost could be numerical data: i
 - Categorical Data (gender, race, etcetera).
 - Numerical Data
 
-### Example of data
+### Example of a dataset
 
-Here we will represent a simple example of gathering data about several people: `name`, `gender`, `degree`, `postcode`, `age`, `salary` with the observation to be each different person, and we would like to create an ML algorithm that given the info for these people to estimate a prediction for their salary. We can say that our observation is the different people in the Table 1.1 while the each characteristic can be called a `feature`. Note this table extracted by a popular dataset that studies `gender biases`.
+We present a data set in Table 1.1, where each `observation` is a person, and the `features` are characteristics of people: `name`, `gender`, `degree`, `postcode`, `age`, `salary`. Note this table extracted by a popular dataset that studies `gender biases`. We could use this dataset to create a ML algorithm to estimate salaries for new observations. The dataset must be prepared before we can do this. There is not one right way to prepare a dataset.
 
 $$\begin{aligned}
 & \text {Table 1.1. A collected dataset of people and their salaries.}\\
@@ -85,9 +93,9 @@ made to obtain a numerical representation. For example, in Table 1.1, the
 gender column (a categorical variable) may be converted into numbers 0
 representing `Male` and 1 representing `Female`. Alternatively, the gender
 could be represented by numbers `−1`, `+1`, respectively (as shown in
-Table 1.2). Furthermore, it is often important to use domain knowledge
+Table 1.2). It is often important to use `domain knowledge`
 when constructing the representation, such as knowing that university
-degrees progress from `bachelor’s` to `master’s` to `PhD` or realizing that the
+degrees progress from `bachelor’s` to `master’s` to `PhD`, or realizing that the
 postcode provided is not just a string of characters but actually encodes
 an area in London.
 
@@ -106,16 +114,17 @@ $$\begin{aligned}
 \end{array}
 \end{aligned}$$
 
-## Data as vectors and matrices
+### Representing data as vectors and matrices
 
-We just saw that not all data are inherently numerical, and from the computer perspective, it is always necessary to transform these data into a numerical representation. Thus, when we talk about digital images we talk about pixel numerical representation. Regarding textual data, each character letter, digit, symbol is assigned a number via an encoding standard, such as `ASCII` or `Unicode` (pls check this site for further information). Another example concerns auditory data which when we digitalize it, we actually captured the the amplitude of sound waves over time.
+We just saw that not all data are inherently numerical, and from the computer perspective, it is always necessary to transform these data into a numerical representation during data preparation. Thus, when we talk about digital images we talk about pixel numerical representation. Regarding textual data, each character letter, digit, symbol is assigned a number via an encoding standard, such as `ASCII` or `Unicode` (pls check this site for further information). Another example concerns auditory data which when we digitalize it, we actually captured the the amplitude of sound waves over time.
 
+For comprehensive purposes between humans and computers, when we collect, store and share these data, we need to make use of `placeholders`: entities that can store information and can be easy to represent and manipulate from mathematical perspective. 
 
-For comprehensive purposes of the humans and computers, when we collect, store and share these data we need to make use of placeholders, entities that can store information and can be easy to represent and manipulate them from mathematical perspective. Hence, we can introduce in our terminology the concept of a `vector` as the main placeholder of `data`.  `Vectors` are used to store information about observations in our data. In the previous example, each row of the table (each different person) is considered an `observation` and is represented by `vectors`.
+Hence, we can introduce in our terminology the concept of a `vector` as the main placeholder of `data`.  `Vectors` are used to store information about `observations` in our data. In the previous example, each row of the table (each different person) is considered an `observation` and is represented by `vectors`.
 
-Dataset as we mentioned before are usually composed with a set of multiple observations, for instance when we do have a set of images we can say that each image each a different `observation` or a different `instance`. Each `instance` could be eventually be represented by a corresponding `vector`. As we said the dataset is a collection of observations and thus a collection of `vectors`. We can introduce also the concept of a `matrix` as a set of multiple `vectors` grouped together.
+We also introduce the concept of a `matrix`: a set of multiple `vectors` grouped together, as a `placeholder` of a `dataset`. A dataset, as we mentioned before, is usually composed of multiple observations. For example, when we have a set of images we can say that each image is a different `observation` or a different `instance`, represented by a corresponding `vector`. It is useful to be able to study a collection of observations and thus a collection of `vectors`, which is why we use `matrices`.
 
-Thus, a vector (an single observation or instance) can be represented as $\mathbf{x}$, so we can have:
+In practice, a vector (a single observation or instance) can be represented as $\mathbf{x}$. So so we can have 2 vectors $$\mathbf{x}_1 and $$\mathbf{x}_2:
 
 $$\mathbf{x}_1 = \{1, 1, 3, 41.507, 41, 9.9 \}$$ 
 
@@ -123,7 +132,7 @@ and
 
 $$\mathbf{x}_2 = \{2, 1, 1, 51.5074, 19, 1.7 \}$$ 
 
-while the whole dataset can be represented by the following matrix:
+These observations are part of a whole dataset, represented by the following `matrix`:
 
 $$
 \mathbf{X} = \begin{pmatrix}
@@ -136,11 +145,12 @@ $$
 
 ## Intro to Linear Algebra
 
-Vectors could be regarded as placeholders from the `computer science` perspective, but at the same time, they can be perceived as objects in the geometric space (or Cartesian space). Therefore, they could be manipulated by Linear Algebra or geometric tools (that you might have already encounter from high-school mathematics courses). Vectors have length, direction and they live in a multi-dimensional space. We can also call them `geometric vectors`.
+Vectors could be regarded as `placeholders` from the `computer science` perspective, but at the same time they can be perceived as objects in the geometric space. Therefore, they could be manipulated by Linear Algebra or geometric tools (that you may have already encountered in high-school mathematics courses). 
  
 ### Geometric Vectors
+As objects in geometric space, `vectors` have length, direction, and they live in a multi-dimensional space. We can also call them `geometric vectors`. These `geometric vectors` are usually denoted by a small arrow above the letter, e.g. $\vec{v_1}$ and $\vec{v_2}$. In this tutorial, we will simply denote the vectors as $\mathbf{v}_1$, $\mathbf{v}_2$ as a collection of numerical values. 
 
-These `geometric vectors` are usually denoted by a small arrow above the letter, e.g. $\vec{v_1}$ and $\vec{v_2}$. In this tutorial, we will simply denote the vectors as $\mathbf{v}_1$, $\mathbf{v}_2$ as a collection of numerical values. For example we can have that:
+For example, we can have that:
 
 $$\mathbf{v}_1 = [1, 1]$$
 
@@ -148,15 +158,18 @@ and
  
 $$\mathbf{v}_2 = [1, 2]$$
  
-These are examples of two dimensional vectors that lie on the cartesian space with coordinates $\{x, y\}$. Each dimension (or `coordinate`) of this vector it is called a `feature` and can represent a characteristic value for our observation. For example, these two value of the vector $\mathbf{v}_1$ could be the values of an image that contains just two pixels or the score of students in two different classes. Ιn general they represent observations with two-features.
+These are examples of two dimensional vectors, objects in a 2-demensional space called the `Cartesian space`, with coordinates $\{x, y\}$. We denote that vector $\mathbf{v} = [x, y] \in \mathbb{R}x\mathbb{R} = \mathbb{R}^{2}$, where $\mathbb{R}$ is the set of all real values.
 
-You may recall from high-school that these vectors can be visualized in the cartesian 2-dimensional space as:
+In the context of ML, each dimension (or `coordinate`) of this vector can be a `feature` representing a characteristic value of our observation. For example, these two values of the vector $\mathbf{v}_1$ (its coordinates) could be the values of an image that contains just two pixels, or the score of students in two different classes. Ιn general they represent observations with two features.
+
+These vectors can be visualized in the cartesian 2-dimensional space as:
 
 <p align="center">
   <img src="images/vectors.png" alt="Sublime's custom image"/>
 </p>
 
-Once we represent our observations in vectors and visualize them in the cartesian space we can actually perform some basic mathematical computations. One simple and straightforward example is to add these two vectors. That can be represented as 
+#### Vector addition
+Once we represent our observations as vectors and visualize them in the `Cartesian space`, we can actually perform some basic mathematical computations. One simple and straightforward example is to add these two vectors: 
 
 $$\mathbf{v}_1 + \mathbf{v}_2 = [2, 3]$$ 
 
@@ -167,9 +180,10 @@ That is represented by the following image:
   <img src="images/addition.png" alt="Sublime's custom image"/>
 </p>
 
-As you might recall the addition of the vectors in two-dimensions works as follows: you can start with the first vector which point to the position $\mathbf{v}_1 = [1, 1]$ and then you add one in the `x-axis` and 2 in the `y-axis`. The result of this addition is another vector that points to $\mathbf{v}_1 + \mathbf{v}_2 = [2, 3]$. This operation can be considered as a `tip and tail` addition. The tail here refers to the starting point of the vector, while the tip (or head) is the ending point, typically indicated by an arrowhead
+As you might recall, the addition of the vectors in two-dimensions works as follows: you can start with the first vector which points to the position $\mathbf{v}_1 = [1, 1]$. Then you add 1 in the `x-coordinate` and 2 in the `y-coordinate`. The result of this addition is another vector that points to $\mathbf{v}_1 + \mathbf{v}_2 = [2, 3]$. This operation is called a `tip and tail` addition. The tail here refers to the starting point of the vector, while the tip (or head) is the ending point, typically indicated by an arrowhead
 
-Another simply example is the multiplication of a vector with the scalar. For instance 
+#### Scalar multiplication 
+Another simple example is the multiplication of a vector with a scalar. For instance. scaling vector $\mathbf{v}_1$ by 2 requires multiplying each coordinate by 2. The resulting vector is:
 
 $$\mathbf{v}_3 = 2 \cdot \mathbf{v}_1 = [2, 2]$$
 
@@ -177,35 +191,37 @@ $$\mathbf{v}_3 = 2 \cdot \mathbf{v}_1 = [2, 2]$$
   <img src="images/scaled.png" alt="Sublime's custom image"/>
 </p>
 
-### Vector subtraction
+#### Vector subtraction
 
 What if we would like to subtract two vectors. In this case, we can simple perform vector addition, however, instead of adding the two vectors directly, we will need to add the negative of a vector, an operation that looks as follows: 
 
-$$\mathbf{v3} = \mathbf{v1} - \mathbf{v2} = \mathbf{v1} + (-\mathbf{v2})$$
+$$\mathbf{v}_4 = \mathbf{v}_1 - \mathbf{v}_2 = \mathbf{v}_1 + (-\mathbf{v}_2)$$
 
-So in our example $\mathbf{v3} = [0, -1]$
+So in our example $\mathbf{v}_4 = [0, -1]$
 
-One remark here that is good to remember is that the vectors in our example live in the two-dimensional space, and thus, it is easy to visualize. However, they could easily live in a higher dimensionality, which is also more practical, since the most interesting problems lives in a high-dimension. The only problem is that unfortunately, we cannot visualize these vectors. Thus, in this tutorial, we are usually employ two-dimensional vectors as example since it is easy also to visualize them.
+One remark here that is good to remember is that the vectors in our example live in the two-dimensional space, and thus, it is easy to visualize. However, they could easily live in a higher dimensionality, which is also more practical, since the most interesting problems live in a high-dimension. Unfortunately, we cannot visualize these vectors. Thus, in this tutorial, we usually employ two-dimensional vectors as example.
 
-### Inner product
+#### Inner product
 
-A really important concept in Linear algebra is called `inner product`. If we stick with the above-mentioned vectors we can calculate the following entity $\mathbf{v}_4 =\mathbf{v}_1 \cdot \mathbf{v}_2  = 1 \cdot 1 + 1 \cdot 2 = 3$. Eventually, we end up calculating a scalar value which represents the similarity of these two vectors. It shows actually if these two vectors point to the same direction they are perpendicular or point to opposite direction. Thus, the inner product:
+A really important concept in Linear algebra is called `inner product`: coordinate-wise multiplication. If we stick with the above-mentioned vectors we can calculate the following entity $\mathbf{v}_5 =\mathbf{v}_1 \cdot \mathbf{v}_2  = 1 \cdot 1 + 1 \cdot 2 = 3$. 
 
-- Is positive if the angle between vectors is less than $90^\circ$,
-- Zero if the vectors are orthogonal (perpendicular),
-- Negative if the angle is greater than $90^\circ$.
+The result of an inner product of two vectors represents the `similarity` of these two vectors. It shows actually if these two vectors point to the same direction, if they are perpendicular, or point to opposite directions. Thus, the `inner product` is:
 
-Another thing to keep in mind is that this product relates also with the angle between the two vectors. It ends up being as follows:
+- Positive, if the angle between vectors is less than $90^\circ$,
+- Zero, if the vectors are orthogonal (perpendicular),
+- Negative, if the angle is greater than $90^\circ$.
+
+This product also relates to the angle between the two vectors as follows:
 
 
 $$\mathbf{v}_1 \cdot \mathbf{v}_2 = \lVert \mathbf{v}_1  \lVert  \lVert  \mathbf{v}_2 \lVert   \cdot cos(\theta)$$
 
 
-The norm of a vector 
+ $\lVert \cdot \lVert$ is called the norm of a vector, which represents the length of the vector. It is calculated as follows: 
 
 $$\lVert \mathbf{v}_1 \lVert = \sqrt{1^2 + 1^2 } = \sqrt{2} \text{, }\lVert \mathbf{v}_2 \lVert = \sqrt{1^2 + 2^2 } = \sqrt{5} $$  
 
-represents the length of the vector. Here you should think of the Pythagorean theorem and how to compute the hypotenuse of a triangle side.
+Here you should think of the Pythagorean theorem and how to compute the hypotenuse of a triangle with sides the length of the x and y coordinates.
 
  We can also re-write as:
 
@@ -216,16 +232,16 @@ and the angle between the two vectors as:
 $$cos(\theta) = \frac{\mathbf{v}_1 \cdot \mathbf{v}_2}{\lVert \mathbf{v}_1 \lVert  \lVert \mathbf{v}_2 \lVert }$$
 
 
-### Matrices
+### Geometric matrices
 
-Now if we would like to create a placeholder in order to store multiple vectors together (so multiple instances), we can construct a `matrix`. A matrix could encapsulate the given set of observation into a rectangular entity that looks like an extended version of a vector. For instance given the observation $\mathbf{v}_1, \mathbf{v}_2$ we can group them together into a `dataset` or a `matrix` as follows:
+As introduced, we can construct a `matrix` as a placeholder to store multiple vectors. For instance, given the observation $\mathbf{v}_1, \mathbf{v}_2$ we can group them together into a `dataset` or a `matrix` as follows:
 
 $$D = \begin{bmatrix}
 1 & 1 \newline
 1 & 2
 \end{bmatrix}$$
 
-And that can of course can be generalized with multiple vectors of n-th dimensions as follows:
+We introduce notation and generalise to n dimensions with m vectors as follows: 
 
 $$A = \begin{bmatrix}
 a_{11} & a_{12} & \cdots & a_{1n} \newline
@@ -234,11 +250,11 @@ a_{21} & a_{22} & \cdots & a_{2n} \newline
 a_{m1} & a_{m2} & \cdots & a_{mn}
 \end{bmatrix}$$
 
-with $a_{ij}\in \mathbb{R}$, where $\mathbb{R}$ is the set with all the real-values. We then can denote that a vector $\mathbf{v}_1 \in \mathbb{R}^2$ and the matrix $\mathbf{A} \in \mathbb{R}^{m \times n}$, where $\mathbb{R}^{m \times n}$ is the set of all real-valued $m \times n$ matrices.
+with $a_{ij}\in \mathbb{R}$, where $\mathbb{R}$ is the set with all the real-values. We denote that a vector $\mathbf{v}_1 \in \mathbb{R}^m$ and the matrix $\mathbf{A} \in \mathbb{R}^{m \times n}$, where $\mathbb{R}^{m \times n}$ is the set of all real-valued $m \times n$ matrices.
 
 #### Matrix addition
 
-In the same spirit with the addition of a vector, we can define also the addition of two (or more) matrices. For example if we have a matrix $\mathbf{B}$ as:
+In the same spirit as the addition of a vector, we can define also the addition of two (or more) matrices. For example if we have a matrix $\mathbf{B}$ as:
 
 $$B = \begin{bmatrix}
 b_{11} & b_{12} & \cdots & b_{1n} \newline
@@ -256,7 +272,7 @@ a_{21} + b_{21} & a_{22} + b_{22} & \cdots & a_{2n} + b_{2n} \newline
 a_{m1} + b_{m1} & a_{m2} + b_{m2} & \cdots & a_{mn} + b_{mn}
 \end{bmatrix}$$
 
-It is important to note that in order to be able to add two matrices they need to have the same size otherwise it is not possible to perform the matrix addition.
+It is important to note that in order to be able to add two matrices they need to have the same size, otherwise it is not possible to perform the matrix addition.
 
 #### Matrix multiplication
 
@@ -278,20 +294,16 @@ are computed as:
 
 $$d_{ij} = \sum_{l=1}^{n} a_{il} b_{lj}, \quad i = 1, \ldots, m, \quad j = 1, \ldots, k$$
 
-Hence, in the case of matrix multiplication it is important to note that the number of columns of the first matrix should be the same for the number of rows of the second matrix in order the multiplication to be a valid operation.
+That means that in order to calculate $d_{ij}$ element, we need to multiply the elements of the i-th row of $\mathbf{A}$ with the j-th column of $\mathbf{B}$ and sum them up. Of course, a row (or column) in a matrix can be considered as a vector, and thus we can just use the inner product that we can discussed earlier.
 
-That means that in order to calculate $d_{ij}$ element we need to multiple the elements of the i-th row of $\mathbf{A}$ with the j-th column of $\mathbf{B}$ and sum them up, so to calculate the inner product of these two. Of course, a row in matrix can be considered as a vector and thus, we can just use the inner product that we can discuss earlier.
-
-The matrices can only be multiplied if their `neighboring` dimensions match. For instance, an $n \times k$-matrix $\mathbf{A}$can be multiplied with a $k \times m$-matrix $\mathbf{B}$, but only from the left side:
+In the case of matrix multiplication, it is important to note that the number of columns of the first matrix should be the same for the number of rows of the second matrix, in order for the multiplication to be a valid operation. The matrices can thus only be multiplied if their `neighboring` dimensions match. For instance, an $n \times k$-matrix $\mathbf{A}$can be multiplied with a $k \times m$-matrix $\mathbf{B}$, but only from the left side:
 
 
 $$\underbrace{A}_{n \times k} \cdot \underbrace{B}_{k \times m} =  \underbrace{D}_{n \times m}$$
 
-The product $BA$ is not defined if $m \ne n$ since the neighboring dimensions do not match.
+The product $BA$ is not defined if $m \ne n$ since the `neighboring dimensions` do not match.
 
-#### Example of matrix multiplications
-
-An example to help you grasp the detail inner working of the matrix multiplication is placed below. By having two matrices $\mathbf{A}$ and $\mathbf{B}$:
+An example to help you grasp the detailed inner working of the matrix multiplication is placed below. We have  two matrices $\mathbf{A}$ and $\mathbf{B}$:
 
 $$\mathbf{A} = \begin{bmatrix} 1 & 2 & 3 \newline 3 & 2 & 1 \end{bmatrix} \in \mathbb{R}^{2 \times 3}$$
 
@@ -324,7 +336,7 @@ From this example, we can already see that matrix multiplication is not commutat
 
 #### Identity matrix
 
-A very interesting and useful type of matrix is called identity matrix. The properties of this matrix is that every item of the matrix is zero except the diagonal of the matrix where the value is equal to one. An example of this matrix can be found as follows:
+A very interesting and useful type of matrix is called the `identity matrix`. The properties of this matrix is that every item of the matrix is zero, except the diagonal of the matrix where the value is equal to $1$. An example of this matrix can be found as follows:
 
 $$\mathbf{I}_n := 
 \begin{bmatrix}
@@ -336,7 +348,7 @@ $$\mathbf{I}_n :=
 \end{bmatrix}
 \in \mathbb{R}^{n \times n}$$
 
-You should note that the identity matrix is always squared meaning that it has the same number of rows and columns which is represented by the number $n$.
+You should note that the identity matrix is always squared, meaning that it has the same number of rows and columns which is represented by the number $n$.
 
 
 #### Matrix properties
@@ -350,13 +362,9 @@ There are a lot of properties that stem from the previous mentioned operations (
 
 - Inverse and Transpose
 
-Consider a square matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$. Let matrix $\mathbf{B} \in \mathbb{R}^{n \times n}$ have the property that $\mathbf{AB} = \mathbf{I}_n = \mathbf{BA}$. $\mathbf{B}$ is called the `inverse` of $A$ and denoted by $\mathbf{A}^{-1}$.
-
-Unfortunately, not every matrix $A$ possesses an inverse $\mathbf{A}^{-1}$. If this inverse does exist, $\mathbf{A}$ is called `regular-invertible-nonsingular`, otherwise `singular-noninvertible`. When the matrix inverse exists, it is unique. There are ways to determine whether a matrix is invertible but this is out of the scope of the mathematics intro.
-
 #### Inverse of a matrix
 
-Let us assume two matrices $\mathbf{A} \in \mathbb{R}^{n \times n}$ and $\mathbf{B} \in \mathbb{R}^{n \times n}$. If the following property is true: $\mathbf{A} \cdot \mathbf{B} = \mathbf{I}_n$, then we can say that $\mathbf{B}$ is the inverse of matrix $\mathbf{A}$. 
+Consider a square matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$. Let matrix $\mathbf{B} \in \mathbb{R}^{n \times n}$ have the property that $\mathbf{A} \cdot \mathbf{B} = \mathbf{I}_n = \mathbf{B} \cdot \mathbf{A}$. $\mathbf{B}$ is called the `inverse` of $A$ and denoted by $\mathbf{A}^{-1}$. 
 
 For instance if we have the following matrices:
 
@@ -375,10 +383,13 @@ $$\mathbf{B} = \begin{bmatrix}
 \end{bmatrix} \in \mathbb{R}^{3 \times 3}$$
 
 Then the product $\mathbf{A} \cdot \mathbf{B} = \mathbf{I}_3$  
+
+Unfortunately, not every matrix $A$ possesses an inverse $\mathbf{A}^{-1}$. If this inverse does exist, $\mathbf{A}$ is called `invertible`, otherwise `noninvertible`. When the matrix inverse exists, it is unique. There are ways to determine whether a matrix is invertible but this is out of the scope of the mathematics intro.
+
 #### Transpose of a matrix
 
-Another definition that we will encounter in this course is the transpose matrix. So if we have two matrices again $\mathbf{A} \in \mathbb{R}^{n \times m}$ and $\mathbf{B} \in \mathbb{R}^{m \times n}$, then we call matrix $\mathbf{B}$ as the transpose matrix $\mathbf{A}$ if 
-the transpose matrix of $\mathbf{B}$ denoted as $\mathbf{B}^T$ is equal with matrix $\mathbf{A}$, $\mathbf{A} = \mathbf{B}^T$. Thus, if we calculate the transpose of $\mathbf{A}^T$ from the previous example then, we can calculate the following:
+Another definition that we will encounter in this course is the `transpose` matrix. So if we have two matrices again $\mathbf{A} \in \mathbb{R}^{n \times m}$ and $\mathbf{B} \in \mathbb{R}^{m \times n}$, then we call matrix $\mathbf{B}$ as the transpose matrix $\mathbf{A}$ if 
+the transpose matrix of $\mathbf{B}$ denoted as $\mathbf{B}^T$ is equal with matrix $\mathbf{A}$, $\mathbf{A} = \mathbf{B}^T$. Thus, if we calculate the transpose of $\mathbf{A}^T$, from the previous example, then we can calculate the following:
 
 $$\mathbf{A}^T = \begin{bmatrix}
 1 & 4 & 6 \newline
@@ -386,7 +397,7 @@ $$\mathbf{A}^T = \begin{bmatrix}
 1 & 5 & 7 
 \end{bmatrix} \in \mathbb{R}^{3 \times 3}$$
 
-We can say that the rows of the initial becoming the columns of the transpose matrix. Now several interesting properties for inverse and transpose matrices arise:
+We can say that the rows of the initial matrix become the columns of the transpose matrix. Now several interesting properties for inverse and transpose matrices arise:
 
 $$\mathbf{A} \cdot \mathbf{A}^{-1} = \mathbf{I} =  \mathbf{A}^{-1}  \cdot \mathbf{A}$$
 
@@ -401,19 +412,20 @@ $$\mathbf{(AB)}^{T} = \mathbf{B}^{T} \cdot \mathbf{A}^{T}$$
 $$(\mathbf{A+B})^{T} = \mathbf{A}^{T} + \mathbf{B}^{T}$$
 
 
-#### Linear systems
+### Linear systems
 
-A simply way to understand the usefulness of `matrices` and `vectors` stems from the linear system world (as you might recall from the high-school). We can define as a` linear system` a collection of linear equations that involve the same set of variables. 
+The usefulness of `matrices` and `vectors` extend beyond placeholders for data. They can be used to solve problems in `linear systems` (as you may recall from high school). We define a` linear system` as a collection of linear equations that involve the same set of variables. 
 
-To better grasp this let us for a second try to solve the following problem `movie-recommendation`. We do have the following scenario:
+To grasp this concept in the context of datasets, let us try to solve the following problem: `movie-recommendation`. We have the following scenario:
 
-A movie platform wants to understand a user’s taste based on three factors:
+A movie platform wants to understand a user’s taste based on three `features`:
+- $w_1$ $\rightarrow$ the user's liking of action characteristics.
+- $w_2$ $\rightarrow$ the user's liking of romantic-comedy characteristics.
+- $w_3$ $\rightarrow$ the user's liking of horror-style characteristics.
 
-- $w_1$ $\rightarrow$ the intensity of action characteristics.
-- $w_2$ $\rightarrow$ the intensity of romantic-comedy characteristics.
-- $w_3$ $\rightarrow$ the intensity of horror-style characteristics.
+We observe how the user rated three different movies (on a 1–10 scale). Each movie has known `feature` intensities (e.g., how much action, romance, and horror it has). The rating for the first movie is 7, for the second 9 and the third 5. 
 
-The system observes how the user rated three different movies (on a 1–10 scale). Each movie has known feature intensities (e.g., how much action, romance, and horror it has). The rating for the first movie is 7, for the second 9 and the third 5. The platform tried to understand the interest of the user. That problem can be represented by the following `linear system ` of equations:
+The movie platform tried to understand the interest of the user. That problem can be represented by the following `linear system ` of equations:
 
 
 $$2w_1 + 3 w_2 + 1 w_3 = 7$$
@@ -422,7 +434,7 @@ $$3w_1 + 2 w_2 + 2 w_3 = 9$$
 
 $$1w_1 + 4 w_2 + 3 w_3 = 5$$
 
-Now, if we define as:
+To describe this linear system, we deffine matrix $\mathbf{X}$ as a `placeholder` for the dataset with the feature intensities of 3 movies: 
 
 $$\mathbf{X} = \begin{bmatrix}
 2 & 3 & 1 \newline
@@ -430,17 +442,17 @@ $$\mathbf{X} = \begin{bmatrix}
 1 & 4 & 3 
 \end{bmatrix} \in \mathbb{R}^{3 \times 3}$$
 
-And then we can define 
+Next, we define $\mathbf{w}$ as a placeholder for the user's taste:
 
 $$\mathbf{w} = [w_1, w_2, w_3] \in \mathbb{R}^{3 \times 1}$$ 
 
-and 
+and $\mathbf{y}$ as a placeholder for the user's movie ratings:
 
 $$\mathbf{y} = [y_1, y_2, y_3] = [7, 9, 5] \in \mathbb{R}^{3 \times 1}$$
 
-then we can simply write $\mathbf{X} \cdot \mathbf{w} = \mathbf{y}$ or simply $\mathbf{y} = \mathbf{X} \cdot \mathbf{w}$ which stems from the properties of matrix multiplication. So in essence we can see the matrix multiplication as a simple way to represent linear equations of multiple variables $\mathbf{w} = [w_1, w_2, w_3]$. 
+We can simply write $\mathbf{X} \cdot \mathbf{w} = \mathbf{y}$ or $\mathbf{y} = \mathbf{X} \cdot \mathbf{w}$, which stems from the properties of matrix multiplication. 
 
-We can use also the following representation:
+We can also use the following representation:
 
 $$
 \begin{pmatrix}
@@ -461,15 +473,16 @@ w_3
 \end{pmatrix}
 $$
 
+So in essence we can see the matrix multiplication as a simple way to represent linear equations of multiple variables $\mathbf{w} = [w_1, w_2, w_3]$. 
 
 Now, we want to solve this system to figure out how much this user likes action, romantic and horror movies in general.
 
 
-It can be proven that by using also the matrix properties for inverse matrices we can solve this linear equation problem and calculate the variables $\mathbf{w}$ as follows: 
+By using the matrix properties for inverse matrices, it can be proven that we can solve this linear equation problem and calculate the variables $\mathbf{w}$ as follows: 
 
 $$\mathbf{w} = \mathbf{X}^{-1} \cdot \mathbf{y}$$
 
-The final results can be found to be the following:
+The final results is:
 
 $$ \mathbf{w} = [w_1, w_2, w_3] = 
 \begin{bmatrix}
@@ -479,17 +492,17 @@ $$ \mathbf{w} = [w_1, w_2, w_3] =
 \end{bmatrix}.
 $$
 
-Thus, we have transformed the linear equation problem to matrix inverse and matrix computation in order to find a solution. That is something that we need to keep in mind that is omnipotent in machine learning. We are usually trying to solve a similar equation given a matrix $\mathbf{X}$ that represents our `data`.
+Thus, we have transformed the linear equation problem to matrix inverse, and matrix computation, in order to find a solution. Something we need to keep in mind that is omnipotent in machine learning: We are usually trying to solve a set of linear equations given a matrix $\mathbf{X}$ that represents our `data`.
 
 
-## Matrix transformations
+### Matrix transformations
 
-Another way to regard matrices in general are as `linear functions`. That means if we have an input vector $\mathbf{w}$ and we multiply it with a matrix $\mathbf{X}$ we end up transforming the initial vector to a new one. Thus, matrix here plays the role of linear function or more usually called `linear transformation`.
+As an extension of the section on linear systems, we can regard matrices in general are as `linear functions`. That means if we have an input vector $\mathbf{w}$ and we multiply it with a matrix $\mathbf{X}$ we end up transforming the initial vector to a new one. Thus, matrix here plays the role of linear function or more usually called `linear transformation` or `matrix transformation`.
 
 The idea here is that when we perform $\mathbf{X} \cdot \mathbf{w} = \mathbf{y}$ then we can see 
-$\mathbf{w}$ as our input and $\mathbf{y}$ out output. Matrix $\mathbf{X} $ can be considered as a function transformation f that maps input vector to the output vector. We can say that $\mathbf{X} \in \mathbb{R}^{n \times n}$ what it does is to receive an matrix $\mathbf{w} \in \mathbb{R}^{n}$ and it spits out a vector $\mathbf{y} \in \mathbb{R}^{n}$. Depending of the dimensionality of the matrix $\mathbf{X}$ this transformation could keep the same dimensionality or change the dimensionality of the output vector.
+$\mathbf{w}$ as our input and $\mathbf{y}$ as out output. Matrix $\mathbf{X} $ can be considered as a function transformation f that maps input vector to the output vector. We can say that $\mathbf{X} \in \mathbb{R}^{n \times n}$ receives a matrix $\mathbf{w} \in \mathbb{R}^{n}$ and outputs a vector $\mathbf{y} \in \mathbb{R}^{n}$. Depending on the dimensionality of the matrix $\mathbf{X}$ this transformation could output the same dimensionality, or change the dimensionality of the output vector.
 
-A nice outcome of the above is that we can even visualize the affect of matrix transformation. Therefore, in this part of the tutorial we will put forwards some classic examples of matrix transformation that can help grasp some intuitions on what it means to multiple a vector with the matrix. Let us say that we do have a vector: 
+We will show some classic examples of matrix transformation that can help grasp some intuitions on what it means to multiply a `vector` with the `matrix`. We can even visualize the effect of matrix transformation. Let us say that we have a vector: 
 
 $$\mathbf{v}_2 = [1, 2]$$
 
@@ -500,7 +513,7 @@ $$\mathbf{I}_2 = \begin{pmatrix}
 0 & 1 
 \end{pmatrix}$$
 
-If we multiple $\mathbf{v}_2 \cdot \mathbf{I}_2$ its easy to figure out that we end up having as a result the same vector $[1, 2]$.
+If we multiply $\mathbf{v}_2 \cdot \mathbf{I}_2$ its easy to figure out that we end up having as a result the same vector $[1, 2]$.
 
 If we instead multiply $\mathbf{v}_2$ with matrix $\mathbf{A}$:
 
@@ -509,21 +522,23 @@ a & 0  \newline
 0 & b 
 \end{pmatrix}$$
 
-That will return a slightly different vector which is $[a, 2\cdot b]$, so this diagonal-matrix $\mathbf{A}$ (only the diagonal values are non-zero) scales the values of the vector. Another example matrix is:
+That will return a slightly different vector, which is $[a, 2\cdot b]$. So this diagonal-matrix $\mathbf{A}$ (only the diagonal values are non-zero) scales the values of the vector. Another example matrix is:
 
 $$\mathbf{A} = \begin{pmatrix}
 1 & 0  \newline
 0 & -1 
 \end{pmatrix}$$
 
-which actually flips the y-axis of the vector in the negative direction. As a final example, we have matrix $\mathbf{C}$:
+which flips the y-coordinate of the vector in the negative direction (mirrors the geometric vector around the x-axis). 
+
+As a final example, we have matrix $\mathbf{C}$:
 
 $$\mathbf{C} = \begin{pmatrix}
 0 & -1  \newline
 1 & 0 
 \end{pmatrix}$$
 
-which actually rotates a vector $90^\circ$. This can be validated by the following:
+which rotates a vector $90^\circ$. This can be validated by the following:
 
 
 $$\mathbf{v}_2 \cdot \mathbf{C} = [1, 2] \cdot \begin{pmatrix}
@@ -539,15 +554,15 @@ To better understand what happened, we can visualize vector $\mathbf{v}_2$ and t
 
 So there is always some geometric interpretation of the result of the matrix-vector multiplication. This can be extended for the matrix-to-matrix multiplication.
 
-## Distance between vectors
+### Distance between vectors
 
-Nice! As a quick recap, so far we have seen that we can express `instances` that represent observations from real-world (or experiments) as vectors. Each different value of the vector that is called a `feature` represents a different measurement for the instance (or otherwise called `dimension`). We actually discuss also some basic tool in Linear algebra that helps us manipulate these vectors.
+As a quick recap, so far we have seen that we can express `instances`, that represent observations from real-world (or experiments), as vectors. Each different value of the vector, a `feature` or `dimension`, represents a different measurement for the instance. We discussed some basic tool in Linear algebra that helps us manipulate these vectors.
 
-It is really useful also to introduce a notion of distance with which we can measure the closeness of vectors. In this way, we can compare different instances and judge which one are close or far to each other. We saw that these vectors can represent images or text. If for example they represent images, and we want to build an web-image-recommendation system like `Google Lens` we will need a distance measurement to figure out which images are closer to the query image at time.
+It is really useful also to introduce a notion of `distance` with which we can measure the closeness of vectors. In this way, we can compare different instances and judge which one are close to or far from each other. 
 
-Having represent the query image as a vector and all the images as vectors we can easily also use this distance metric to compute the closeness of the query image with all the images in our dataset.
+In real datasets these vectors can represent images or text. For example, we want to build an web-image-recommendation system like `Google Lens`. Representing the query image as a `vector`, and the dataset of all the other images as vectors, we can easily use this `distance metric` to compute the closeness of the query image with all the images in our dataset.
 
-If we have two vectors $\mathbf{x} = (x_1, x_2, \cdots, x_n )$ and  $\mathbf{y} = (y_1, y_2, \cdots, y_n)$ a very popular distance is the Euclidean distance which can be defined as:
+If we have two vectors $\mathbf{x} = (x_1, x_2, \cdots, x_n )$ and  $\mathbf{y} = (y_1, y_2, \cdots, y_n)$ a very popular distance is the `Euclidean distance` which can be defined as:
 
 $$
 \text{Dis}_2(\mathbf{x}, \mathbf{y}) 
@@ -559,7 +574,7 @@ $$= \sqrt{(\mathbf{x} - \mathbf{y})^\top (\mathbf{x} - \mathbf{y})}$$
 
 
 
-Another way is to use 1-norm distance which is the following:
+Another `distance metric` ist the 1-norm distance, which is the following:
 
 $$
 \text{Dis}_1(\mathbf{x}, \mathbf{y}) 
@@ -567,19 +582,19 @@ $$
 
 $$
 
-The generalized version of the previous distances is called `Minkowski distance` and it is as follows:
+The generalized version of the previous distance metrics is called `Minkowski distance`, and it is as follows:
 
 $$
 \text{Dis}_p(\mathbf{x}, \mathbf{y})  = \Bigg({\sum_{j=1}^{d} (x_j - y_j)^p} \Bigg)^{1/p} 
 
 $$
 
-The main take-home message in this sub-section is that we can make use one of the previous tools as a means to gauge the closeness of two vectors. By employing such a tool we can create powerful Machine Learning tools.
+The main take-home message in this sub-section is that we can make use one of the previous tools as a means to gauge the closeness of two vectors. By employing such a tool we can create powerful Machine Learning models.
 
 ### Vector projection (and rejection)
 
-In Linear Algebra we call orthogonal projection of vector $\vec{a}$ to $\vec{b}$ (from the below figure) and the legs (or catheti) to hypotenuse that is $\vec{a}$ are $\vec{a_1}$ and $\vec{a_2}$. The leg that is parallel with the 
-vector $\vec{b}$ is the actually projection that we are looking for $\vec{r1}$.
+In Linear Algebra we often want to calculate the orthogonal projection of vector $\vec{a}$ to $\vec{b}$ (from the below figure) : $p_\vec{b} \vec{a} $. The legs (or catheti) of the hypotenuse $\vec{a}$ are $\vec{a_1}$ and $\vec{a_2}$. The leg that is parallel with the 
+vector $\vec{b}$ is the projection that we are looking for.
 <p align="center">
   <img src="images/vector_projection.png" alt="Sublime's custom image" style="width:45%"/>
 </p>
@@ -588,36 +603,33 @@ This projection is calculated as:
 
 $$p_\vec{b} \vec{a} = \frac{a \cdot b}{||a||||b||} b$$
 
-while just the length of the projection is 
+where the length of the projection is 
 
 $$d = \frac{a \cdot b}{||a||||b||} $$
 
-## Vectors as datasets
+## Identifying classes of observations in datasets
 
-Now lets say that we are conducting an experiment and we gather observations (`instances`) that lives in two dimensions. We can plot the results of these observations in a cartesian two-dimensional plot as follows: 
+Now lets say that we are conducting an experiment and we gather observations (`instances`) that live in two dimensions. We can plot the results of these observations in a cartesian two-dimensional plot as follows: 
  
 <p align="center">
   <img src="images/2d.png" alt="Sublime's custom image" style="width:50%"/>
 </p>
 
-If our observations regards students and the `features` are student grades on Mathematics and Physics in high school.
+If our observations are students, and the `features` are student grades on Mathematics and Physics in high school.
 
-Given that we know that these observations belongs to two distinct classes (lets say bachelor and master students) and these classes can be represented as follows:
+Say that we know that these observations belong to two distinct classes (lets say bachelor and master students). Two popular techniques in ML are `clustering` and `classification`. In `clustering` we do not use information about any observation what class they belong to, sometimes not even what classes are possible. So, we create 2 groups based on similarity (or `distance`). In `classification`, we know the classes of a sample of observations, and use this information to separate and annotate the other observations using `distance` to the annotated observations. The known class annotations can be represented as follows:
 
 <p align="center">
   <img src="images/2dc.png" alt="Sublime's custom image" style="width:50%"/>
 </p>
 
-
-Now, two popular techniques in Machine learning are clustering and classification. In the first category, we are trying to assign for each instance a belonging class. In this case, we only have information about the instances. In the latter, while we would like to do the same thing, however, in this case, we do already have information about the class belonging of each sample. We thus want to use also this information to learn a way to separate between the known classes given the annotated information.
-
-Thus, knowing the class belonging, we are looking for a line that separates the two classes. That can be seen in the following image;
+Knowing the class annotations of a sample of observations, we are looking for a line that separates the two classes. That can be seen in the following image;
 
 <p align="center">
   <img src="images/2dcc.png" alt="Sublime's custom image" style="width:50%"/>
 </p>
 
-Of course the most of the problems lies in a higher dimensionality that the previous problem. We can consider the case of three dimensions which can be also visualized as:
+This line is our `linear classification model`, which estimates the class of non-annotated observations based on `distance` to the line. Next section presents a more extensive example of a linear classification model. Of course most of the problems lie in a higher dimensionality than the previous problem. We can consider the case of three dimensions which can be visualized as:
 
 <p align="center">
   <img src="images/3d.png" alt="Sublime's custom image" style="width:50%"/>
@@ -627,29 +639,33 @@ Of course the most of the problems lies in a higher dimensionality that the prev
   <img src="images/3dc.png" alt="Sublime's custom image" style="width:50%"/>
 </p>
 
-But we can also speak for higher than three dimensions. This is the case of the most interesting problems, however, it is impossible to visualize the values of these problems in a similar way. In this course, to help you with the understanding of key concepts we will make use of example datasets with two or three dimensions to explain nuances and then, we will assume that the same concepts can be generalized in higher dimensions.
+But we can also speak for higher than three dimensions. This is the case of the most interesting problems, however, it is impossible to visualize the values of these problems in a similar way. In this course, to help you with the understanding of key concepts, we will make use of example datasets with two or three dimensions to explain nuances. We will assume that the same concepts can be generalized in higher dimensions.
 
 ## Linear models in Machine learning
 
-But ok seriously, why do we even mentioned all these above calculations and linear algebra tools for vectors and matrices. We are just interested in data and making machines `more clever`.
+But ok seriously, why do we even mention all these above calculations and linear algebra tools for vectors and matrices? We are just interested in data and making machines `more clever`.
 
-The reason why we mess with these placeholders and their mathematical properties is multi-facet. 
+The reason why we mess with these placeholders and their mathematical properties is multi-faceted:
 
-- Firstly, is somehow intuitive to place numerical entities in boxes that look like `vector, matrices`.
-- Moreover, it ends up being a convenient abstract representation of how the placeholders in computer looks like. 
+- Firstly, it is somehow intuitive to place numerical entities in boxes that look like `vectors, matrices`.
+- Moreover, it ends up being a convenient abstract representation of what the placeholders look like in computers. 
 - We can use a lot of calculation tools that are provided by linear algebra and calculus and optimization to work with our data. 
 - Having placed all our data observations in placeholders (`vectors`) we can now make use of computation tools to measure similarities and be able to group together things. 
-- `Python` has a lot of nice packages that we can use to process our data. You will familiarize with them in the three assignments of this course. More info regarding the assignment you will be able to find here.
+- `Python` has a lot of nice packages that we can use to process our data. You will get familiar with them in the three assignments of this course. More info regarding the assignment is available here.
 
-In the following paragraphs, we will introduce an example of  a `dataset` and a `model` that performs the task of `linear classification`.
+In the following paragraphs, we will introduce an example of  a `dataset` and a `model` that performs the task of `linear classification`. We will introduce this process with a very simplistic example that works as a basis to understand the whole concept. This should work as a mere blueprint in order to grasp the idea behind training a ML algorithm. During the lecture we will analyze several training methodologies and algorithms in more details that work in practice for multiple tasks (`classification`, `regression`, `clustering` etcetera). 
 
-#### Example MNIST
+Firstly, we will start by making a simple hypothesis that our data are linearly separable meaning that we could find a simple `line` (or a `surface plane` in multi-dimensional space) that could separate each different class for our problem.
 
-Now, lets say that we would like to study images with handwritten digits and the classification of them into the correct digit. Each time that you write in a paper a numerical digit, scan the document, you would like your machine learning algorithm to recognize the digit.
+### Example MNIST: digit-classification
 
-For this purpose, we can employ a set of image-examples from the popular [MNIST dataset](https://en.wikipedia.org/wiki/MNIST_database) (developed some decades ago) that contains 70.000 gray scale images of handwritten digits (with pixel size of $28 \times 28$) which are `named` (or `labelled` or `annotated`) after the digit that they represent. So there is a way to know what each image represents. That type of `naming` is called a `label` or an `annotation`. We can represent this label using an integer variable that takes the following values $t = \{0, 1, 2, ..., 9\}$.
+Let's say that we would like to study images with handwritten digits. Each time that you write a numerical digit on paper and scan the document, you would like your machine learning algorithm to recognize the digit. This is a `classification` task.
 
-Each input image can be represented as a vector after placing each row next to each other. Eventually, instead of $28$ rows with $28$ columns we can end up having $1$ row with $784$ columns matrix. We can actually use as placeholder a vector $\mathbf{x} \in \mathbb{R}^{784}$. Finally, we can store all the vector-images in one big matrix:
+For this purpose, we can employ a set of image-examples from the popular [MNIST dataset](https://en.wikipedia.org/wiki/MNIST_database) (developed some decades ago) that contains 70.000 gray scale images of handwritten digits (with pixel size of $28 \times 28$) which are `named` (or `labelled` or `annotated`) after the digit that they represent. So there is a way to know what each image represents. We can represent this label using an integer variable that takes the following values $t = \{0, 1, 2, ..., 9\}$. We can actually place all the labels for each image in a single vector $\mathbf{t} \in {\{0, 1, 2, ..., 9\}}^{70000}$.
+
+#### Data preparation
+
+First we prepare the dataset. Each input image is a collection of rows of pixels. They can be represented as a `vector` after placing each row next to each other: Instead of $28$ rows with $28$ columns, we can end up having a matrix with $1$ row and $784$ columns. We can actually use as placeholder a vector $\mathbf{x} \in \mathbb{R}^{784}$. Finally, we can store all the vector-images in one big matrix:
 
 $$ \mathbf{X} = \begin{bmatrix}
 \text{---} & \mathbf{x}_1  & \text{---} \newline
@@ -658,65 +674,48 @@ $$ \mathbf{X} = \begin{bmatrix}
 \text{---} &  \mathbf{x}_n  & \text{---}
 \end{bmatrix} \in \mathbb{R}^{70000 \times 784}$$
 
-Where each row is represented by a vector $\mathbf{x}_i$. Out task is to extract useful information and patterns from these data. For example in digit-classification, we would like to build a ML model to predict automatically the digits in MNIST images without using the information from the naming or the labels. Once we build this system, we can apply to each image that contains handwritten digits and create our [OCR software](https://en.wikipedia.org/wiki/Optical_character_recognition).
+Where each row is represented by a vector $\mathbf{x}_i$. Our task is to extract useful information and patterns from these data. Specifically in digit-classification, we would like to build a ML model to predict automatically the digits in MNIST images. Once we build this system, we can apply to each image that contains handwritten digits and create our [OCR software](https://en.wikipedia.org/wiki/Optical_character_recognition).
 
-Now back to the MNIST dataset. We can actually place all the labels for each image in a single vector $\mathbf{t} \in {\(0, 1, 2, ..., 9\)}^{70000}$.
-
-
-### Task example: linear classifier
-
-A simple approach to create our first classifier (our machine learning model) is as follows: 
-
-- Introduce some parameters (we can call them also variables or `weights`) $\mathbf{w}$. 
-- Then, we simply :) need to tune these parameters in such a way that each time that we will have a new observation $\mathbf{x}^{\prime}$ that contains a handwritten digit (that we do not know beforehand its `label`) 
-- if we multiply this new instance (by using the `inner product` discussed before) with parameters $\mathbf{w}$ the output should be a numerical value that will represent the digit that the input observation contains.
-
-$$y = \mathbf{w} \cdot  \mathbf{x}^{\prime}$$
-
-Now the whole point of tuning the parameters $\mathbf{w}$ is that we need to end up with $\mathbf{y}$ that should be always as close as possible to the desired digit value $\mathbf{t}$. 
-
-For instance if we do have as our new observation the following digit $\mathbf{x}'$:
+To illustrate, we have as our new observation the following digit $\mathbf{x}'$:
 
 <p align="center">
   <img src="images/nine.png" alt="Sublime's custom image"/>
 </p>
 
-the first thing to do is that we place each row of pixels next to each other and we finally we can have a vector that looks as follows (note this is a part of the final vector and not full vector):
+The first thing to do is that we place each row of pixels next to each other. We have a vector that looks as follows (note this is a part of the final vector and not full vector):
 
 <p align="center">
   <img src="images/mnist2.png" alt="Sublime's custom image"/>
 </p>
 
-Then, the output of the ML model should be something like $y = \mathbf{w} \cdot \mathbf{x}' \approx 9$ (or some other value that codifies this specific digit- that is not important for now, if you are curious make questions on it). 
+#### Tuning phase
 
-Note that we can have instead of a scalar a vector as an output. This vector could be $\mathbf{y} \in \mathbb{R}^{9}$ where each dimensionality represents each of the desired digits. In this case, we should replace $\mathbf{w}$ with a matrix. But for now, we will stick to the simple case of the scalar output.
+Next, we use a simple approach to create our first classifier (our machine learning model) as follows: 
 
-### Tuning phase for the parameters (training phase)
+- We introduce some parameters (we can also call them variables or `weights`) $\mathbf{w} \in \mathbb{R}^{784}$. 
+- Then, we need to `tune` these parameters in such a way that each time we have a new unlabeled observation $\mathbf{x}^{\prime}$ that contains a handwritten digit, the innerproduct $\mathbf{w} \cdot  \mathbf{x}^{\prime} = y$ is as close as possible to the right label $\mathbf{t}$.
 
-In `Machine Learning` we are trying to figure out a good way to tune these parameters $\mathbf{w}$ in such a way that the above classification task will be resolved. The process of tuning these parameters is called in machine learning `training` or `learning process`. 
+For now, we can intuit that the output of the ML model should be something like $y = \mathbf{w} \cdot \mathbf{x}' \approx 9$ (or some other value that codifies this specific digit.
 
-We will introduce this process with a very simplistic example that works as a basis to understand the whole concept. This should work as a mere blueprint in order to grasp the idea behind training a ML algorithm. During the lecture we will analyze several training methodologies and algorithms in more details that work in practice for multiple tasks (classification, regression, clustering etcetera). 
+> Note: instead of a scalar, we could want a vector as an output: $\mathbf{y} \in \mathbb{R}^{9}$ where each dimensionality represents each of the desired digits. In this case, we should replace $\mathbf{w}$ with a matrix. But for now, we will stick to the simple case of the scalar output.
 
-Firstly, we will start by making a simplistic hypothesis that our data are linearly separable meaning that we could find a simple `line` or a `surface plane` in multi-dimensional space that could separate each different class for our problem.
+In `Machine Learning` we are trying to figure out a good way to `tune` these parameters $\mathbf{w}$ in such a way that the above `classification` task will be resolved. The process of tuning these parameters is called in machine learning `training` or `learning process`. Now, how can we engineer meaningful values to these parameters $\mathbf{w}$ to classify handwritten digits?
 
-This should be done by just performing a simple linear operation between the data in the dataset and the introduced parameters $\mathbf{w}$. This operation looks like:
+- We have already accessed and prepared the MNIST dataset of handwriting images that contain some annotation or label describing the digit in the image.
+- We can split our MNIST dataset into two sets: `training` and `test` set. The training set $\mathbf{X'}$ is used during the `training phase` where we will `tune` the parameters of the model.
+- Then, the test set will be used for `evaluating the quality of the tuned parameters` of our new model: $\mathbf{y} = \mathbf{X'} \cdot \mathbf{w}$.
 
-$$\mathbf{y} = \mathbf{X} \cdot \mathbf{w}$$ 
+We can do the `tuning` by performing a simple linear operation between the data in the training dataset $\mathbf{X'}$ and the introduced parameters $\mathbf{w}$. This operation looks like:
 
-Now a very good question is the following: `how can we engineer meaningful values to these parameters` $\mathbf{w}$ to perform handwritten classification? The next step gives a simplistic example that could be the starting skeleton 
-of a ML algorithm:
+$$\mathbf{y} = \mathbf{X'} \cdot \mathbf{w}$$ 
 
-- First thing first, is to access a dataset of handwriting images (MNIST) that contains some annotation or label describing whats the digit representation of its image.
-- Each image $\mathbf{x}_i$ contains a label $t_i$.
-- We can split this dataset into two sets: training and test set. The training set we will use it during the training phase where we will tune the parameters of the model.
-- Them, the test set will be used for evaluating the quality of the tuned parameters of our new model.
-
-Having prepared our data now we can proceed in the so-called training process, which is usually as follows (another reminder that his is a very simplistic example):
-
-- We start by tuning these parameters $\mathbf{w}$ randomly. Having done that, now, we can calculate the output $\mathbf{y}$ using the previous linear equation $\mathbf{y} = \mathbf{X} \cdot \mathbf{w}$.  
-- However, given that we initialize the parameters $\mathbf{w}$ randomly there is not any quarantee that the values $\mathbf{y}$ could codify any meaningful information related to MNIST dataset. 
-- Meanwhile, we already know how this output should be (the stored label information $\mathbf{t}$).
-- It is natural to measure the distance between the predictions $\mathbf{y}$ and the annotations $\mathbf{t}$ and then update the values of $\mathbf{w}$ in a way that this distance (think about the distance metrics we talked before) between the two vectors is minimized. 
+Now we can proceed to the so-called training process, which is usually as follows (another reminder that this is a very simplistic example):
+- We start by tuning these parameters $\mathbf{w}$ randomly. 
+- Having done that, we can calculate the output $\mathbf{y}$ using the previous linear equation $\mathbf{y} = \mathbf{X'} \cdot \mathbf{w}$.  
+- As we initialized the parameters $\mathbf{w}$ randomly, there is not any quarantee that the values $\mathbf{y}$ could codify any meaningful information related to MNIST dataset. 
+- We already know the output should be the stored label information $\mathbf{t}$.
+- It is natural to measure the `distance` between the predictions $\mathbf{y}$ and the annotations $\mathbf{t}$.
+- Then update the values of $\mathbf{w}$ in a way that this distance (think about the distance metrics we talked before) between the two vectors is minimized. 
 - In this way, we can measure the total error between the model output and the real labels. This is called alternatively `loss function` or `error function`.
 - Then we can use this loss output as a compass to modify our parameters $\mathbf{w}$ and direct them towards minimizing this entity. After all, we want to minimize this distance between correct label and the predicted values.
 - Throughout this course, we will analyze several key ways of tuning our parameters given this error calculation.
@@ -742,7 +741,7 @@ It is clear that we can find a line that separates the two classes. For instance
 
 $$y = -x1 -x2 + 9 = 0$$
 
-could separate the two classes. We can alternative write :
+could separate the two classes. We can alternatively write :
 
 $$y = \mathbf{w}^{T}\mathbf{x} + w_0$$
 
@@ -800,9 +799,9 @@ The main principle behind Support Vector Machines (SVM) is that we would like to
 
 To conclude and come back to our `EoML course`, during the lectures, we defined as key ingredients of ML the following concepts: `data (instances, features)`, `the task`, and `the model`.
 
-In the previous example, we defined that a single image $\mathbf{x}$ acts as the instance or observation and its pixel-value as the feature. Our dataset is a set of images that could include annotation in the case of supervised learning and linear classification like the case of the MNIST datasets. However, we might still have a set of images without annotation and can still employ algorithms that find interesting patterns in data (`clustering`, `image compression` or `image generation` using `GANs` or `stable diffusion` models).
+In the previous example, we defined that a single image $\mathbf{x}$ acts as the instance or `observation` and its pixel-value as the `feature`. Our dataset is a set of images that could include annotation in the case of supervised learning and linear classification like the case of the MNIST datasets. However, we might still have a set of images without annotation and can still employ algorithms that find interesting patterns in data (`clustering`, `image compression` or `image generation` using `GANs` or `stable diffusion` models).
 
-In this tutorial, we mainly focused on the `linear classification` task. The model is actually the parameters $\mathbf{w}$ that we introduced during the example and tuned during the training process. Thus, for each different task we have different type of a model and different type of introduced parameters $\mathbf{w}$ that needs to be learned. Think of different the different recipes for supervised or unsupervised learning and the introduced parameters.
+In this tutorial, we mainly focused on the `linear classification` task. The model is actually the parameters $\mathbf{w}$ that we introduced during the example and tuned during the training process. Thus, for each different task we have a different type of a model and different type of introduced parameters $\mathbf{w}$ that needs to be `tuned`. 
 
 ##
 
