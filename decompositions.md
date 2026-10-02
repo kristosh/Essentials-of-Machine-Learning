@@ -6,28 +6,26 @@ description: Matrix decompositions and from eigen-analysis to Principal componen
 ---
 
 # Matrix decompositions
+So what is matrix decomposition? And why do we need it? This is what we will try to answer in this tutorial.
 
-So what is matrix decomposition? And why we need it? This is what we will try to answer in this tutorial.
+>In general we have seen in previous tutorials how `mappings` and `transformations` of vectors can be conveniently seen as `linear transformation` and described as`matrices`. We saw how `data` can be represented by `matrices` where the rows of the matrix for example represent different people or as they called `instances` and the columns describe different `features` of the people, such as: `weight`, `height`, and other information about the individuals. That row and column order does not play a really important role and we can have each instance to be a column vector so a column of the matrix. That is simply a transpose of the initial matrix.
 
-In general we have seen in previous tutorials how `mappings` and `transformations` of vectors can be conveniently seen as `linear transformation` and described as`matrices`. We saw how `data` can be represented by `matrices` where the rows of the matrix for example represent different people or as they called `instances` and the columns
-describe different `features` of the people, such as: `weight`, `height`, and other information about the individuals. That row and column order does not play a really important role and we can have each 
-instance to be a column vector so a column of the matrix. That is simply a transpose of the initial matrix.
+In ML the most interesting and challenging problems are coupled with data that live in `high-dimensionalities` such as `images`, `videos`, `brain scans` etcetera. This high-dimensionality comes with multiple problems such as it makes the ML algorithm hard to parse data to interpret them while it is merely impossible to visualize them and really expensive to store the data in servers. At the same time, there are properties of these high-dimensional data that we can take advantage of. For instance, many dimensions are redundant since they 
+could simply represented `a linear combination` of other dimensions. `Dimensionality reduction` exploits structure and correlation and allows us to work with a more compact representation of the data, ideally without losing information. We can think of dimensionality reduction as a compression technique, similar to `jpeg` or `mp3`, which are compression algorithms for images and music.
 
-In this page, we will present three different aspects of these matrices: how to `summarize matrices`, how matrices can be `decomposed`, and how these decompositions can be used for matrix approximations. 
-We will analyze multiple ways to perform matrix decomposition and eventually we will show why this is really important in `Machine Learning`. 
+In this part of the tutorial, we will see the real merit and the reasons why we would like to perform `matrix decomposition` in Machine Learning. A direct answer to that is that matrix decomposition paves the way for `dimensionality reduction` and the `discovery of embeddings` that can meaningfully characterize the initial feature space of our data in hand. In this page, we will present three different aspects of these matrices: 
+- how to `summarize matrices`, 
+- how matrices can be `decomposed`, 
+- and how these decompositions can be used for `matrix approximations`. 
 
+Matrix decompositions usually decompose an original matrix into a product of simpler matrices, which have some specific features. In this theory page, we cover two important decompositions: `Eigenvalue decomposition (Diagonalization)` and `Singular value Decomposition (SVD)`. Finally we show that one of the most important algorithms in Machine Learning called `Principal Component Analysis (PCA)` is based on matrix decomposition and SVD.
+
+## Summarizing matrices
 We will start our journey by considering methods that allow us to describe matrices with just a few numbers that characterize the overall properties of matrices. These methods are the `determinants`, `traces` and `eigenvalues`.
 
-Matrix decompositions usually decompose an original matrix 
-into a product of simpler matrices, which have some specific features. In this theory page, we cover two important decompositions: 
-`Eigenvalue decomposition (Diagonalization)` and `Singular value Decomposition (SVD)`. Finally we show that one of the most important algorithms in Machine Learning
-called `Principal Component Analysis (PCA)` is based on matrix decomposition and SVD.
+### Determinant of a matrix
 
-Ok but first things first, lets start with simple ways to describe matrices. The first methodology or function of the matrix it is called the `determinant`.
-
-## Determinant of a matrix
-
-Let's assume a square matrix $\boldsymbol{A} \in \mathbb{R}^{n \times n}$, we can write the determinant of this matrix as follows:
+Let's assume a square matrix $\boldsymbol{A} \in \mathbb{R}^{n \times n}$. W use the following notation for the determinant of this matrix:
 
 $$
 \det(A) = \begin{vmatrix}
@@ -38,11 +36,12 @@ a_{n1} & a_{n2} & \ldots & a_{nn}
 \end{vmatrix}
 $$
 
-Determinant is a function that maps a matrix into a scalar value $\det(A) \in \mathbb{R}$. The determinant is the entity that we use to check whether a matrix is invertible. It holds
-that if a matrix $\boldsymbol{A}$ is `invertible` then $\det(A) \neq 0$. That means that we cannot compute $\boldsymbol{A}^{-1}$ In case, that $\det(A) = 0$ then the matrix is not invertible and it is called a `singular matrix`.
+Determinant is a function that maps a matrix into a scalar value $\det(A) \in \mathbb{R}$. The determinant is the entity that we use to check whether a matrix is invertible. It holds that if a matrix $\boldsymbol{A}$ is `invertible` then $\det(A) \neq 0$. That means that we cannot compute $\boldsymbol{A}^{-1}$ In case, that $\det(A) = 0$ then the matrix is not invertible and it is called a `singular matrix`.
 
 The notion of a determinant is natural when we consider it as a mapping from a set of $n$ vectors spanning an object in $\mathbb{R}^n$. 
-It turns out that the determinant $\det(A)$ is the signed volume of an $n$-dimensional parallelepiped formed by columns of the matrix $\boldsymbol{A}$. To better grasp this, we can start with the following example: Let's say that we got two vector $\mathbf{g} = [g, 0]^T$ and $\mathbf{b} = [0, b]^T$ in standard basis $\{\mathbf{e}_1 = [1, 0]^T  \mathbf{e}_2 = [0, 1]^T \}$:
+It turns out that the determinant $\det(A)$ is the signed volume of an $n$-dimensional parallelepiped formed by columns of the matrix $\boldsymbol{A}$. 
+
+To better grasp this, we can start with the following example: Let's say that we got two vector $\mathbf{g} = [g, 0]^T$ and $\mathbf{b} = [0, b]^T$ in standard basis $\{\mathbf{e}_1 = [1, 0]^T  \mathbf{e}_2 = [0, 1]^T \}$:
 
 <p align="center">
   <img src="images/det1.png" alt="Sublime's custom image" style="width:20%"/>
@@ -61,8 +60,7 @@ In this case, we define as determinant to be:
 
 $$det(A) = g\cdot b + 0 =  g\cdot b $$
 
- which is the area of the parallelogram defined by the two vectors. The same happens in the below image, where we can compute the area in the $\mathbb{R}^{3}$ space using the 
- determinant of the matrix that contains the vectors:
+ which is the area of the parallelogram defined by the two vectors. The same happens in the below image, where we can compute the area in the $\mathbb{R}^{3}$ space using the determinant of the matrix that contains the vectors:
 
 
 <p align="center">
@@ -90,9 +88,12 @@ $$
 \end{vmatrix} = 186
 $$
 
-One prerequisite is that the vectors are `linearly independent` otherwise we cannot compute the volume. Lets us imagine that the vectors $\mathbf{b}$ and $\mathbf{g}$ are dependant, that means that they are parallel and thus, the area that they define is equal to zero. `That observation is really important!` If a matrix contains columns that are linearly dependant then, `the determinant is equal to zero` and thus we can say that this matrix is a `singular matrix`. 
+>One prerequisite is that the vectors are `linearly independent` otherwise we cannot compute the volume. Let us imagine that the vectors $\mathbf{b}$ and $\mathbf{g}$ are dependant, that means that they are parallel. Thus the area that they define is equal to zero. `That observation is really important!` If a matrix contains columns that are linearly dependant then, `the determinant is equal to zero` and thus we can say that this matrix is a `singular matrix`. 
 
-The important message in this section is that if the determinant of a matrix is not zero, then, it represents the volume that the column vector define is $\mathbb{R}^{n}$ space. A second useful observation, is that we can compute the determinant only for square matrices. If the matrix contains columns that are linearly dependant then we have a `singular matrix`.
+The important messages in this section:
+- If the determinant of a matrix is not zero, then, it represents the volume that the n column vectors define is $\mathbb{R}^{n}$ space. 
+- We can compute the determinant only for square matrices. 
+- If the matrix contains columns that are linearly dependant then we have a `singular matrix`.
 
 <!-- The sign of the determinant indicates the orientation of the spanning vectors $\mathbf{b}, \mathbf{g}$ 
 with respect to the standard basis $(\mathbf{e}_1, \mathbf{e}_2)$. In our figure, flipping the order to $\mathbf{g}, \mathbf{b}$ 
@@ -102,9 +103,9 @@ spanning the edges of a parallelepiped, i.e., a solid with faces that are parall
 determinant of the $3 \times 3$ matrix $[\mathbf{r}, \mathbf{b}, \mathbf{g}]$ is the volume of the solid. Thus, the determinant acts as a 
 function that measures the signed volume formed by column vectors composed in a matrix. -->
 
-## Trace of a matrix 
+### Trace of a matrix 
 
-The second important way to summarize matrix is by using a function called `trace`. This function takes as input $\boldsymbol{A} \in \mathbb{R}^{n \times n}$ and maps it into real-world
+The second important way to summarize a matrix is by using a function called `trace`. This function takes as input $\boldsymbol{A} \in \mathbb{R}^{n \times n}$ and maps it into real-world
 values $\mathbb{R}$ in the following way:
 
 $$
@@ -135,29 +136,30 @@ $$
 tr(\boldsymbol{xy}^\top) = tr(\boldsymbol{y}^\top \boldsymbol{x}) = \boldsymbol{y}^\top \boldsymbol{x} = \boldsymbol{x}^\top \boldsymbol{y} \in \mathbb{R}
 $$
 
-This trace of a matrix places an important role in eigen-decomposition and SVD and it is important to understand the basics so we can apply them later during 
-the eigen-decomposition. 
+There are plenty of useful properties for these functions. For instance, the trace of the matrix is equal with the summation of the `eigenvalues` (which we will introduce in the next section). This trace of a matrix plays an important role in `eigen-decomposition` and `SVD`.
 
+## Matrix decomposition
 
-# Matrix decomposition
+So far we found two ways to describe a square matrix using two functions the determinant and the trace.  Now equipped with these two basic functions we can proceed with the concept of `matrix decomposition`. We will start by explaining with the really important concepts of `eigenvalues` and `eigenvectors`.
 
-Ok so far we found two ways to describe a square matrix using two functions the determinant and the trace. There are plenty of useful properties
-for these functions. For instance, the trace of the matrix is equal with the summation of the `eigenvalues` (we will see soon what are these values). Now equipped with these two basic functions we can proceed with the concept of `matrix decomposition`. We will start by explaining with the really important concepts of `eigenvalues` and `eigenvectors`.
+### Eigenvalues and Eigenvectors
 
-## Eigenvalues and Eigenvectors
+In linear algebra, `eigensystems` denote a set of problems that include finding `eigenvectors` and `eigenvalues`. The word `eigen` comes from German and means `own`: they are the system's own (or characteristic) vectors and values. This will make sense when we formulate the problem more concretely. 
 
-In linear algebra, `eigensystems` denote a set of problems that include finding `eigenvectors` and `eigenvalues`. The word `eigen` comes from
-German and means `own`, which will make sense when we formulate the problem more concretely. We will start with a square matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$. We have seen before that a matrix performs a linear transformation that maps vectors from $\mathbf{R}^{n} \to \mathbf{R}^{n}$ in a specific way. The core idea of eigen-decomposition is to find 
-vectors $\mathbf{x}$ that when we apply the transformation matrix $\mathbf{A}$ they are affected
-`the least` by the transformation, and by least we mean that they are not rotated, but are `only scaled` by a scalar factor $\lambda$. Formally, given a
-vector $\mathbf{x}$ and a transformation $\mathbf{A}$, this requirement can be written as:
+We will start with a square matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$. We have seen before that this matrix performs a linear transformation that maps vectors from $\mathbf{R}^{n} \to \mathbf{R}^{n}$ in a specific way. 
+
+The core idea of eigen-decomposition is to find vectors $\mathbf{x}$, such that when we apply the transformation matrix $\mathbf{A}$ they are affected `the least` by the transformation. By least, we mean that they are not rotated, but are `only scaled` by a scalar factor $\lambda$. 
+
+Formally, given a vector $\mathbf{x}$ and a transformation $\mathbf{A}$, this requirement can be written as:
 
 $$
 \mathbf{A}\mathbf{x} = \lambda \mathbf{x}
 
 $$
 
-Since on the right-hand side we multiply a vector by a scalar, we can equivalently add the identity matrix as $\lambda \rightarrow \lambda \mathbf{I}$. Rearranging terms gives us the following equation:
+The sets of $\mathbf{x}$ and $\lambda$ that satisfy this equation are, respectively, the eigenvectors and eigenvalues of matrix $\mathbf{A}$. Thus every eigenvector corresponds to a (not unique) eigenvalue.
+
+We can rewrite this equation to understand more about how to find these characteristic vectors and values. Since on the right-hand side we multiply a vector by a scalar, we can equivalently add the identity matrix as $\lambda \rightarrow \lambda \mathbf{I}$. Rearranging terms gives us the following equation:
 
 $$
 (\mathbf{A} - \lambda \mathbf{I})\mathbf{x} = \mathbf{0}
@@ -165,7 +167,7 @@ $$
 $$
 
 Assuming that $\mathbf{A} \in \mathbb{R}^{n \times n}$ and $\mathbf{x} \in \mathbb{R}^n$,
-we can rewrite the former equation in an expanded form:
+we can rewrite this equation in an expanded form:
 
 $$
 \begin{pmatrix}
@@ -187,48 +189,43 @@ x_n
 \end{pmatrix}
 $$
 
-The equation above represents a system of linear equations, and the goal is to
-find vectors $\mathbf{x} = (x_1 \ \cdots \ x_n)^\top$ and $\lambda$ that satisfy
-it. For example, the $m$-th equation is given by:
+The equation above represents a system of linear equations, and the goal is to find vectors $\mathbf{x} = (x_1 \ \cdots \ x_n)^\top$ and $\lambda$ that satisfy it. For example, the $m$-th equation of this linear system is given by:
 
 $$
 A_{m1} x_1 + \cdots + (A_{mm} - \lambda) x_m + \cdots + A_{mn} x_n = 0.
 
 $$
 
-What we can see is that in every equation, we have all the unknowns (elements of
-the vector). Therefore, if the equations are not linearly independent, the only
-solution is the trivial one, i.e.\ $x_1 = x_2 = \cdots = x_n = 0$. This is a detrimental solution, and we are interested in the case that this vector is non-zero. 
-In this case, it should hold that:
+### Prerequisite: independence
+What we can see is that in every equation, we have all the unknowns (elements of the vector). If the equations are linearly dependent, the only solution is the trivial one, i.e.\ $x_1 = x_2 = \cdots = x_n = 0$. In this case, it holds that:
 
 $$
 |\boldsymbol{A} - \lambda \boldsymbol{I}| = 0
 $$
 
-We can say that matrix $\boldsymbol{A} - \lambda \boldsymbol{I}$ is `singular` in this case. If that was not the case, then, we can multiply with the inverse of this matrix
+We can say that matrix $\boldsymbol{A} - \lambda \boldsymbol{I}$ is `singular` in this case (square and not invertible). 
+If we would still use its inverse, we would arrive only at solutions $\mathbf{x} = \mathbf{0}$, which would be detrimental: 
 
 $$
 (\mathbf{A} - \lambda \mathbf{I})^{-1} (\mathbf{A} - \lambda \mathbf{I})\mathbf{x} = (\mathbf{A} - \lambda \mathbf{I})^{-1} \mathbf{0}
 $$
 
-which would lead to detrimental solutions that $\mathbf{x} = \mathbf{0}$ and we actually are interested in non-detrimental solutions. Finally, by using the properties of the determinant we can eventually compute
-the `eigenvectors` and `eigenvalues`.
+Finally, by using the properties of the determinant we can eventually compute the `eigenvectors` and `eigenvalues`.
 
 ### Geometrical interpretation and an example
 
-So what exactly is an eigenvector from the geometrical perspective. Eigenvalue portrays the variance of the initial data to the new coordinate axis that is 
-represented by each eigenvector. However, what exactly this direction of each eigenvector could tell us?
+So what exactly is an eigenvector from the geometrical perspective. When we introduced eigenvalues and eigenvectors, we were interested in those vectors that are transformed only very little. 
 
 The geometric interpretation for eigenvector is that once we compute the eigenvectors 
 
 $$\mathbf{x}_{1}, \mathbf{x}_{2}, \cdots, \mathbf{x}_{m}$$
 
- of matrix $\mathbf{A}$, then these vectors are not affected by the transformation with the 
+of matrix $\mathbf{A}$, then these vectors are not affected (or very little) by the transformation with the 
 matrix $\boldsymbol{A}$ except by a stretching factor $\lambda_{1}, \lambda_{2}, \cdots, \lambda_{m}$ in each case.
 
-Why is this important? Maybe add a little bit more on this!
+In the context of datasets these `eigenvectors` describe a new set of axes along which the data varies the most. These vectors are important for the goal we set out for at the beginning of this chapter: they indicate the most important dimensions for reducing high-dimensional data without losing a lot of information. We will use them in the following sections for `diagonalisation` and `singular value decomposition (SVD)`.
  
-## Matrix diagonalization
+### Matrix diagonalization
 
 Suppose that we do have a matrix $\boldsymbol{A} \in \mathbb{R}^{n \times n}$ and it has $n$ linearly independent eigenvectors. Then, we can place these eigenvectors in matrix $\boldsymbol{S}$. Then, the product $\boldsymbol{S}^{-1}\boldsymbol{A}\boldsymbol{S} = \boldsymbol{\Lambda}$ is a diagonal matrix with the diagonal elements to be the eigenvalues of matrix $\boldsymbol{A}$.  
 
@@ -290,6 +287,7 @@ $$
 \boldsymbol{A} = \boldsymbol{S}\boldsymbol{\Lambda}\boldsymbol{S}^{-1}
 $$
 
+#### Example
 To grasp the importance of diagonalization we can have a view to the following example:
 
 If we want to compute $\boldsymbol{A}^{n}$ we can simplify the computations as follows:
@@ -341,16 +339,18 @@ So we can say that the transformation from the matrix:
 
 $$\textit{transformation} = \textit{rotation} \times \textit{scaling} \times \textit{rotation}$$
 
-Intermezzo: rectangular matrices can transform a vector to a different vector space. For example, matrix transformation $\boldsymbol{A} \in \mathbb{R}^{n \times m}$ if it will be applied (multiplied) by a vector $\mathbf{x} \in \mathbb{R}^n$ then it transforms from $\mathbb{R}^n \to \mathbb{R}^m$.
+#### Vector space transformation
+
+Rectangular matrices can transform a vector to a different vector space. For example, matrix transformation $\boldsymbol{A} \in \mathbb{R}^{n \times m}$ if it will be applied (multiplied) by a vector $\mathbf{x} \in \mathbb{R}^n$ then it transforms from $\mathbb{R}^n \to \mathbb{R}^m$.
 
 To understand better what is going on, let us focus on recatungular matrix $\boldsymbol{A} \in \mathbb{R}^{3 \times 2}$. This matrix can be perceived as a complex linear transformation from 
 $\mathbb{R}^3 \to \mathbb{R}^2$. If we apply this tranformation to a matrix $\mathbf{x} \in \mathbb{R}^3$ it will return a new vector that lives in $\mathbb{R}^2$ space. When we factorize
 this matrix using SVD, matrix $\boldsymbol{\Sigma} \in \mathbb{R}^{3 \times 2}$ lives in the same space with the initial matrix $ \boldsymbol{A}$, and it is a diagonal matrix that contains 
 the so-called singular values. Matrices $ \boldsymbol{U} \in \mathbb{R}^{3 \times 3}$ and $\boldsymbol{V} \in \mathbb{R}^{2 \times 2}$ are orthogonal basis in the two spaces that are related to the transformation matrix $\boldsymbol{A}$.
 
-To better grasp the idea behind these matrices, lets think for a moment about the properties of a symmetric matrix which is square matrix with the property which the two sides of the diagonal matrix 
-contains identical entries. That is reflected from the following obvious property: $\boldsymbol{B} = \boldsymbol{B}^{T}$.
-The second property is the fact that the eigenvectors of the symmetric matrix is perpendicular to each other. If we store these eigenvectors into a matrix that implies some rotation matrix.
+To better grasp the idea behind these matrices, lets think for a moment about the properties of a symmetric matrix which is square matrix where
+1) The two sides of the diagonal matrix contains identical entries. That is reflected from the following obvious property: $\boldsymbol{B} = \boldsymbol{B}^{T}$.
+2) The eigenvectors of the symmetric matrix are perpendicular to each other. If we store these eigenvectors into a matrix that implies some rotation matrix.
 
 These two properties are important for SVD. Note that our matrix $\boldsymbol{A} \in \mathbb{R}^{3 \times 2}$ is rectangular. However, matrices $\boldsymbol{A}\boldsymbol{A}^{T} \in \mathbb{R}^{2 \times 2}$ (can be denoted as $S_L$)
 and $\boldsymbol{A}^{T}\boldsymbol{A} \in \mathbb{R}^{3 \times 3}$ ($S_R$) are always symmetric.  Here you can see the whole process of SVD:
@@ -359,9 +359,7 @@ and $\boldsymbol{A}^{T}\boldsymbol{A} \in \mathbb{R}^{3 \times 3}$ ($S_R$) are a
   <img src="images/svd_3.png" alt="Sublime's custom image" style="width:9s0%"/>
 </p>
 
-To reason why this decomposition holds can be proven if we perform diagonization of the matrix $\boldsymbol{A}^{T}\boldsymbol{A}$. This will easily lead to the defition of SVD decomposition. At then end of the section with SVD we added an alaysis with the proof why this decomposition actually holds.
-
-### Visualization of SVD
+#### Visualization of SVD
 
 The visualization of these matrices is shown below (adapted from Wikipedia). We can see that the matrix $\boldsymbol{\Sigma}$
 has a diagonal part (which can have zero and non-zero elements), whereas the rest of the matrix is equal to zero.
@@ -405,9 +403,8 @@ remove dimensions, depending on the form of the matrix $\mathbf{A}$).
   <img src="images/svd_2.png" alt="Sublime's custom image" style="width:50%"/>
 </p>
 
-### Proof of SVD decomposition
-
-When we do have a SPD (semi-positive definite) matrix it is really trivial to prove why SVD holds by applying the standard eigendecomposition and diagonalization of an SPD matrix.
+#### Proof of SVD decomposition
+To reason why this decomposition holds can be proven if we perform diagonalization of the matrix $\boldsymbol{A}^{T}\boldsymbol{A}$. This will easily lead to the defition of SVD decomposition. 
 
 To prove `SVD` decompoition, in the general case, where a matrix is not SPD or even square, let's think of the matrix $\boldsymbol{A}^{T}\boldsymbol{A} \in \mathbb{R}^{m \times m}$ with $\boldsymbol{A} \in \mathbb{R}^{n \times m}$. Let's start by assuming that matrices $\boldsymbol{A}^T$ and $\boldsymbol{A}$ can be decomposed using SVD. Then, since $\boldsymbol{A}^T\boldsymbol{A}$ is a symmetric and square we can perform eigendecomposition and decompose it in matrix $\boldsymbol{V}$ that contains the eigenvectors and $\boldsymbol{\Sigma}^{T}\boldsymbol{\Sigma}$ that contains the eigevalues which are denoted as $\sigma_{i}^{2}$. That can be seen from the following:
 
@@ -445,16 +442,8 @@ $$
 
 So far we saw multiple ways to describe data that are stored in a matrix $\boldsymbol{A} \in \mathbf{m \times n}$. We learn about how to compute `determinants` and the `trace` of a matrix. We saw also how to perform an `eigen-analysis` of the matrix and what is the geometric interpretation of it. We examine how to diagonalize a matrix and how to perform decomposition for rectangular matrices using `Singular value decomposition (SVD)`. 
 
-In this part of the tutorial, we will see its real merit and the reasons why we would like to perform matrix decomposition in Machine Learning. A direct answer on that is that matrix decomposition paves the way for `dimensionality reduction` and the `discovery of embeddings` that can be meaningfully characterize the 
-initial feature space of our data in hand.
 
-In ML the most interesting and challenging problems are coupled with data that live in `high-dimensionalities` such as `images`, `videos`, `brain scans` etcetera. This high-dimensionality comes 
-with multiple problems such as it makes the ML algorithm hard to parse data to interpret them while it is merely impossible to visualize them and really expensive to 
-store the data in servers. At the same time, there are properties of these high-dimensional data that we can take advantage of. For instance, many dimensions are redundant since they 
-could simply represented `a linear combination` of other dimensions. `Dimensionality reduction` exploits structure and correlation and allows us to work with a more compact representation of the data, ideally without losing information. We can think of dimensionality reduction as a compression technique, similar to `jpeg` or `mp3`, which are compression algorithms for images and music.
-
-
-### Principle component analysis
+## Principle component analysis
 
 We will start the explanation of PCA with a simple intuitive example that I like to use when explaining this method. 
 
@@ -480,8 +469,7 @@ This `proper angle` is an efficient `point of view` of observing the data. It ca
 
 Now the intuition sounds sweet, however, how this is done in practice? 
 
-In Principle component analysis (PCA) we are interested in finding projections of the initial data $\mathbf{x}_n \in \mathbb{R}^{D}$ denoted as $\mathbf{\tilde{x}}_n \in \mathbb{R}^{D'}$ which are as close as
-possible to the original point but at the same time lives in a dimensionality and is lower than the initial one $D' \ll D$.
+In Principle component analysis (PCA) we are interested in finding projections of the initial data $\mathbf{x}_n \in \mathbb{R}^{D}$ denoted as $\mathbf{\tilde{x}}_n \in \mathbb{R}^{D'}$ which are as close as possible to the original point but at the same time lives in a dimensionality and is lower than the initial one $D' \ll D$. See that this is exactly what we intended to find by calculating eigenvectors.
 
 Usually, the setup is the following: we do have access to a dataset $\mathcal{D} = \\{ \mathbf{x}_1, \mathbf{x}_2, ..., \mathbf{x}_n \\} \in \mathbb{R}^{N \times D}$ with $N$ to be the number of instances and $D$ the dimensionality of each feature and we can re-write:
 
@@ -492,7 +480,9 @@ x_1 & x_2 & \cdots & x_n \\
 \end{bmatrix} \in \mathbb{R}^{D \times N}$$
 
 
-Note that this is column matrix meaning that each vector is represented as a column, but sometimes we can have also row-matrix. The same process can be applied in both cases, it is just that perspective changes a bit. With matrix $\boldsymbol{S}$ to be the data covariance matrix:
+>Note that this is a column matrix, meaning that each vector is represented as a column, but sometimes we can have also row-matrix. The same process can be applied in both cases, it is just that perspective changes a bit. 
+
+With matrix $\boldsymbol{S}$ to be the data covariance matrix:
 
 $$
 \boldsymbol{S} = \frac{1}{N}\sum_{i=1} ^N \mathbf{x}_n \mathbf{x}_n^T \in \mathbb{R}^{D \times D}
@@ -508,16 +498,14 @@ $$
 
 so we project the data in lower dimensionality $D' \ll D$
 
-Our target is to find the projection matrix $\boldsymbol{\mathcal{B}}$ that maps the original data with minimal compression loss while keeps the data information intact. In the below sections we will analyze two approaches to find this projection matrix. The first approach, aims at finding the direction that maximizes the variance, while in the second perspective, we are trying to minimize the reconstruction loss.
+Our target is to find the projection matrix $\boldsymbol{\mathcal{B}}$ that maps the original data with minimal compression loss while keeps the data information intact. In the below sections we will analyze two approaches to find this projection matrix. The approach we will discuss aims at finding the direction that maximizes the variance, while other perspectives try to minimize the reconstruction loss.
 
 
-#### First perspective maximizing the variance
+### First perspective: maximizing the variance
 
-Each vector $\[ \mathbf{b}_1, \mathbf{b}_2, \cdots, \mathbf{b}_D' \] \in \mathbb{R}^{D \times D'}$ projects the initial data into a new coordinate space. The total amount of dimensions is $D'$ and this is a hyperparameter that we
-usually need to decide or to figure out which dimensionality is more suitable for the problem in hand. What we can also do here is to sort these projections in such a way that that the first projection leads to the 
-direction with the maximum variance and so on for the rest of the projections. If the dimensionality of the initial data is $D$ then we can find initially $D$ new projections that the variance is 
-maximized and sorted in descending order. Thus, we will need to find these projection vectors that lead to directions where the variance of the data is sorted in this way. 
+Each vector $\[ \mathbf{b}_1, \mathbf{b}_2, \cdots, \mathbf{b}_D' \] \in \mathbb{R}^{D \times D'}$ projects the initial data into a new coordinate space. The total amount of dimensions is $D'$ and this is a hyperparameter that we usually need to decide or to figure out which dimensionality is more suitable for the problem in hand. 
 
+What we can also do here is to sort these projections in such a way that that the first projection leads to the direction with the maximum variance and so on for the rest of the projections. If the dimensionality of the initial data is $D$ then we can find initially $D$ new projections that the variance is maximized and sorted in descending order. Thus, we will need to find these projection vectors that lead to directions where the variance of the data is sorted in this way. 
 
 Initially, we start by trying to find the projection vector $\mathbf{b}_1 \in \mathbb{R}^{D}$ that maximizes the variance of the projected data. Usually, in PCA, we make the assumption that the data are centered around mean since the variance is not 
 affected by this mean. That signifies that even if the data are not centered around the mean, if we subtract the mean and center the data, the variance is the same. Thus, we can compute the variance of the first coordinate as:
@@ -545,8 +533,8 @@ $$
 \boldsymbol{S} = \frac{1}{N}\sum_{i=1} ^N \mathbf{x}_n \mathbf{x}_n^T \in \mathbb{R}^{D \times D}
 $$
 
-To make things easy, in our search for the direction that maximizes the variance, we can assume without that the magnitude of this vector is normalized to be equal to one, thus: 
-$||\mathbf{b}_1|| = 1$ since what we care is the direction and not the length of the vector. 
+To make things easy, in our search for the direction that maximizes the variance, we can assume that the magnitude of this vector is normalized to be equal to one, thus: 
+$||\mathbf{b}_1|| = 1$ since what we care about is the direction and not the length of the vector. 
 
 Since we want to find the optimal vector $\mathbf{b}_1 \in \mathbb{R}^{D}$ that maximizes the variance after the projection of the data in hand in this direction that opens the gate for constraint optimization techniques like Lagrangian multipliers:
 
@@ -578,8 +566,7 @@ $$
 V_1 = \boldsymbol{b}_1^\top S \boldsymbol{b}_1  = \boldsymbol{b}_1^\top \lambda_{1} \boldsymbol{b}_1 =  \lambda_{1} \boldsymbol{b}_1^\top  \boldsymbol{b}_1  = \lambda_{1}
 $$
 
-What this equation express is that the to maximize the variance of this projection, we need to find the eigenvector with the largest eigenvalue of the data covariance matrix. Then,
-this vector $ \boldsymbol{b}_1$ is called `first principal component`.
+What this equation expresses is that the to maximize the variance of this projection, we need to find the eigenvector with the largest eigenvalue of the data covariance matrix. Then, this vector $ \boldsymbol{b}_1$ is called `first principal component`.
 
 Once we found the first PC we can subtract this from the data matrix and perform the same process again until we find $M$ principal component vectors. While we will not present here all the details of how this
 is done, in principle we can have:
@@ -590,13 +577,12 @@ $$
 
 The above shows a generalization of how we can subtract the first $m-1$ principal components from our matrix $\boldsymbol{X}$.
 
-We can proceed that way that we can compute $M$ principal components. We can even compute $M = D$ components. Once we compute all of them, we can sort the PC based on their eigenvalue so the
-variance in the projected coordinate. Finally, we can keep all the coordinates that lead to minimum reduce of the variance in data with the respect to the variance of the initial data.
+We can proceed that way that we can compute $M$ principal components. We can even compute $M = D$ components. Once we compute all of them, we can sort the PC based on their eigenvalue so the variance in the projected coordinate. Finally, we can keep all the coordinates that lead to minimum reduce of the variance in data with the respect to the variance of the initial data.
 
 
-#### Example MNIST embeddings
+####Example MNIST embeddings
 
 
-#### How to use SVD for computing PCA in practise
+####How to use SVD for computing PCA in practise
 
 [back](./)
